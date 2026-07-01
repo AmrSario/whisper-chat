@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whisper Chat</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,sans-serif}
+:root{--bg:#fff;--text:#000;--card:#f0f2f5;--border:#ddd;--primary:#1877f2;--danger:#e41e3f;--success:#42b72a}
+.dark{--bg:#000;--text:#fff;--card:#1c1c1c;--border:#333;--primary:#4dabf7;--danger:#ff6b6b;--success:#51cf66}
+body{background:var(--bg);color:var(--text);min-height:100vh;transition:.3s}
+.hidden{display:none!important}
+#auth-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.auth-box{background:var(--card);padding:30px;border-radius:12px;width:100%;max-width:400px;border:1px solid var(--border)}
+.auth-box h1{text-align:center;margin-bottom:20px;font-size:28px}
+.auth-box input{width:100%;padding:12px;margin:8px 0;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:16px}
+.auth-box button{width:100%;padding:12px;margin:8px 0;border:none;border-radius:8px;font-size:16px;cursor:pointer;font-weight:bold}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-success{background:var(--success);color:#fff}
+.btn-danger{background:var(--danger);color:#fff}
+.auth-toggle{text-align:center;margin-top:15px;cursor:pointer;color:var(--primary)}
+#chat-screen{max-width:700px;margin:0 auto}
+.header{position:sticky;top:0;background:var(--bg);padding:15px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;z-index:100}
+.header h2{font-size:20px}
+.header-btns{display:flex;gap:10px}
+.header-btns button{padding:8px 16px;border:none;border-radius:6px;cursor:pointer;font-size:14px;font-weight:bold}
+.post-box{padding:15px;border-bottom:1px solid var(--border)}
+.post-box textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);font-size:16px;resize:vertical;min-height:80px;max-height:200px}
+.post-box .char-count{text-align:left;font-size:12px;color:#888;margin-top:5px}
+.post-btn{margin-top:10px;padding:10px 24px}
+.posts-container{padding:10px}
+.post{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px;margin-bottom:15px}
+.post-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:8px}
+.post-author{font-weight:bold;font-size:16px;color:var(--primary)}
+.post-time{font-size:12px;color:#888}
+.post-content{font-size:16px;line-height:1.6;margin-bottom:12px;word-wrap:break-word}
+.post-actions{display:flex;gap:15px;padding-top:10px;border-top:1px solid var(--border)}
+.post-actions button{background:none;border:none;color:var(--text);cursor:pointer;font-size:14px;display:flex;align-items:center;gap:5px}
+.post-actions button:hover{color:var(--primary)}
+.comments-section{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.comment{background:var(--bg);padding:10px;border-radius:8px;margin-bottom:8px;border:1px solid var(--border)}
+.comment-author{font-weight:bold;font-size:14px;color:var(--primary);margin-bottom:4px}
+.comment-text{font-size:14px;line-height:1.5}
+.comment-time{font-size:11px;color:#888;margin-top:4px}
+.comment-input{display:flex;gap:10px;margin-top:10px}
+.comment-input input{flex:1;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:14px}
+.comment-input button{padding:10px 16px}
+.loading{text-align:center;padding:40px;color:#888}
+.empty{text-align:center;padding:60px 20px;color:#888;font-size:18px}
+.error-msg{color:var(--danger);text-align:center;margin:10px 0;font-size:14px}
+.success-msg{color:var(--success);text-align:center;margin:10px 0;font-size:14px}
+@media(max-width:600px){.header h2{font-size:16px}.post-content{font-size:15px}}
+</style>
+</head>
+<body>
+<div id="auth-screen">
+<div class="auth-box">
+<h1>🗨️ Whisper Chat</h1>
+<div id="auth-form">
+<input type="text" id="username" placeholder="اسم المستخدم" maxlength="30">
+<input type="password" id="password" placeholder="كلمة المرور" maxlength="50">
+<div id="auth-msg" class="error-msg"></div>
+<button class="btn-primary" id="auth-btn" onclick="handleAuth()">تسجيل الدخول</button>
+<button class="btn-success hidden" id="signup-btn" onclick="handleSignup()">إنشاء حساب</button>
+</div>
+<div class="auth-toggle" id="auth-toggle" onclick="toggleAuthMode()">ليس لديك حساب؟ سجل الآن</div>
+</div>
+</div>
+<div id="chat-screen" class="hidden">
+<div class="header">
+<h2>🗨️ Whisper Chat</h2>
+<div class="header-btns">
+<button class="btn-primary" onclick="toggleTheme()">🌓</button>
+<button class="btn-danger" onclick="logout()">خروج</button>
+</div>
+</div>
+<div class="post-box">
+<textarea id="post-content" placeholder="اكتب منشورك هنا..." maxlength="1000" oninput="updateCharCount('post-content','post-count')"></textarea>
+<div class="char-count" id="post-count">1000 / 1000</div>
+<button class="btn-primary post-btn" onclick="createPost()">نشر</button>
+</div>
+<div class="posts-container" id="posts-container">
+<div class="loading">جاري التحميل...</div>
+</div>
+</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, getDoc, setDoc, deleteDoc, updateDoc, onSnapshot, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyB5XM0o56xLSIJjC5_Ffn5R6-DkesBiJHA",
+    authDomain: "whisper-chat-2000.firebaseapp.com",
+    projectId: "whisper-chat-2000",
+    storageBucket: "whisper-chat-2000.firebasestorage.app",
+    messagingSenderId: "759998123313",
+    appId: "1:759998123313:web:0c719c96f550d1fa24b410",
+    measurementId: "G-0QWN8TRKSM"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let currentUser = null;
+let isLoginMode = true;
+let postsListener = null;
+let commentsListeners = {};
+
+const savedUser = sessionStorage.getItem('whisper_user');
+if (savedUser) { currentUser = savedUser; showChat(); }
+
+window.toggleAuthMode = function() {
+    isLoginMode = !isLoginMode;
+    document.getElementById('auth-btn').classList.toggle('hidden');
+    document.getElementById('signup-btn').classList.toggle('hidden');
+    document.getElementById('auth-toggle').textContent = isLoginMode ? 'ليس لديك حساب؟ سجل الآن' : 'لديك حساب؟ سجل الدخول';
+    document.getElementById('auth-msg').textContent = '';
+};
+
+window.handleAuth = async function() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const msgEl = document.getElementById('auth-msg');
+    if (!username || !password) { msgEl.textContent = 'يرجى ملء جميع الحقول'; return; }
+    try {
+        const userRef = doc(db, 'users', username);
+        const userSnap = await getDoc(userRef);
+        if (!userSnap.exists()) { msgEl.textContent = 'اسم المستخدم غير موجود'; return; }
+        if (userSnap.data().password !== password) { msgEl.textContent = 'كلمة المرور غير صحيحة'; return; }
+        currentUser = username;
+        sessionStorage.setItem('whisper_user', username);
+        showChat();
+    } catch (e) { msgEl.textContent = 'خطأ: ' + e.message; }
+};
+
+window.handleSignup = async function() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const msgEl = document.getElementById('auth-msg');
+    if (!username || !password) { msgEl.textContent = 'يرجى ملء جميع الحقول'; return; }
+    if (username.length < 3) { msgEl.textContent = 'اسم المستخدم 3 أحرف على الأقل'; return; }
+    if (password.length < 4) { msgEl.textContent = 'كلمة المرور 4 أحرف على الأقل'; return; }
+    try {
+        const userRef = doc(db, 'users', username);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) { msgEl.textContent = 'اسم المستخدم موجود بالفعل'; return; }
+        await setDoc(userRef, { username: username, password: password, createdAt: serverTimestamp() });
+        currentUser = username;
+        sessionStorage.setItem('whisper_user', username);
+        showChat();
+    } catch (e) { msgEl.textContent = 'خطأ: ' + e.message; }
+};
+
+window.logout = function() {
+    currentUser = null;
+    sessionStorage.removeItem('whisper_user');
+    if (postsListener) postsListener();
+    Object.values(commentsListeners).forEach(l => l());
+    commentsListeners = {};
+    document.getElementById('chat-screen').classList.add('hidden');
+    document.getElementById('auth-screen').classList.remove('hidden');
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+};
+
+window.showChat = function() {
+    document.getElementById('auth-screen').classList.add('hidden');
+    document.getElementById('chat-screen').classList.remove('hidden');
+    loadPosts();
+};
+
+window.updateCharCount = function(inputId, countId) {
+    const input = document.getElementById(inputId);
+    const count = document.getElementById(countId);
+    const remaining = 1000 - input.value.length;
+    count.textContent = remaining + ' / 1000';
+    count.style.color = remaining < 50 ? 'var(--danger)' : '#888';
+};
+
+window.createPost = async function() {
+    const content = document.getElementById('post-content').value.trim();
+    if (!content) return;
+    if (content.length > 1000) { alert('المنشور يجب أن لا يتجاوز 1000 حرف'); return; }
+    try {
+        await addDoc(collection(db, 'posts'), {
+            username: currentUser,
+            content: content,
+            createdAt: serverTimestamp(),
+            likes: 0,
+            dislikes: 0
+        });
+        document.getElementById('post-content').value = '';
+        updateCharCount('post-content', 'post-count');
+    } catch (e) { alert('خطأ في النشر: ' + e.message); }
+};
+
+window.loadPosts = function() {
+    const container = document.getElementById('posts-container');
+    container.innerHTML = '<div class="loading">جاري التحميل...</div>';
+    const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
+    postsListener = onSnapshot(q, (snapshot) => {
+        if (snapshot.empty) { container.innerHTML = '<div class="empty">لا توجد منشورات بعد. كن أول من ينشر!</div>'; return; }
+        let html = '';
+        snapshot.forEach((docSnap) => {
+            const post = docSnap.data();
+            const postId = docSnap.id;
+            const time = post.createdAt ? formatTime(post.createdAt.toDate()) : 'الآن';
+            html += `<div class="post" id="post-${postId}">
+                <div class="post-header"><span class="post-author">@${post.username}</span><span class="post-time">${time}</span></div>
+                <div class="post-content">${escapeHtml(post.content)}</div>
+                <div class="post-actions">
+                    <button onclick="likePost('${postId}')">❤️ <span id="likes-${postId}">${post.likes || 0}</span></button>
+                    <button onclick="dislikePost('${postId}')">👎 <span id="dislikes-${postId}">${post.dislikes || 0}</span></button>
+                    <button onclick="toggleComments('${postId}')">💬 تعليق</button>
+                </div>
+                <div class="comments-section hidden" id="comments-${postId}">
+                    <div id="comments-list-${postId}"></div>
+                    <div class="comment-input">
+                        <input type="text" id="comment-input-${postId}" placeholder="اكتب تعليق..." maxlength="1000">
+                        <button class="btn-primary" onclick="addComment('${postId}')">إرسال</button>
+                    </div>
+                </div>
+            </div>`;
+        });
+        container.innerHTML = html;
+        snapshot.forEach((docSnap) => { loadComments(docSnap.id); });
+    }, (error) => { container.innerHTML = '<div class="error-msg">خطأ: ' + error.message + '</div>'; });
+};
+
+window.likePost = async function(postId) {
+    try {
+        const likeRef = doc(db, 'likes', postId + '_' + currentUser);
+        const likeSnap = await getDoc(likeRef);
+        const postRef = doc(db, 'posts', postId);
+        const postSnap = await getDoc(postRef);
+        const currentLikes = postSnap.data().likes || 0;
+        const currentDislikes = postSnap.data().dislikes || 0;
+        if (likeSnap.exists() && likeSnap.data().type === 'like') {
+            await deleteDoc(likeRef);
+            await updateDoc(postRef, { likes: currentLikes - 1 });
+        } else if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
+            await updateDoc(likeRef, { type: 'like' });
+            await updateDoc(postRef, { likes: currentLikes + 1, dislikes: currentDislikes - 1 });
+        } else {
+            await setDoc(likeRef, { postId, username: currentUser, type: 'like' });
+            await updateDoc(postRef, { likes: currentLikes + 1 });
+        }
+    } catch (e) { console.error(e); }
+};
+
+window.dislikePost = async function(postId) {
+    try {
+        const likeRef = doc(db, 'likes', postId + '_' + currentUser);
+        const likeSnap = await getDoc(likeRef);
+        const postRef = doc(db, 'posts', postId);
+        const postSnap = await getDoc(postRef);
+        const currentLikes = postSnap.data().likes || 0;
+        const currentDislikes = postSnap.data().dislikes || 0;
+        if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
+            await deleteDoc(likeRef);
+            await updateDoc(postRef, { dislikes: currentDislikes - 1 });
+        } else if (likeSnap.exists() && likeSnap.data().type === 'like') {
+            await updateDoc(likeRef, { type: 'dislike' });
+            await updateDoc(postRef, { dislikes: currentDislikes + 1, likes: currentLikes - 1 });
+        } else {
+            await setDoc(likeRef, { postId, username: currentUser, type: 'dislike' });
+            await updateDoc(postRef, { dislikes: currentDislikes + 1 });
+        }
+    } catch (e) { console.error(e); }
+};
+
+window.toggleComments = function(postId) {
+    document.getElementById('comments-' + postId).classList.toggle('hidden');
+};
+
+window.loadComments = function(postId) {
+    if (commentsListeners[postId]) return;
+    const q = query(collection(db, 'comments'), where('postId', '==', postId), orderBy('createdAt', 'desc'));
+    commentsListeners[postId] = onSnapshot(q, (snapshot) => {
+        const container = document.getElementById('comments-list-' + postId);
+        if (!container) return;
+        let html = '';
+        if (snapshot.empty) { html = '<div style="color:#888;font-size:14px;text-align:center;padding:10px">لا توجد تعليقات</div>'; }
+        else {
+            snapshot.forEach((docSnap) => {
+                const c = docSnap.data();
+                const time = c.createdAt ? formatTime(c.createdAt.toDate()) : 'الآن';
+                html += `<div class="comment"><div class="comment-author">@${c.username}</div><div class="comment-text">${escapeHtml(c.content)}</div><div class="comment-time">${time}</div></div>`;
+            });
+        }
+        container.innerHTML = html;
+    });
+};
+
+window.addComment = async function(postId) {
+    const input = document.getElementById('comment-input-' + postId);
+    const content = input.value.trim();
+    if (!content) return;
+    if (content.length > 1000) { alert('التعليق يجب أن لا يتجاوز 1000 حرف'); return; }
+    try {
+        await addDoc(collection(db, 'comments'), { postId: postId, username: currentUser, content: content, createdAt: serverTimestamp() });
+        input.value = '';
+    } catch (e) { alert('خطأ: ' + e.message); }
+};
+
+window.toggleTheme = function() {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('whisper_theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+};
+
+if (localStorage.getItem('whisper_theme') === 'dark') { document.body.classList.add('dark'); }
+
+function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
+
+function formatTime(date) {
+    const now = new Date();
+    const diff = Math.floor((now - date) / 1000);
+    if (diff < 60) return 'منذ لحظات';
+    if (diff < 3600) return 'منذ ' + Math.floor(diff / 60) + ' دقيقة';
+    if (diff < 86400) return 'منذ ' + Math.floor(diff / 3600) + ' ساعة';
+    if (diff < 604800) return 'منذ ' + Math.floor(diff / 86400) + ' يوم';
+    return date.toLocaleDateString('ar-EG');
+}
+
+window.addEventListener('beforeunload', () => { sessionStorage.removeItem('whisper_user'); });
+</script>
+</body>
+</html>
