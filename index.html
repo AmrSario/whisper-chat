@@ -5,51 +5,109 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Whisper Chat</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,sans-serif}
-:root{--bg:#fff;--text:#000;--card:#f0f2f5;--border:#ddd;--primary:#1877f2;--danger:#e41e3f;--success:#42b72a}
-.dark{--bg:#000;--text:#fff;--card:#1c1c1c;--border:#333;--primary:#4dabf7;--danger:#ff6b6b;--success:#51cf66}
-body{background:var(--bg);color:var(--text);min-height:100vh;transition:.3s}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+:root{--bg:#f0f2f5;--text:#050505;--card:#ffffff;--border:#dddfe2;--primary:#1877f2;--danger:#e41e3f;--success:#42b72a;--owner:#ff6b00;--admin:#9b59b6;--ban:#dc3545;--group:#17a2b8;--shadow:0 1px 2px rgba(0,0,0,0.1);--radius:8px}
+.dark{--bg:#18191a;--text:#e4e6eb;--card:#242526;--border:#3a3b3c;--primary:#4dabf7;--danger:#ff6b6b;--success:#51cf66;--owner:#ff9500;--admin:#bb8fce;--ban:#ff4444;--group:#5bc0de;--shadow:0 1px 2px rgba(0,0,0,0.3)}
+body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s}
 .hidden{display:none!important}
 #auth-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-.auth-box{background:var(--card);padding:30px;border-radius:12px;width:100%;max-width:400px;border:1px solid var(--border)}
-.auth-box h1{text-align:center;margin-bottom:20px;font-size:28px}
-.auth-box input{width:100%;padding:12px;margin:8px 0;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:16px}
-.auth-box button{width:100%;padding:12px;margin:8px 0;border:none;border-radius:8px;font-size:16px;cursor:pointer;font-weight:bold}
+.auth-box{background:var(--card);padding:40px;border-radius:var(--radius);width:100%;max-width:400px;box-shadow:var(--shadow);border:1px solid var(--border)}
+.auth-box h1{text-align:center;margin-bottom:25px;font-size:32px;font-weight:700}
+.auth-box input{width:100%;padding:14px;margin:8px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:15px;outline:none}
+.auth-box input:focus{border-color:var(--primary)}
+.auth-box button{width:100%;padding:14px;margin:8px 0;border:none;border-radius:var(--radius);font-size:16px;cursor:pointer;font-weight:600;transition:0.2s}
+.auth-box button:hover{opacity:0.9;transform:translateY(-1px)}
 .btn-primary{background:var(--primary);color:#fff}
 .btn-success{background:var(--success);color:#fff}
 .btn-danger{background:var(--danger);color:#fff}
-.auth-toggle{text-align:center;margin-top:15px;cursor:pointer;color:var(--primary)}
-#chat-screen{max-width:700px;margin:0 auto}
-.header{position:sticky;top:0;background:var(--bg);padding:15px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;z-index:100}
-.header h2{font-size:20px}
-.header-btns{display:flex;gap:10px}
-.header-btns button{padding:8px 16px;border:none;border-radius:6px;cursor:pointer;font-size:14px;font-weight:bold}
-.post-box{padding:15px;border-bottom:1px solid var(--border)}
-.post-box textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text);font-size:16px;resize:vertical;min-height:80px;max-height:200px}
-.post-box .char-count{text-align:left;font-size:12px;color:#888;margin-top:5px}
+.btn-owner{background:var(--owner);color:#fff}
+.btn-admin{background:var(--admin);color:#fff}
+.btn-ban{background:var(--ban);color:#fff}
+.btn-group{background:var(--group);color:#fff}
+.btn-secondary{background:var(--card);color:var(--text);border:1px solid var(--border)!important}
+.auth-toggle{text-align:center;margin-top:15px;cursor:pointer;color:var(--primary);font-weight:500}
+#chat-screen{max-width:680px;margin:0 auto;padding-bottom:20px}
+.header{position:sticky;top:0;background:var(--card);padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:var(--shadow)}
+.header h2{font-size:20px;font-weight:700}
+.header-btns{display:flex;gap:8px}
+.header-btns button{padding:8px 14px;border:none;border-radius:var(--radius);cursor:pointer;font-size:13px;font-weight:600;transition:0.2s}
+.header-btns button:hover{opacity:0.9}
+.nav-tabs{display:flex;gap:4px;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--border);overflow-x:auto}
+.nav-tab{padding:8px 16px;border:none;border-radius:20px;background:transparent;color:var(--text);cursor:pointer;font-size:14px;font-weight:600;white-space:nowrap;transition:0.2s}
+.nav-tab.active{background:var(--primary);color:#fff}
+.nav-tab:hover:not(.active){background:var(--bg)}
+.post-box{padding:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin:12px 16px;box-shadow:var(--shadow)}
+.post-box textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:15px;resize:vertical;min-height:80px;outline:none}
+.post-box textarea:focus{border-color:var(--primary)}
+.post-box .char-count{text-align:left;font-size:12px;color:#888;margin-top:6px}
 .post-btn{margin-top:10px;padding:10px 24px}
-.posts-container{padding:10px}
-.post{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px;margin-bottom:15px}
-.post-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:8px}
-.post-author{font-weight:bold;font-size:16px;color:var(--primary)}
+.group-box{padding:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin:12px 16px;box-shadow:var(--shadow)}
+.group-box input{width:100%;padding:12px;margin:8px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:15px;outline:none}
+.group-box input:focus{border-color:var(--primary)}
+.posts-container{padding:0 16px}
+.post{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.post-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.post-author{font-weight:700;font-size:15px;color:var(--primary);display:flex;align-items:center;gap:6px}
 .post-time{font-size:12px;color:#888}
-.post-content{font-size:16px;line-height:1.6;margin-bottom:12px;word-wrap:break-word}
-.post-actions{display:flex;gap:15px;padding-top:10px;border-top:1px solid var(--border)}
-.post-actions button{background:none;border:none;color:var(--text);cursor:pointer;font-size:14px;display:flex;align-items:center;gap:5px}
-.post-actions button:hover{color:var(--primary)}
+.post-content{font-size:15px;line-height:1.6;margin-bottom:12px;word-wrap:break-word}
+.post-actions{display:flex;gap:12px;padding-top:10px;border-top:1px solid var(--border);flex-wrap:wrap}
+.post-actions button{background:none;border:none;color:var(--text);cursor:pointer;font-size:13px;display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:var(--radius);transition:0.2s}
+.post-actions button:hover{background:var(--bg);color:var(--primary)}
+.post-staff-actions{display:flex;gap:8px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);flex-wrap:wrap}
+.post-staff-actions button{padding:5px 12px;border:none;border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:600;color:#fff;transition:0.2s}
+.post-staff-actions button:hover{opacity:0.9}
 .comments-section{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
-.comment{background:var(--bg);padding:10px;border-radius:8px;margin-bottom:8px;border:1px solid var(--border)}
-.comment-author{font-weight:bold;font-size:14px;color:var(--primary);margin-bottom:4px}
+.comment{background:var(--bg);padding:10px;border-radius:var(--radius);margin-bottom:8px;border:1px solid var(--border);position:relative}
+.comment-author{font-weight:700;font-size:13px;color:var(--primary);margin-bottom:4px;display:flex;align-items:center;gap:5px}
 .comment-text{font-size:14px;line-height:1.5}
 .comment-time{font-size:11px;color:#888;margin-top:4px}
+.comment-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.comment-actions button{padding:4px 10px;border:none;border-radius:var(--radius);cursor:pointer;font-size:11px;font-weight:600;color:#fff;transition:0.2s}
+.comment-actions button:hover{opacity:0.9}
 .comment-input{display:flex;gap:10px;margin-top:10px}
-.comment-input input{flex:1;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:14px}
+.comment-input input{flex:1;padding:10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:14px;outline:none}
+.comment-input input:focus{border-color:var(--primary)}
 .comment-input button{padding:10px 16px}
+.tag{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;color:#fff;text-transform:uppercase}
+.tag-owner{background:var(--owner)}
+.tag-admin{background:var(--admin)}
+.tag-banned{background:var(--ban)}
+.tag-group{background:var(--group)}
 .loading{text-align:center;padding:40px;color:#888}
-.empty{text-align:center;padding:60px 20px;color:#888;font-size:18px}
+.empty{text-align:center;padding:60px 20px;color:#888;font-size:16px}
 .error-msg{color:var(--danger);text-align:center;margin:10px 0;font-size:14px}
-.success-msg{color:var(--success);text-align:center;margin:10px 0;font-size:14px}
-@media(max-width:600px){.header h2{font-size:16px}.post-content{font-size:15px}}
+.inbox-container{padding:0 16px}
+.inbox-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.inbox-item-info{flex:1}
+.inbox-item-title{font-weight:700;font-size:14px;margin-bottom:4px}
+.inbox-item-desc{font-size:13px;color:#888}
+.inbox-actions{display:flex;gap:8px}
+.inbox-actions button{padding:6px 14px;border:none;border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:600;color:#fff;transition:0.2s}
+.inbox-actions button:hover{opacity:0.9}
+.group-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow)}
+.group-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.group-card-name{font-weight:700;font-size:16px;color:var(--primary)}
+.group-card-owner{font-size:12px;color:#888}
+.group-card-actions{display:flex;gap:8px;margin-top:10px}
+.group-card-actions button{padding:6px 12px;border:none;border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:600;color:#fff;transition:0.2s}
+.group-card-actions button:hover{opacity:0.9}
+.group-members{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.group-member{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
+.group-member-name{font-size:13px}
+.group-invite-box{background:var(--bg);padding:12px;border-radius:var(--radius);margin-top:10px;border:1px solid var(--border)}
+.group-invite-box input{width:100%;padding:10px;margin-bottom:8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);color:var(--text);font-size:14px;outline:none}
+.group-invite-box input:focus{border-color:var(--primary)}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.modal-content{background:var(--card);padding:24px;border-radius:var(--radius);width:100%;max-width:420px;border:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+.modal-content h3{margin-bottom:16px;font-size:18px}
+.modal-content textarea,.modal-content input{width:100%;padding:12px;margin-bottom:12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:14px;outline:none;resize:vertical}
+.modal-content textarea:focus,.modal-content input:focus{border-color:var(--primary)}
+.modal-btns{display:flex;gap:10px;margin-top:16px}
+.modal-btns button{flex:1;padding:12px;border:none;border-radius:var(--radius);cursor:pointer;font-size:14px;font-weight:600;transition:0.2s}
+.modal-btns button:hover{opacity:0.9}
+.banned-notice{background:var(--ban);color:#fff;padding:16px;text-align:center;border-radius:var(--radius);margin:12px 16px;font-weight:600}
+.edited-tag{font-size:11px;color:#888;margin-left:8px}
+@media(max-width:600px){.header h2{font-size:16px}.post-content{font-size:14px}.nav-tab{padding:6px 12px;font-size:13px}}
 </style>
 </head>
 <body>
@@ -70,22 +128,79 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:.3s}
 <div class="header">
 <h2>🗨️ Whisper Chat</h2>
 <div class="header-btns">
-<button class="btn-primary" onclick="toggleTheme()">🌓</button>
+<button class="btn-secondary" onclick="toggleTheme()">🌓</button>
+<button class="btn-danger hidden" id="ban-list-btn" onclick="showBanList()">🚫 المحظورين</button>
 <button class="btn-danger" onclick="logout()">خروج</button>
 </div>
 </div>
-<div class="post-box">
+<div class="nav-tabs" id="nav-tabs">
+<button class="nav-tab active" onclick="switchTab('home')" id="tab-home">🏠 الرئيسية</button>
+<button class="nav-tab" onclick="switchTab('groups')" id="tab-groups">👥 المجموعات</button>
+<button class="nav-tab" onclick="switchTab('inbox')" id="tab-inbox">📥 الصندوق <span id="inbox-badge" class="hidden" style="background:var(--danger);color:#fff;padding:2px 6px;border-radius:10px;font-size:10px;margin-right:4px">0</span></button>
+</div>
+<div id="banned-notice" class="banned-notice hidden">
+⛔ أنت محظور من المنصة. لا يمكنك النشر أو التعليق.
+</div>
+<div id="tab-content-home">
+<div class="post-box" id="post-box-area">
 <textarea id="post-content" placeholder="اكتب منشورك هنا..." maxlength="1000" oninput="updateCharCount('post-content','post-count')"></textarea>
 <div class="char-count" id="post-count">1000 / 1000</div>
-<button class="btn-primary post-btn" onclick="createPost()">نشر</button>
+<button class="btn-primary post-btn" onclick="createPost()">📤 نشر</button>
 </div>
 <div class="posts-container" id="posts-container">
 <div class="loading">جاري التحميل...</div>
 </div>
 </div>
+<div id="tab-content-groups" class="hidden">
+<div class="group-box" id="create-group-box">
+<h3 style="margin-bottom:10px">👥 إنشاء مجموعة جديدة</h3>
+<input type="text" id="group-name" placeholder="اسم المجموعة" maxlength="50">
+<button class="btn-group post-btn" onclick="createGroup()">➕ إنشاء مجموعة</button>
+<div id="group-msg" class="error-msg" style="margin-top:8px"></div>
+</div>
+<div class="posts-container" id="groups-container">
+<div class="loading">جاري التحميل...</div>
+</div>
+</div>
+<div id="tab-content-inbox" class="hidden">
+<div class="inbox-container" id="inbox-container">
+<div class="empty">لا توجد رسائل في الصندوق الوارد</div>
+</div>
+</div>
+</div>
+<div id="edit-modal" class="hidden modal">
+<div class="modal-content">
+<h3>✏️ تعديل</h3>
+<textarea id="edit-text" maxlength="1000"></textarea>
+<div class="modal-btns">
+<button class="btn-success" onclick="saveEdit()">💾 حفظ</button>
+<button class="btn-secondary" onclick="closeEditModal()">❌ إلغاء</button>
+</div>
+</div>
+</div>
+<div id="ban-modal" class="hidden modal">
+<div class="modal-content">
+<h3>🚫 قائمة المحظورين</h3>
+<div id="ban-list-container" style="max-height:300px;overflow-y:auto"></div>
+<div class="modal-btns">
+<button class="btn-danger" onclick="closeBanModal()">❌ إغلاق</button>
+</div>
+</div>
+</div>
+<div id="invite-modal" class="hidden modal">
+<div class="modal-content">
+<h3>📨 دعوة لمجموعة</h3>
+<div id="invite-info" style="margin-bottom:12px;font-size:14px"></div>
+<input type="text" id="invite-username" placeholder="اسم المستخدم">
+<div class="modal-btns">
+<button class="btn-success" onclick="sendInvite()">📨 إرسال دعوة</button>
+<button class="btn-secondary" onclick="closeInviteModal()">❌ إلغاء</button>
+</div>
+</div>
+</div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, getDoc, setDoc, deleteDoc, updateDoc, onSnapshot, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, query, orderBy, doc, getDoc, setDoc, deleteDoc, updateDoc, onSnapshot, serverTimestamp, where, getDocs } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCg__gUC0NBNGH_bpOtNByCibo6u_aS9gg",
@@ -99,10 +214,35 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// ===== CONFIG =====
+const OWNER_USERNAME = "The Owner 3000";
+const ADMIN_USERNAMES = ["Admin1", "Admin2", "Moderator"];
+// ==================
+
 let currentUser = null;
 let isLoginMode = true;
 let postsListener = null;
 let commentsListeners = {};
+let groupsListener = null;
+let inboxListener = null;
+let banListener = null;
+let editingId = null;
+let editingType = null; // 'post' or 'comment'
+let bannedUsers = [];
+let currentTab = 'home';
+let inviteGroupId = null;
+
+function isOwner() { return currentUser === OWNER_USERNAME; }
+function isAdmin() { return ADMIN_USERNAMES.includes(currentUser); }
+function isStaff() { return isOwner() || isAdmin(); }
+function isBanned(username) { return bannedUsers.includes(username); }
+
+function getTag(username) {
+    if (username === OWNER_USERNAME) return '<span class="tag tag-owner">Owner</span>';
+    if (ADMIN_USERNAMES.includes(username)) return '<span class="tag tag-admin">Admin</span>';
+    if (isBanned(username)) return '<span class="tag tag-banned">Banned</span>';
+    return '';
+}
 
 const savedUser = sessionStorage.getItem('whisper_user');
 if (savedUser) { currentUser = savedUser; showChat(); }
@@ -153,8 +293,12 @@ window.logout = function() {
     currentUser = null;
     sessionStorage.removeItem('whisper_user');
     if (postsListener) postsListener();
+    if (groupsListener) groupsListener();
+    if (inboxListener) inboxListener();
+    if (banListener) banListener();
     Object.values(commentsListeners).forEach(l => l());
     commentsListeners = {};
+    bannedUsers = [];
     document.getElementById('chat-screen').classList.add('hidden');
     document.getElementById('auth-screen').classList.remove('hidden');
     document.getElementById('username').value = '';
@@ -164,7 +308,27 @@ window.logout = function() {
 window.showChat = function() {
     document.getElementById('auth-screen').classList.add('hidden');
     document.getElementById('chat-screen').classList.remove('hidden');
+    if (isStaff()) {
+        document.getElementById('ban-list-btn').classList.remove('hidden');
+    } else {
+        document.getElementById('ban-list-btn').classList.add('hidden');
+    }
+    loadBannedUsers();
     loadPosts();
+    loadGroups();
+    loadInbox();
+};
+
+window.switchTab = function(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.getElementById('tab-content-home').classList.add('hidden');
+    document.getElementById('tab-content-groups').classList.add('hidden');
+    document.getElementById('tab-content-inbox').classList.add('hidden');
+    document.getElementById('tab-content-' + tab).classList.remove('hidden');
+    if (tab === 'groups') loadGroups();
+    if (tab === 'inbox') loadInbox();
 };
 
 window.updateCharCount = function(inputId, countId) {
@@ -175,17 +339,74 @@ window.updateCharCount = function(inputId, countId) {
     count.style.color = remaining < 50 ? 'var(--danger)' : '#888';
 };
 
+function checkBanned() {
+    if (isBanned(currentUser)) {
+        document.getElementById('banned-notice').classList.remove('hidden');
+        document.getElementById('post-box-area').classList.add('hidden');
+    } else {
+        document.getElementById('banned-notice').classList.add('hidden');
+        document.getElementById('post-box-area').classList.remove('hidden');
+    }
+}
+
+// ===== BAN SYSTEM =====
+window.loadBannedUsers = function() {
+    const q = query(collection(db, 'banned'));
+    banListener = onSnapshot(q, (snapshot) => {
+        bannedUsers = [];
+        snapshot.forEach((docSnap) => { bannedUsers.push(docSnap.id); });
+        checkBanned();
+    });
+};
+
+window.banUser = async function(username) {
+    if (!isStaff()) { alert('غير مصرح'); return; }
+    if (username === OWNER_USERNAME) { alert('لا يمكن حظر الـ Owner'); return; }
+    if (!confirm('هل أنت متأكد من حظر ' + username + '؟')) return;
+    try {
+        await setDoc(doc(db, 'banned', username), { bannedBy: currentUser, bannedAt: serverTimestamp() });
+    } catch (e) { alert('خطأ في الحظر: ' + e.message); }
+};
+
+window.unbanUser = async function(username) {
+    if (!isStaff()) { alert('غير مصرح'); return; }
+    try {
+        await deleteDoc(doc(db, 'banned', username));
+    } catch (e) { alert('خطأ في فك الحظر: ' + e.message); }
+};
+
+window.showBanList = function() {
+    if (!isStaff()) return;
+    const container = document.getElementById('ban-list-container');
+    let html = '';
+    if (bannedUsers.length === 0) {
+        html = '<div style="text-align:center;color:#888;padding:20px">لا يوجد محظورين</div>';
+    } else {
+        bannedUsers.forEach((username) => {
+            html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid var(--border)">
+                <span style="font-weight:700">@${username}</span>
+                <button class="btn-success" onclick="unbanUser('${username}'); closeBanModal();" style="padding:6px 12px;border:none;border-radius:6px;cursor:pointer;font-size:12px">فك الحظر</button>
+            </div>`;
+        });
+    }
+    container.innerHTML = html;
+    document.getElementById('ban-modal').classList.remove('hidden');
+};
+
+window.closeBanModal = function() {
+    document.getElementById('ban-modal').classList.add('hidden');
+};
+
+// ===== POSTS =====
 window.createPost = async function() {
+    if (isBanned(currentUser)) { alert('أنت محظور'); return; }
     const content = document.getElementById('post-content').value.trim();
     if (!content) return;
     if (content.length > 1000) { alert('المنشور يجب أن لا يتجاوز 1000 حرف'); return; }
     try {
         await addDoc(collection(db, 'posts'), {
-            username: currentUser,
-            content: content,
-            createdAt: serverTimestamp(),
-            likes: 0,
-            dislikes: 0
+            username: currentUser, content: content, createdAt: serverTimestamp(),
+            likes: 0, dislikes: 0, edited: false
         });
         document.getElementById('post-content').value = '';
         updateCharCount('post-content', 'post-count');
@@ -203,16 +424,34 @@ window.loadPosts = function() {
             const post = docSnap.data();
             const postId = docSnap.id;
             const time = post.createdAt ? formatTime(post.createdAt.toDate()) : 'الآن';
+            const editedTag = post.edited ? '<span class="edited-tag">(تم التعديل)</span>' : '';
+            let staffActions = '';
+            if (isStaff()) {
+                staffActions = `<div class="post-staff-actions">
+                    <button class="btn-owner" onclick="editPost('${postId}', '${escapeHtml(post.content)}')">✏️ تعديل</button>
+                    <button class="btn-danger" onclick="deletePost('${postId}')">🗑️ مسح</button>
+                    <button class="btn-ban" onclick="banUser('${post.username}')">🚫 حظر صاحب المنشور</button>
+                </div>`;
+            } else if (post.username === currentUser) {
+                staffActions = `<div class="post-staff-actions">
+                    <button class="btn-owner" onclick="editPost('${postId}', '${escapeHtml(post.content)}')">✏️ تعديل</button>
+                    <button class="btn-danger" onclick="deletePost('${postId}')">🗑️ مسح</button>
+                </div>`;
+            }
             html += `<div class="post" id="post-${postId}">
-                <div class="post-header"><span class="post-author">@${post.username}</span><span class="post-time">${time}</span></div>
+                <div class="post-header">
+                    <span class="post-author">@${post.username} ${getTag(post.username)}</span>
+                    <span class="post-time">${time}${editedTag}</span>
+                </div>
                 <div class="post-content">${escapeHtml(post.content)}</div>
                 <div class="post-actions">
                     <button onclick="likePost('${postId}')">❤️ <span id="likes-${postId}">${post.likes || 0}</span></button>
                     <button onclick="dislikePost('${postId}')">👎 <span id="dislikes-${postId}">${post.dislikes || 0}</span></button>
                     <button onclick="toggleComments('${postId}')">💬 تعليق</button>
                 </div>
+                ${staffActions}
                 <div class="comments-section hidden" id="comments-${postId}">
-                    <div id="comments-list-${postId}"></div>
+                    <div id="comments-list-${postId}"><div class="loading">جاري تحميل التعليقات...</div></div>
                     <div class="comment-input">
                         <input type="text" id="comment-input-${postId}" placeholder="اكتب تعليق..." maxlength="1000">
                         <button class="btn-primary" onclick="addComment('${postId}')">إرسال</button>
@@ -225,7 +464,22 @@ window.loadPosts = function() {
     }, (error) => { container.innerHTML = '<div class="error-msg">خطأ: ' + error.message + '</div>'; });
 };
 
+window.editPost = function(postId, content) {
+    editingId = postId;
+    editingType = 'post';
+    document.getElementById('edit-text').value = content;
+    document.getElementById('edit-modal').classList.remove('hidden');
+};
+
+window.deletePost = async function(postId) {
+    if (!confirm('هل أنت متأكد من مسح هذا المنشور؟')) return;
+    try {
+        await deleteDoc(doc(db, 'posts', postId));
+    } catch (e) { alert('خطأ: ' + e.message); }
+};
+
 window.likePost = async function(postId) {
+    if (isBanned(currentUser)) { alert('أنت محظور'); return; }
     try {
         const likeRef = doc(db, 'likes', postId + '_' + currentUser);
         const likeSnap = await getDoc(likeRef);
@@ -247,6 +501,7 @@ window.likePost = async function(postId) {
 };
 
 window.dislikePost = async function(postId) {
+    if (isBanned(currentUser)) { alert('أنت محظور'); return; }
     try {
         const likeRef = doc(db, 'likes', postId + '_' + currentUser);
         const likeSnap = await getDoc(likeRef);
@@ -267,48 +522,370 @@ window.dislikePost = async function(postId) {
     } catch (e) { console.error(e); }
 };
 
+// ===== COMMENTS =====
 window.toggleComments = function(postId) {
-    document.getElementById('comments-' + postId).classList.toggle('hidden');
+    const section = document.getElementById('comments-' + postId);
+    section.classList.toggle('hidden');
+    if (!section.classList.contains('hidden')) loadComments(postId);
 };
 
 window.loadComments = function(postId) {
-    if (commentsListeners[postId]) return;
-    const q = query(collection(db, 'comments'), where('postId', '==', postId), orderBy('createdAt', 'desc'));
+    if (commentsListeners[postId]) { commentsListeners[postId](); }
+    const container = document.getElementById('comments-list-' + postId);
+    if (!container) return;
+    container.innerHTML = '<div class="loading">جاري تحميل التعليقات...</div>';
+    const q = query(collection(db, 'comments'), orderBy('createdAt', 'desc'));
     commentsListeners[postId] = onSnapshot(q, (snapshot) => {
-        const container = document.getElementById('comments-list-' + postId);
         if (!container) return;
         let html = '';
-        if (snapshot.empty) { html = '<div style="color:#888;font-size:14px;text-align:center;padding:10px">لا توجد تعليقات</div>'; }
-        else {
-            snapshot.forEach((docSnap) => {
-                const c = docSnap.data();
-                const time = c.createdAt ? formatTime(c.createdAt.toDate()) : 'الآن';
-                html += `<div class="comment"><div class="comment-author">@${c.username}</div><div class="comment-text">${escapeHtml(c.content)}</div><div class="comment-time">${time}</div></div>`;
-            });
-        }
+        let hasComments = false;
+        snapshot.forEach((docSnap) => {
+            const c = docSnap.data();
+            if (c.postId !== postId) return;
+            hasComments = true;
+            const commentId = docSnap.id;
+            const time = c.createdAt ? formatTime(c.createdAt.toDate()) : 'الآن';
+            const editedTag = c.edited ? '<span class="edited-tag">(تم التعديل)</span>' : '';
+            let actions = '';
+            if (isStaff()) {
+                actions = `<div class="comment-actions">
+                    <button class="btn-owner" onclick="editComment('${commentId}', '${escapeHtml(c.content)}')">✏️ تعديل</button>
+                    <button class="btn-danger" onclick="deleteComment('${commentId}')">🗑️ مسح</button>
+                    <button class="btn-ban" onclick="banUser('${c.username}')">🚫 حظر</button>
+                </div>`;
+            } else if (c.username === currentUser) {
+                actions = `<div class="comment-actions">
+                    <button class="btn-owner" onclick="editComment('${commentId}', '${escapeHtml(c.content)}')">✏️ تعديل</button>
+                    <button class="btn-danger" onclick="deleteComment('${commentId}')">🗑️ مسح</button>
+                </div>`;
+            }
+            html += `<div class="comment" id="comment-${commentId}">
+                <div class="comment-author">@${c.username} ${getTag(c.username)}</div>
+                <div class="comment-text">${escapeHtml(c.content)}${editedTag}</div>
+                <div class="comment-time">${time}</div>
+                ${actions}
+            </div>`;
+        });
+        if (!hasComments) html = '<div style="color:#888;font-size:14px;text-align:center;padding:10px">لا توجد تعليقات</div>';
         container.innerHTML = html;
+    }, (error) => {
+        console.error('Comments error:', error);
+        if (container) container.innerHTML = '<div style="color:#888;font-size:14px;text-align:center;padding:10px">خطأ في تحميل التعليقات</div>';
     });
 };
 
 window.addComment = async function(postId) {
+    if (isBanned(currentUser)) { alert('أنت محظور'); return; }
     const input = document.getElementById('comment-input-' + postId);
     const content = input.value.trim();
     if (!content) return;
     if (content.length > 1000) { alert('التعليق يجب أن لا يتجاوز 1000 حرف'); return; }
     try {
-        await addDoc(collection(db, 'comments'), { postId: postId, username: currentUser, content: content, createdAt: serverTimestamp() });
+        await addDoc(collection(db, 'comments'), { postId: postId, username: currentUser, content: content, createdAt: serverTimestamp(), edited: false });
         input.value = '';
+    } catch (e) { alert('خطأ: ' + e.message); console.error(e); }
+};
+
+window.editComment = function(commentId, content) {
+    editingId = commentId;
+    editingType = 'comment';
+    document.getElementById('edit-text').value = content;
+    document.getElementById('edit-modal').classList.remove('hidden');
+};
+
+window.deleteComment = async function(commentId) {
+    if (!confirm('هل أنت متأكد من مسح هذا التعليق؟')) return;
+    try { await deleteDoc(doc(db, 'comments', commentId)); }
+    catch (e) { alert('خطأ: ' + e.message); }
+};
+
+window.saveEdit = async function() {
+    const newContent = document.getElementById('edit-text').value.trim();
+    if (!newContent) { alert('لا يمكن أن يكون فارغاً'); return; }
+    if (newContent.length > 1000) { alert('يجب أن لا يتجاوز 1000 حرف'); return; }
+    try {
+        const ref = doc(db, editingType === 'post' ? 'posts' : 'comments', editingId);
+        const snap = await getDoc(ref);
+        if (snap.exists()) {
+            if (editingType === 'post' && snap.data().edited) { alert('يمكن التعديل مرة واحدة فقط'); closeEditModal(); return; }
+            await updateDoc(ref, { content: newContent, edited: true });
+        }
+        closeEditModal();
+    } catch (e) { alert('خطأ: ' + e.message); console.error(e); }
+};
+
+window.closeEditModal = function() {
+    document.getElementById('edit-modal').classList.add('hidden');
+    editingId = null;
+    editingType = null;
+};
+
+// ===== GROUPS =====
+window.createGroup = async function() {
+    const name = document.getElementById('group-name').value.trim();
+    const msgEl = document.getElementById('group-msg');
+    if (!name) { msgEl.textContent = 'يرجى إدخال اسم المجموعة'; return; }
+    if (name.length > 50) { msgEl.textContent = 'الاسم يجب أن لا يتجاوز 50 حرف'; return; }
+
+    try {
+        // Check if user already has a group (non-staff only)
+        if (!isStaff()) {
+            const userGroups = await getDocs(query(collection(db, 'groups')));
+            let hasGroup = false;
+            userGroups.forEach((docSnap) => {
+                if (docSnap.data().owner === currentUser) hasGroup = true;
+            });
+            if (hasGroup) { msgEl.textContent = 'يمكنك إنشاء مجموعة واحدة فقط'; return; }
+        }
+
+        await addDoc(collection(db, 'groups'), {
+            name: name, owner: currentUser, members: [currentUser],
+            createdAt: serverTimestamp()
+        });
+        document.getElementById('group-name').value = '';
+        msgEl.textContent = '';
+        msgEl.className = 'success-msg';
+        msgEl.textContent = 'تم إنشاء المجموعة بنجاح!';
+        setTimeout(() => { msgEl.textContent = ''; msgEl.className = 'error-msg'; }, 3000);
+    } catch (e) { msgEl.textContent = 'خطأ: ' + e.message; }
+};
+
+window.loadGroups = function() {
+    const container = document.getElementById('groups-container');
+    if (!container) return;
+    container.innerHTML = '<div class="loading">جاري التحميل...</div>';
+    const q = query(collection(db, 'groups'), orderBy('createdAt', 'desc'));
+    groupsListener = onSnapshot(q, (snapshot) => {
+        if (snapshot.empty) { container.innerHTML = '<div class="empty">لا توجد مجموعات</div>'; return; }
+        let html = '';
+        snapshot.forEach((docSnap) => {
+            const g = docSnap.data();
+            const groupId = docSnap.id;
+            const isMember = g.members && g.members.includes(currentUser);
+            const isOwner = g.owner === currentUser;
+            let actions = '';
+            if (isOwner) {
+                actions = `<div class="group-card-actions">
+                    <button class="btn-group" onclick="showInviteModal('${groupId}')">📨 دعوة</button>
+                    <button class="btn-danger" onclick="deleteGroup('${groupId}')">🗑️ حذف</button>
+                </div>`;
+            } else if (!isMember) {
+                actions = `<div class="group-card-actions">
+                    <button class="btn-primary" onclick="joinGroup('${groupId}')">➕ انضمام</button>
+                </div>`;
+            } else {
+                actions = `<div class="group-card-actions">
+                    <button class="btn-secondary" onclick="leaveGroup('${groupId}')">👋 مغادرة</button>
+                </div>`;
+            }
+            let membersHtml = '';
+            if (g.members && g.members.length > 0) {
+                membersHtml = `<div class="group-members"><strong>الأعضاء:</strong> ${g.members.map(m => '@' + m).join(', ')}</div>`;
+            }
+            html += `<div class="group-card">
+                <div class="group-card-header">
+                    <span class="group-card-name">👥 ${g.name}</span>
+                    <span class="group-card-owner">بواسطة @${g.owner}</span>
+                </div>
+                ${actions}
+                ${membersHtml}
+            </div>`;
+        });
+        container.innerHTML = html;
+    }, (error) => { container.innerHTML = '<div class="error-msg">خطأ: ' + error.message + '</div>'; });
+};
+
+window.joinGroup = async function(groupId) {
+    try {
+        const groupRef = doc(db, 'groups', groupId);
+        const groupSnap = await getDoc(groupRef);
+        if (groupSnap.exists()) {
+            const members = groupSnap.data().members || [];
+            if (!members.includes(currentUser)) {
+                members.push(currentUser);
+                await updateDoc(groupRef, { members: members });
+            }
+        }
     } catch (e) { alert('خطأ: ' + e.message); }
 };
 
+window.leaveGroup = async function(groupId) {
+    try {
+        const groupRef = doc(db, 'groups', groupId);
+        const groupSnap = await getDoc(groupRef);
+        if (groupSnap.exists()) {
+            let members = groupSnap.data().members || [];
+            members = members.filter(m => m !== currentUser);
+            await updateDoc(groupRef, { members: members });
+        }
+    } catch (e) { alert('خطأ: ' + e.message); }
+};
+
+window.deleteGroup = async function(groupId) {
+    if (!confirm('هل أنت متأكد من حذف هذه المجموعة؟')) return;
+    try { await deleteDoc(doc(db, 'groups', groupId)); }
+    catch (e) { alert('خطأ: ' + e.message); }
+};
+
+// ===== INVITE SYSTEM =====
+window.showInviteModal = function(groupId) {
+    inviteGroupId = groupId;
+    const groupRef = doc(db, 'groups', groupId);
+    getDoc(groupRef).then((snap) => {
+        if (snap.exists()) {
+            document.getElementById('invite-info').innerHTML = `دعوة شخص للمجموعة: <strong>${snap.data().name}</strong>`;
+            document.getElementById('invite-modal').classList.remove('hidden');
+        }
+    });
+};
+
+window.closeInviteModal = function() {
+    document.getElementById('invite-modal').classList.add('hidden');
+    inviteGroupId = null;
+    document.getElementById('invite-username').value = '';
+};
+
+window.sendInvite = async function() {
+    const username = document.getElementById('invite-username').value.trim();
+    if (!username) { alert('يرجى إدخال اسم المستخدم'); return; }
+    if (username === currentUser) { alert('لا يمكنك دعوة نفسك'); return; }
+    try {
+        const userRef = doc(db, 'users', username);
+        const userSnap = await getDoc(userRef);
+        if (!userSnap.exists()) { alert('المستخدم غير موجود'); return; }
+
+        const groupRef = doc(db, 'groups', inviteGroupId);
+        const groupSnap = await getDoc(groupRef);
+        if (groupSnap.exists()) {
+            const members = groupSnap.data().members || [];
+            if (members.includes(username)) { alert('المستخدم عضو بالفعل'); return; }
+        }
+
+        await addDoc(collection(db, 'invites'), {
+            groupId: inviteGroupId,
+            groupName: groupSnap.data().name,
+            from: currentUser,
+            to: username,
+            status: 'pending',
+            createdAt: serverTimestamp()
+        });
+        alert('تم إرسال الدعوة بنجاح!');
+        closeInviteModal();
+    } catch (e) { alert('خطأ: ' + e.message); }
+};
+
+// ===== INBOX =====
+window.loadInbox = function() {
+    const container = document.getElementById('inbox-container');
+    if (!container) return;
+    const q = query(collection(db, 'invites'), orderBy('createdAt', 'desc'));
+    inboxListener = onSnapshot(q, (snapshot) => {
+        let html = '';
+        let count = 0;
+        snapshot.forEach((docSnap) => {
+            const inv = docSnap.data();
+            if (inv.to !== currentUser && inv.from !== currentUser) return;
+            count++;
+            const time = inv.createdAt ? formatTime(inv.createdAt.toDate()) : 'الآن';
+
+            if (inv.to === currentUser && inv.status === 'pending') {
+                // Received invite
+                html += `<div class="inbox-item">
+                    <div class="inbox-item-info">
+                        <div class="inbox-item-title">📨 دعوة للانضمام لمجموعة "${inv.groupName}"</div>
+                        <div class="inbox-item-desc">من @${inv.from} · ${time}</div>
+                    </div>
+                    <div class="inbox-actions">
+                        <button class="btn-success" onclick="acceptInvite('${docSnap.id}')">✅ قبول</button>
+                        <button class="btn-danger" onclick="rejectInvite('${docSnap.id}')">❌ رفض</button>
+                    </div>
+                </div>`;
+            } else if (inv.from === currentUser && inv.status === 'pending') {
+                // Sent invite pending
+                html += `<div class="inbox-item">
+                    <div class="inbox-item-info">
+                        <div class="inbox-item-title">⏳ دعوة مرسلة لـ @${inv.to}</div>
+                        <div class="inbox-item-desc">للمجموعة "${inv.groupName}" · ${time}</div>
+                    </div>
+                    <div class="inbox-actions">
+                        <button class="btn-secondary" disabled>⏳ في الانتظار</button>
+                    </div>
+                </div>`;
+            } else if (inv.from === currentUser && inv.status === 'accepted') {
+                // Accepted - need owner approval
+                html += `<div class="inbox-item">
+                    <div class="inbox-item-info">
+                        <div class="inbox-item-title">✅ @${inv.to} قبل الدعوة</div>
+                        <div class="inbox-item-desc">للمجموعة "${inv.groupName}" · ${time}</div>
+                    </div>
+                    <div class="inbox-actions">
+                        <button class="btn-success" onclick="approveMember('${docSnap.id}', '${inv.to}', '${inv.groupId}')">✅ موافقة</button>
+                        <button class="btn-danger" onclick="rejectMember('${docSnap.id}')">❌ رفض</button>
+                    </div>
+                </div>`;
+            } else if (inv.to === currentUser && inv.status === 'rejected') {
+                html += `<div class="inbox-item">
+                    <div class="inbox-item-info">
+                        <div class="inbox-item-title">❌ تم رفض دعوتك</div>
+                        <div class="inbox-item-desc">للمجموعة "${inv.groupName}" · ${time}</div>
+                    </div>
+                </div>`;
+            }
+        });
+
+        if (count === 0) html = '<div class="empty">لا توجد رسائل في الصندوق الوارد</div>';
+        container.innerHTML = html;
+
+        const badge = document.getElementById('inbox-badge');
+        if (count > 0) { badge.textContent = count; badge.classList.remove('hidden'); }
+        else { badge.classList.add('hidden'); }
+    });
+};
+
+window.acceptInvite = async function(inviteId) {
+    try {
+        await updateDoc(doc(db, 'invites', inviteId), { status: 'accepted' });
+    } catch (e) { alert('خطأ: ' + e.message); }
+};
+
+window.rejectInvite = async function(inviteId) {
+    try {
+        await updateDoc(doc(db, 'invites', inviteId), { status: 'rejected' });
+    } catch (e) { alert('خطأ: ' + e.message); }
+};
+
+window.approveMember = async function(inviteId, username, groupId) {
+    try {
+        const groupRef = doc(db, 'groups', groupId);
+        const groupSnap = await getDoc(groupRef);
+        if (groupSnap.exists()) {
+            const members = groupSnap.data().members || [];
+            if (!members.includes(username)) members.push(username);
+            await updateDoc(groupRef, { members: members });
+        }
+        await deleteDoc(doc(db, 'invites', inviteId));
+    } catch (e) { alert('خطأ: ' + e.message); }
+};
+
+window.rejectMember = async function(inviteId) {
+    try {
+        await deleteDoc(doc(db, 'invites', inviteId));
+    } catch (e) { alert('خطأ: ' + e.message); }
+};
+
+// ===== UTILS =====
 window.toggleTheme = function() {
     document.body.classList.toggle('dark');
     localStorage.setItem('whisper_theme', document.body.classList.contains('dark') ? 'dark' : 'light');
 };
 
-if (localStorage.getItem('whisper_theme') === 'dark') { document.body.classList.add('dark'); }
+if (localStorage.getItem('whisper_theme') === 'dark') document.body.classList.add('dark');
 
-function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
+function escapeHtml(text) { 
+    const div = document.createElement('div'); 
+    div.textContent = text; 
+    return div.innerHTML; 
+}
 
 function formatTime(date) {
     const now = new Date();
