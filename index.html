@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -150,63 +150,63 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s}
 <div class="auth-box">
 <h1>Whisper Chat</h1>
 <div id="auth-form">
-<input type="text" id="username" placeholder="اسم المستخدم" maxlength="30">
-<input type="password" id="password" placeholder="كلمة المرور" maxlength="50">
+<input type="text" id="username" placeholder="Username" maxlength="30">
+<input type="password" id="password" placeholder="Password" maxlength="50">
 <div id="auth-msg" class="error-msg"></div>
-<button class="btn-primary" id="auth-btn" onclick="handleAuth()">تسجيل الدخول</button>
-<button class="btn-success hidden" id="signup-btn" onclick="handleSignup()">انشاء حساب</button>
+<button class="btn-primary" id="auth-btn" onclick="handleAuth()">Login</button>
+<button class="btn-success hidden" id="signup-btn" onclick="handleSignup()">Sign Up</button>
 </div>
-<div class="auth-toggle" id="auth-toggle" onclick="toggleAuthMode()">ليس لديك حساب؟ سجل الان</div>
+<div class="auth-toggle" id="auth-toggle" onclick="toggleAuthMode()">Don't have an account? Sign up now</div>
 </div>
 </div>
 <div id="chat-screen" class="hidden">
 <div class="header">
 <h2>Whisper Chat</h2>
 <div class="header-btns">
-<button class="btn-secondary" onclick="toggleTheme()">تبديل الوضع</button>
-<button class="btn-danger hidden" id="ban-list-btn" onclick="showBanList()">المحظورين</button>
-<button class="btn-danger" onclick="logout()">خروج</button>
+<button class="btn-secondary" onclick="toggleTheme()">Toggle Theme</button>
+<button class="btn-danger hidden" id="ban-list-btn" onclick="showBanList()">Banned Users</button>
+<button class="btn-danger" onclick="logout()">Logout</button>
 </div>
 </div>
 <div class="nav-tabs" id="nav-tabs">
-<button class="nav-tab active" onclick="switchTab('home')" id="tab-home">الرئيسية</button>
-<button class="nav-tab" onclick="switchTab('groups')" id="tab-groups">المجموعات</button>
-<button class="nav-tab" onclick="switchTab('private')" id="tab-private">المحادثات الخاصة</button>
-<button class="nav-tab" onclick="switchTab('inbox')" id="tab-inbox">الصندوق <span id="inbox-badge" class="hidden" style="background:var(--danger);color:#fff;padding:2px 6px;border-radius:10px;font-size:10px;margin-right:4px">0</span></button>
+<button class="nav-tab active" onclick="switchTab('home')" id="tab-home">Home</button>
+<button class="nav-tab" onclick="switchTab('groups')" id="tab-groups">Groups</button>
+<button class="nav-tab" onclick="switchTab('private')" id="tab-private">Private Chats</button>
+<button class="nav-tab" onclick="switchTab('inbox')" id="tab-inbox">Inbox <span id="inbox-badge" class="hidden" style="background:var(--danger);color:#fff;padding:2px 6px;border-radius:10px;font-size:10px;margin-left:4px">0</span></button>
 </div>
 <div id="banned-notice" class="banned-notice hidden">
 انت محظور من المنصة. لا يمكنك النشر او التعليق.
 </div>
 <div id="tab-content-home">
 <div class="post-box" id="post-box-area">
-<textarea id="post-content" placeholder="اكتب منشورك هنا..." maxlength="1000" oninput="updateCharCount('post-content','post-count')"></textarea>
+<textarea id="post-content" placeholder="Write your post here..." maxlength="1000" oninput="updateCharCount('post-content','post-count')"></textarea>
 <div class="char-count" id="post-count">1000 / 1000</div>
-<button class="btn-primary post-btn" onclick="createPost()">نشر</button>
+<button class="btn-primary post-btn" onclick="createPost()">Post</button>
 </div>
 <div class="posts-container" id="posts-container">
-<div class="loading">جاري التحميل...</div>
+<div class="loading">Loading...</div>
 </div>
 </div>
 <div id="tab-content-groups" class="hidden">
 <div class="group-box" id="create-group-box">
-<h3 style="margin-bottom:10px">انشاء مجموعة جديدة</h3>
-<input type="text" id="group-name" placeholder="اسم المجموعة" maxlength="50">
-<button class="btn-group post-btn" onclick="createGroup()">انشاء مجموعة</button>
+<h3 style="margin-bottom:10px">Create New Group</h3>
+<input type="text" id="group-name" placeholder="Group Name" maxlength="50">
+<button class="btn-group post-btn" onclick="createGroup()">Create Group</button>
 <div id="group-msg" class="error-msg" style="margin-top:8px"></div>
 </div>
 <div class="posts-container" id="groups-container">
-<div class="loading">جاري التحميل...</div>
+<div class="loading">Loading...</div>
 </div>
 </div>
 <div id="tab-content-private" class="hidden">
 <div class="group-box" id="add-chat-box">
-<h3 style="margin-bottom:10px">اضافة محادثة جديدة</h3>
-<input type="text" id="private-chat-username" placeholder="اسم المستخدم">
-<button class="btn-primary post-btn" onclick="startPrivateChat()">اضافة محادثة</button>
+<h3 style="margin-bottom:10px">Add New Chat</h3>
+<input type="text" id="private-chat-username" placeholder="Username">
+<button class="btn-primary post-btn" onclick="startPrivateChat()">Add Chat</button>
 <div id="private-chat-msg" class="error-msg" style="margin-top:8px"></div>
 </div>
 <div class="posts-container" id="private-chats-container">
-<div class="empty">لا توجد محادثات خاصة</div>
+<div class="empty">No private chats</div>
 </div>
 </div>
 <div id="tab-content-chat" class="hidden">
@@ -214,51 +214,51 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s}
 <div class="chat-header">
 <div class="chat-header-info" id="chat-header-name"></div>
 <div class="header-btns">
-<button class="btn-ban" onclick="blockChatUser()" id="chat-block-btn">حظر</button>
-<button class="btn-secondary" onclick="backToPrivateList()">رجوع</button>
+<button class="btn-ban" onclick="blockChatUser()" id="chat-block-btn">Block</button>
+<button class="btn-secondary" onclick="backToPrivateList()">Back</button>
 </div>
 </div>
-<div id="chat-blocked-notice" class="chat-blocked-notice hidden">تم حظر هذا المستخدم. لا يمكنك ارسال رسائل اليه.</div>
+<div id="chat-blocked-notice" class="chat-blocked-notice hidden">This user is blocked. You cannot send messages to them.</div>
 <div class="chat-messages" id="chat-messages"></div>
 <div class="chat-input-area" id="chat-input-area">
-<input type="text" id="chat-message-input" placeholder="اكتب رسالتك..." maxlength="1000" onkeypress="if(event.key==='Enter')sendChatMessage()">
-<button class="btn-primary" onclick="sendChatMessage()">ارسال</button>
+<input type="text" id="chat-message-input" placeholder="Type your message..." maxlength="1000" onkeypress="if(event.key==='Enter')sendChatMessage()">
+<button class="btn-primary" onclick="sendChatMessage()">Send</button>
 </div>
 </div>
 </div>
 <div id="tab-content-inbox" class="hidden">
 <div class="inbox-container" id="inbox-container">
-<div class="empty">لا توجد رسائل في الصندوق الوارد</div>
+<div class="empty">No messages in Inbox</div>
 </div>
 </div>
 </div>
 <div id="edit-modal" class="hidden modal">
 <div class="modal-content">
-<h3>تعديل</h3>
+<h3>Edit</h3>
 <textarea id="edit-text" maxlength="1000"></textarea>
 <div class="modal-btns">
-<button class="btn-success" onclick="saveEdit()">حفظ</button>
-<button class="btn-secondary" onclick="closeEditModal()">الغاء</button>
+<button class="btn-success" onclick="saveEdit()">Save</button>
+<button class="btn-secondary" onclick="closeEditModal()">Cancel</button>
 </div>
 </div>
 </div>
 <div id="ban-modal" class="hidden modal">
 <div class="modal-content">
-<h3>قائمة المحظورين</h3>
+<h3>Banned Users List</h3>
 <div id="ban-list-container" style="max-height:300px;overflow-y:auto"></div>
 <div class="modal-btns">
-<button class="btn-danger" onclick="closeBanModal()">اغلاق</button>
+<button class="btn-danger" onclick="closeBanModal()">Close</button>
 </div>
 </div>
 </div>
 <div id="invite-modal" class="hidden modal">
 <div class="modal-content">
-<h3>دعوة لمجموعة</h3>
+<h3>Group Invite</h3>
 <div id="invite-info" style="margin-bottom:12px;font-size:14px"></div>
-<input type="text" id="invite-username" placeholder="اسم المستخدم">
+<input type="text" id="invite-username" placeholder="Username">
 <div class="modal-btns">
-<button class="btn-success" onclick="sendInvite()">ارسال دعوة</button>
-<button class="btn-secondary" onclick="closeInviteModal()">الغاء</button>
+<button class="btn-success" onclick="sendInvite()">Send Invite</button>
+<button class="btn-secondary" onclick="closeInviteModal()">Cancel</button>
 </div>
 </div>
 </div>
@@ -300,6 +300,9 @@ let currentTab = 'home';
 let inviteGroupId = null;
 let currentChatUser = null;
 let currentGroupId = null;
+let inboxReadStatus = {};
+let privateUnreadCounts = {};
+let totalPrivateUnread = 0;
 
 function isOwner() { return currentUser === OWNER_USERNAME; }
 function isAdmin() { return ADMIN_USERNAMES.includes(currentUser); }
@@ -328,34 +331,34 @@ window.handleAuth = async function() {
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
     const msgEl = document.getElementById('auth-msg');
-    if (!username || !password) { msgEl.textContent = 'يرجى ملء جميع الحقول'; return; }
+    if (!username || !password) { msgEl.textContent = 'Please fill in all fields'; return; }
     try {
         const userRef = doc(db, 'users', username);
         const userSnap = await getDoc(userRef);
-        if (!userSnap.exists()) { msgEl.textContent = 'اسم المستخدم غير موجود'; return; }
-        if (userSnap.data().password !== password) { msgEl.textContent = 'كلمة المرور غير صحيحة'; return; }
+        if (!userSnap.exists()) { msgEl.textContent = 'Username not found'; return; }
+        if (userSnap.data().password !== password) { msgEl.textContent = 'Incorrect password'; return; }
         currentUser = username;
         sessionStorage.setItem('whisper_user', username);
         showChat();
-    } catch (e) { msgEl.textContent = 'خطأ: ' + e.message; }
+    } catch (e) { msgEl.textContent = 'Error: ' + e.message; }
 };
 
 window.handleSignup = async function() {
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
     const msgEl = document.getElementById('auth-msg');
-    if (!username || !password) { msgEl.textContent = 'يرجى ملء جميع الحقول'; return; }
-    if (username.length < 3) { msgEl.textContent = 'اسم المستخدم 3 أحرف على الأقل'; return; }
-    if (password.length < 4) { msgEl.textContent = 'كلمة المرور 4 أحرف على الأقل'; return; }
+    if (!username || !password) { msgEl.textContent = 'Please fill in all fields'; return; }
+    if (username.length < 3) { msgEl.textContent = 'Username must be at least 3 characters'; return; }
+    if (password.length < 4) { msgEl.textContent = 'Password must be at least 4 characters'; return; }
     try {
         const userRef = doc(db, 'users', username);
         const userSnap = await getDoc(userRef);
-        if (userSnap.exists()) { msgEl.textContent = 'اسم المستخدم موجود بالفعل'; return; }
+        if (userSnap.exists()) { msgEl.textContent = 'Username already exists'; return; }
         await setDoc(userRef, { username: username, password: password, createdAt: serverTimestamp() });
         currentUser = username;
         sessionStorage.setItem('whisper_user', username);
         showChat();
-    } catch (e) { msgEl.textContent = 'خطأ: ' + e.message; }
+    } catch (e) { msgEl.textContent = 'Error: ' + e.message; }
 };
 
 window.logout = function() {
@@ -406,7 +409,7 @@ window.switchTab = function(tab) {
     document.getElementById('tab-content-inbox').classList.add('hidden');
     document.getElementById('tab-content-' + tab).classList.remove('hidden');
     if (tab === 'groups') loadGroups();
-    if (tab === 'inbox') loadInbox();
+    if (tab === 'inbox') { markInboxAsRead(); loadInbox(); }
     if (tab === 'private') loadPrivateChats();
 };
 
@@ -429,6 +432,33 @@ function checkBanned() {
 }
 
 // ===== BAN SYSTEM =====
+window.markInboxAsRead = async function() {
+    try {
+        const invitesQ = query(collection(db, 'invites'), where('to', '==', currentUser), where('status', '==', 'pending'));
+        const invitesSnap = await getDocs(invitesQ);
+        invitesSnap.forEach(async (docSnap) => {
+            const data = docSnap.data();
+            const readBy = data.readBy || [];
+            if (!readBy.includes(currentUser)) {
+                readBy.push(currentUser);
+                await updateDoc(doc(db, 'invites', docSnap.id), { readBy: readBy });
+            }
+        });
+        const chatReqQ = query(collection(db, 'chatRequests'), where('to', '==', currentUser), where('status', '==', 'pending'));
+        const chatReqSnap = await getDocs(chatReqQ);
+        chatReqSnap.forEach(async (docSnap) => {
+            const data = docSnap.data();
+            const readBy = data.readBy || [];
+            if (!readBy.includes(currentUser)) {
+                readBy.push(currentUser);
+                await updateDoc(doc(db, 'chatRequests', docSnap.id), { readBy: readBy });
+            }
+        });
+        const badge = document.getElementById('inbox-badge');
+        if (badge) { badge.textContent = '0'; badge.classList.add('hidden'); }
+    } catch (e) { console.error('markInboxAsRead error:', e); }
+};
+
 window.loadBannedUsers = function() {
     const q = query(collection(db, 'banned'));
     banListener = onSnapshot(q, (snapshot) => {
@@ -439,19 +469,19 @@ window.loadBannedUsers = function() {
 };
 
 window.banUser = async function(username) {
-    if (!isStaff()) { alert('غير مصرح'); return; }
-    if (username === OWNER_USERNAME) { alert('لا يمكن حظر الـ Owner'); return; }
-    if (!confirm('هل أنت متأكد من حظر ' + username + '؟')) return;
+    if (!isStaff()) { alert('Unauthorized'); return; }
+    if (username === OWNER_USERNAME) { alert('Cannot ban the Owner'); return; }
+    if (!confirm('Are you sure you want to ban ' + username + '؟')) return;
     try {
         await setDoc(doc(db, 'banned', username), { bannedBy: currentUser, bannedAt: serverTimestamp() });
-    } catch (e) { alert('خطأ في الحظر: ' + e.message); }
+    } catch (e) { alert('Error banning: ' + e.message); }
 };
 
 window.unbanUser = async function(username) {
-    if (!isStaff()) { alert('غير مصرح'); return; }
+    if (!isStaff()) { alert('Unauthorized'); return; }
     try {
         await deleteDoc(doc(db, 'banned', username));
-    } catch (e) { alert('خطأ في فك الحظر: ' + e.message); }
+    } catch (e) { alert('Error unbanning: ' + e.message); }
 };
 
 window.showBanList = function() {
@@ -459,12 +489,12 @@ window.showBanList = function() {
     const container = document.getElementById('ban-list-container');
     let html = '';
     if (bannedUsers.length === 0) {
-        html = '<div style="text-align:center;color:#888;padding:20px">لا يوجد محظورين</div>';
+        html = '<div style="text-align:center;color:#888;padding:20px">No banned users</div>';
     } else {
         bannedUsers.forEach((username) => {
             html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid var(--border)">
                 <span style="font-weight:700">@${username}</span>
-                <button class="btn-success" onclick="unbanUser('${username}'); closeBanModal();" style="padding:6px 12px;border:none;border-radius:6px;cursor:pointer;font-size:12px">فك الحظر</button>
+                <button class="btn-success" onclick="unbanUser('${username}'); closeBanModal();" style="padding:6px 12px;border:none;border-radius:6px;cursor:pointer;font-size:12px">Unban</button>
             </div>`;
         });
     }
@@ -478,10 +508,10 @@ window.closeBanModal = function() {
 
 // ===== POSTS =====
 window.createPost = async function() {
-    if (isBanned(currentUser)) { alert('أنت محظور'); return; }
+    if (isBanned(currentUser)) { alert('You are banned'); return; }
     const content = document.getElementById('post-content').value.trim();
     if (!content) return;
-    if (content.length > 1000) { alert('المنشور يجب أن لا يتجاوز 1000 حرف'); return; }
+    if (content.length > 1000) { alert('Post must not exceed 1000 characters'); return; }
     try {
         await addDoc(collection(db, 'posts'), {
             username: currentUser, content: content, createdAt: serverTimestamp(),
@@ -489,32 +519,32 @@ window.createPost = async function() {
         });
         document.getElementById('post-content').value = '';
         updateCharCount('post-content', 'post-count');
-    } catch (e) { alert('خطأ في النشر: ' + e.message); }
+    } catch (e) { alert('Error posting: ' + e.message); }
 };
 
 window.loadPosts = function() {
     const container = document.getElementById('posts-container');
-    container.innerHTML = '<div class="loading">جاري التحميل...</div>';
+    container.innerHTML = '<div class="loading">Loading...</div>';
     const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
     postsListener = onSnapshot(q, (snapshot) => {
-        if (snapshot.empty) { container.innerHTML = '<div class="empty">لا توجد منشورات بعد. كن أول من ينشر!</div>'; return; }
+        if (snapshot.empty) { container.innerHTML = '<div class="empty">No posts yet. Be the first to post!</div>'; return; }
         let html = '';
         snapshot.forEach((docSnap) => {
             const post = docSnap.data();
             const postId = docSnap.id;
-            const time = post.createdAt ? formatTime(post.createdAt.toDate()) : 'الآن';
+            const time = post.createdAt ? formatTime(post.createdAt.toDate()) : 'Now';
             const editedTag = post.edited ? '<span class="edited-tag">(تم التعديل)</span>' : '';
             let staffActions = '';
             if (isStaff()) {
                 staffActions = `<div class="post-staff-actions">
-                    <button class="btn-owner" onclick="editPost('${postId}', '${escapeHtml(post.content)}')">تعديل</button>
-                    <button class="btn-danger" onclick="deletePost('${postId}')">مسح</button>
-                    <button class="btn-ban" onclick="banUser('${post.username}')">حظر صاحب المنشور</button>
+                    <button class="btn-owner" onclick="editPost('${postId}', '${escapeHtml(post.content)}')">Edit</button>
+                    <button class="btn-danger" onclick="deletePost('${postId}')">Delete</button>
+                    <button class="btn-ban" onclick="banUser('${post.username}')">Ban Post Owner</button>
                 </div>`;
             } else if (post.username === currentUser) {
                 staffActions = `<div class="post-staff-actions">
-                    <button class="btn-owner" onclick="editPost('${postId}', '${escapeHtml(post.content)}')">تعديل</button>
-                    <button class="btn-danger" onclick="deletePost('${postId}')">مسح</button>
+                    <button class="btn-owner" onclick="editPost('${postId}', '${escapeHtml(post.content)}')">Edit</button>
+                    <button class="btn-danger" onclick="deletePost('${postId}')">Delete</button>
                 </div>`;
             }
             html += `<div class="post" id="post-${postId}">
@@ -530,10 +560,10 @@ window.loadPosts = function() {
                 </div>
                 ${staffActions}
                 <div class="comments-section hidden" id="comments-${postId}">
-                    <div id="comments-list-${postId}"><div class="loading">جاري تحميل التعليقات...</div></div>
+                    <div id="comments-list-${postId}"><div class="loading">Loading comments...</div></div>
                     <div class="comment-input">
-                        <input type="text" id="comment-input-${postId}" placeholder="اكتب تعليق..." maxlength="1000">
-                        <button class="btn-primary" onclick="addComment('${postId}')">ارسال</button>
+                        <input type="text" id="comment-input-${postId}" placeholder="Write a comment..." maxlength="1000">
+                        <button class="btn-primary" onclick="addComment('${postId}')">Send</button>
                     </div>
                 </div>
             </div>`;
@@ -551,14 +581,14 @@ window.editPost = function(postId, content) {
 };
 
 window.deletePost = async function(postId) {
-    if (!confirm('هل أنت متأكد من مسح هذا المنشور؟')) return;
+    if (!confirm('Are you sure you want to delete this post?')) return;
     try {
         await deleteDoc(doc(db, 'posts', postId));
-    } catch (e) { alert('خطأ: ' + e.message); }
+    } catch (e) { alert('Error: ' + e.message); }
 };
 
 window.likePost = async function(postId) {
-    if (isBanned(currentUser)) { alert('أنت محظور'); return; }
+    if (isBanned(currentUser)) { alert('You are banned'); return; }
     try {
         const likeRef = doc(db, 'likes', postId + '_' + currentUser);
         const likeSnap = await getDoc(likeRef);
@@ -580,7 +610,7 @@ window.likePost = async function(postId) {
 };
 
 window.dislikePost = async function(postId) {
-    if (isBanned(currentUser)) { alert('أنت محظور'); return; }
+    if (isBanned(currentUser)) { alert('You are banned'); return; }
     try {
         const likeRef = doc(db, 'likes', postId + '_' + currentUser);
         const likeSnap = await getDoc(likeRef);
@@ -612,7 +642,7 @@ window.loadComments = function(postId) {
     if (commentsListeners[postId]) { commentsListeners[postId](); }
     const container = document.getElementById('comments-list-' + postId);
     if (!container) return;
-    container.innerHTML = '<div class="loading">جاري تحميل التعليقات...</div>';
+    container.innerHTML = '<div class="loading">Loading comments...</div>';
     const q = query(collection(db, 'comments'), orderBy('createdAt', 'desc'));
     commentsListeners[postId] = onSnapshot(q, (snapshot) => {
         if (!container) return;
@@ -623,19 +653,19 @@ window.loadComments = function(postId) {
             if (c.postId !== postId) return;
             hasComments = true;
             const commentId = docSnap.id;
-            const time = c.createdAt ? formatTime(c.createdAt.toDate()) : 'الآن';
+            const time = c.createdAt ? formatTime(c.createdAt.toDate()) : 'Now';
             const editedTag = c.edited ? '<span class="edited-tag">(تم التعديل)</span>' : '';
             let actions = '';
             if (isStaff()) {
                 actions = `<div class="comment-actions">
-                    <button class="btn-owner" onclick="editComment('${commentId}', '${escapeHtml(c.content)}')">تعديل</button>
-                    <button class="btn-danger" onclick="deleteComment('${commentId}')">مسح</button>
-                    <button class="btn-ban" onclick="banUser('${c.username}')">حظر</button>
+                    <button class="btn-owner" onclick="editComment('${commentId}', '${escapeHtml(c.content)}')">Edit</button>
+                    <button class="btn-danger" onclick="deleteComment('${commentId}')">Delete</button>
+                    <button class="btn-ban" onclick="banUser('${c.username}')">Block</button>
                 </div>`;
             } else if (c.username === currentUser) {
                 actions = `<div class="comment-actions">
-                    <button class="btn-owner" onclick="editComment('${commentId}', '${escapeHtml(c.content)}')">تعديل</button>
-                    <button class="btn-danger" onclick="deleteComment('${commentId}')">مسح</button>
+                    <button class="btn-owner" onclick="editComment('${commentId}', '${escapeHtml(c.content)}')">Edit</button>
+                    <button class="btn-danger" onclick="deleteComment('${commentId}')">Delete</button>
                 </div>`;
             }
             html += `<div class="comment" id="comment-${commentId}">
@@ -645,24 +675,24 @@ window.loadComments = function(postId) {
                 ${actions}
             </div>`;
         });
-        if (!hasComments) html = '<div style="color:#888;font-size:14px;text-align:center;padding:10px">لا توجد تعليقات</div>';
+        if (!hasComments) html = '<div style="color:#888;font-size:14px;text-align:center;padding:10px">No comments</div>';
         container.innerHTML = html;
     }, (error) => {
         console.error('Comments error:', error);
-        if (container) container.innerHTML = '<div style="color:#888;font-size:14px;text-align:center;padding:10px">خطأ في تحميل التعليقات</div>';
+        if (container) container.innerHTML = '<div style="color:#888;font-size:14px;text-align:center;padding:10px">Error loading comments</div>';
     });
 };
 
 window.addComment = async function(postId) {
-    if (isBanned(currentUser)) { alert('أنت محظور'); return; }
+    if (isBanned(currentUser)) { alert('You are banned'); return; }
     const input = document.getElementById('comment-input-' + postId);
     const content = input.value.trim();
     if (!content) return;
-    if (content.length > 1000) { alert('التعليق يجب أن لا يتجاوز 1000 حرف'); return; }
+    if (content.length > 1000) { alert('Comment must not exceed 1000 characters'); return; }
     try {
         await addDoc(collection(db, 'comments'), { postId: postId, username: currentUser, content: content, createdAt: serverTimestamp(), edited: false });
         input.value = '';
-    } catch (e) { alert('خطأ: ' + e.message); console.error(e); }
+    } catch (e) { alert('Error: ' + e.message); console.error(e); }
 };
 
 window.editComment = function(commentId, content) {
@@ -673,24 +703,24 @@ window.editComment = function(commentId, content) {
 };
 
 window.deleteComment = async function(commentId) {
-    if (!confirm('هل أنت متأكد من مسح هذا التعليق؟')) return;
+    if (!confirm('Are you sure you want to delete this comment?')) return;
     try { await deleteDoc(doc(db, 'comments', commentId)); }
-    catch (e) { alert('خطأ: ' + e.message); }
+    catch (e) { alert('Error: ' + e.message); }
 };
 
 window.saveEdit = async function() {
     const newContent = document.getElementById('edit-text').value.trim();
-    if (!newContent) { alert('لا يمكن أن يكون فارغاً'); return; }
-    if (newContent.length > 1000) { alert('يجب أن لا يتجاوز 1000 حرف'); return; }
+    if (!newContent) { alert('Cannot be empty'); return; }
+    if (newContent.length > 1000) { alert('Must not exceed 1000 characters'); return; }
     try {
         const ref = doc(db, editingType === 'post' ? 'posts' : 'comments', editingId);
         const snap = await getDoc(ref);
         if (snap.exists()) {
-            if (editingType === 'post' && snap.data().edited) { alert('يمكن التعديل مرة واحدة فقط'); closeEditModal(); return; }
+            if (editingType === 'post' && snap.data().edited) { alert('Can only edit once'); closeEditModal(); return; }
             await updateDoc(ref, { content: newContent, edited: true });
         }
         closeEditModal();
-    } catch (e) { alert('خطأ: ' + e.message); console.error(e); }
+    } catch (e) { alert('Error: ' + e.message); console.error(e); }
 };
 
 window.closeEditModal = function() {
@@ -703,8 +733,8 @@ window.closeEditModal = function() {
 window.createGroup = async function() {
     const name = document.getElementById('group-name').value.trim();
     const msgEl = document.getElementById('group-msg');
-    if (!name) { msgEl.textContent = 'يرجى إدخال اسم المجموعة'; return; }
-    if (name.length > 50) { msgEl.textContent = 'الاسم يجب أن لا يتجاوز 50 حرف'; return; }
+    if (!name) { msgEl.textContent = 'Please enter a group name'; return; }
+    if (name.length > 50) { msgEl.textContent = 'Name must not exceed 50 characters'; return; }
 
     try {
         if (!isStaff()) {
@@ -713,7 +743,7 @@ window.createGroup = async function() {
             userGroups.forEach((docSnap) => {
                 if (docSnap.data().owner === currentUser) hasGroup = true;
             });
-            if (hasGroup) { msgEl.textContent = 'يمكنك إنشاء مجموعة واحدة فقط'; return; }
+            if (hasGroup) { msgEl.textContent = 'You can only create one group'; return; }
         }
 
         await addDoc(collection(db, 'groups'), {
@@ -723,18 +753,18 @@ window.createGroup = async function() {
         document.getElementById('group-name').value = '';
         msgEl.textContent = '';
         msgEl.className = 'success-msg';
-        msgEl.textContent = 'تم إنشاء المجموعة بنجاح!';
+        msgEl.textContent = 'Group created successfully!';
         setTimeout(() => { msgEl.textContent = ''; msgEl.className = 'error-msg'; }, 3000);
-    } catch (e) { msgEl.textContent = 'خطأ: ' + e.message; }
+    } catch (e) { msgEl.textContent = 'Error: ' + e.message; }
 };
 
 window.loadGroups = function() {
     const container = document.getElementById('groups-container');
     if (!container) return;
-    container.innerHTML = '<div class="loading">جاري التحميل...</div>';
+    container.innerHTML = '<div class="loading">Loading...</div>';
     const q = query(collection(db, 'groups'), orderBy('createdAt', 'desc'));
     groupsListener = onSnapshot(q, (snapshot) => {
-        if (snapshot.empty) { container.innerHTML = '<div class="empty">لا توجد مجموعات</div>'; return; }
+        if (snapshot.empty) { container.innerHTML = '<div class="empty">No groups</div>'; return; }
         let html = '';
         snapshot.forEach((docSnap) => {
             const g = docSnap.data();
@@ -744,34 +774,34 @@ window.loadGroups = function() {
             let actions = '';
             if (isOwner) {
                 actions = `<div class="group-card-actions">
-                    <button class="btn-group" onclick="showInviteModal('${groupId}')">دعوة</button>
-                    <button class="btn-danger" onclick="deleteGroup('${groupId}')">حذف</button>
+                    <button class="btn-group" onclick="showInviteModal('${groupId}')">Invite</button>
+                    <button class="btn-danger" onclick="deleteGroup('${groupId}')">Delete</button>
                 </div>`;
             } else if (!isMember) {
                 actions = `<div class="group-card-actions">
-                    <button class="btn-primary" onclick="joinGroup('${groupId}')">انضمام</button>
+                    <button class="btn-primary" onclick="joinGroup('${groupId}')">Join</button>
                 </div>`;
             } else {
                 actions = `<div class="group-card-actions">
-                    <button class="btn-secondary" onclick="leaveGroup('${groupId}')">مغادرة</button>
+                    <button class="btn-secondary" onclick="leaveGroup('${groupId}')">Leave</button>
                 </div>`;
             }
             let membersHtml = '';
             if (g.members && g.members.length > 0) {
-                membersHtml = `<div class="group-members"><strong>الأعضاء:</strong> ${g.members.map(m => '@' + m).join(', ')}</div>`;
+                membersHtml = `<div class="group-members"><strong>Members:</strong> ${g.members.map(m => '@' + m).join(', ')}</div>`;
             }
 
             // Group chat section (only for members)
             let groupChatHtml = '';
             if (isMember) {
                 groupChatHtml = `<div class="group-chat-section">
-                    <h4 style="margin-bottom:8px;font-size:14px">محادثة المجموعة</h4>
+                    <h4 style="margin-bottom:8px;font-size:14px">Group Chat</h4>
                     <div class="group-chat-messages" id="group-chat-messages-${groupId}">
-                        <div class="loading">جاري التحميل...</div>
+                        <div class="loading">Loading...</div>
                     </div>
                     <div class="group-chat-input">
-                        <input type="text" id="group-chat-input-${groupId}" placeholder="اكتب رسالة..." maxlength="1000" onkeypress="if(event.key==='Enter')sendGroupMessage('${groupId}')">
-                        <button class="btn-primary" onclick="sendGroupMessage('${groupId}')">ارسال</button>
+                        <input type="text" id="group-chat-input-${groupId}" placeholder="Type a message..." maxlength="1000" onkeypress="if(event.key==='Enter')sendGroupMessage('${groupId}')">
+                        <button class="btn-primary" onclick="sendGroupMessage('${groupId}')">Send</button>
                     </div>
                 </div>`;
             }
@@ -811,7 +841,7 @@ window.loadGroupChat = function(groupId) {
             const msg = docSnap.data();
             if (msg.groupId !== groupId) return;
             hasMessages = true;
-            const time = msg.createdAt ? formatTime(msg.createdAt.toDate()) : 'الآن';
+            const time = msg.createdAt ? formatTime(msg.createdAt.toDate()) : 'Now';
             const isSent = msg.username === currentUser;
             html += `<div class="group-chat-message ${isSent ? 'sent' : 'received'}">
                 <div class="group-chat-message-author">@${msg.username} ${getTag(msg.username)}</div>
@@ -838,7 +868,7 @@ window.sendGroupMessage = async function(groupId) {
             createdAt: serverTimestamp()
         });
         input.value = '';
-    } catch (e) { alert('خطأ: ' + e.message); }
+    } catch (e) { alert('Error: ' + e.message); }
 };
 
 window.joinGroup = async function(groupId) {
@@ -852,7 +882,7 @@ window.joinGroup = async function(groupId) {
                 await updateDoc(groupRef, { members: members });
             }
         }
-    } catch (e) { alert('خطأ: ' + e.message); }
+    } catch (e) { alert('Error: ' + e.message); }
 };
 
 window.leaveGroup = async function(groupId) {
@@ -864,11 +894,11 @@ window.leaveGroup = async function(groupId) {
             members = members.filter(m => m !== currentUser);
             await updateDoc(groupRef, { members: members });
         }
-    } catch (e) { alert('خطأ: ' + e.message); }
+    } catch (e) { alert('Error: ' + e.message); }
 };
 
 window.deleteGroup = async function(groupId) {
-    if (!confirm('هل أنت متأكد من حذف هذه المجموعة؟')) return;
+    if (!confirm('Are you sure you want to delete this group?')) return;
     try { 
         await deleteDoc(doc(db, 'groups', groupId));
         // Also delete group messages
@@ -876,7 +906,7 @@ window.deleteGroup = async function(groupId) {
         const msgsSnap = await getDocs(msgsQuery);
         msgsSnap.forEach(async (m) => { await deleteDoc(doc(db, 'groupMessages', m.id)); });
     }
-    catch (e) { alert('خطأ: ' + e.message); }
+    catch (e) { alert('Error: ' + e.message); }
 };
 
 // ===== INVITE SYSTEM =====
@@ -899,18 +929,18 @@ window.closeInviteModal = function() {
 
 window.sendInvite = async function() {
     const username = document.getElementById('invite-username').value.trim();
-    if (!username) { alert('يرجى إدخال اسم المستخدم'); return; }
-    if (username === currentUser) { alert('لا يمكنك دعوة نفسك'); return; }
+    if (!username) { alert('Please enter a username'); return; }
+    if (username === currentUser) { alert('You cannot invite yourself'); return; }
     try {
         const userRef = doc(db, 'users', username);
         const userSnap = await getDoc(userRef);
-        if (!userSnap.exists()) { alert('المستخدم غير موجود'); return; }
+        if (!userSnap.exists()) { alert('User not found'); return; }
 
         const groupRef = doc(db, 'groups', inviteGroupId);
         const groupSnap = await getDoc(groupRef);
         if (groupSnap.exists()) {
             const members = groupSnap.data().members || [];
-            if (members.includes(username)) { alert('المستخدم عضو بالفعل'); return; }
+            if (members.includes(username)) { alert('User is already a member'); return; }
         }
 
         await addDoc(collection(db, 'invites'), {
@@ -921,9 +951,9 @@ window.sendInvite = async function() {
             status: 'pending',
             createdAt: serverTimestamp()
         });
-        alert('تم إرسال الدعوة بنجاح!');
+        alert('Invite sent successfully!');
         closeInviteModal();
-    } catch (e) { alert('خطأ: ' + e.message); }
+    } catch (e) { alert('Error: ' + e.message); }
 };
 
 // ===== PRIVATE CHATS =====
@@ -957,7 +987,7 @@ window.loadPrivateChats = function() {
         });
 
         if (chatUsers.size === 0) {
-            container.innerHTML = '<div class="empty">لا توجد محادثات خاصة</div>';
+            container.innerHTML = '<div class="empty">No private chats</div>';
             return;
         }
 
@@ -981,13 +1011,13 @@ window.startPrivateChat = async function() {
     const username = document.getElementById('private-chat-username').value.trim();
     const msgEl = document.getElementById('private-chat-msg');
 
-    if (!username) { msgEl.textContent = 'يرجى إدخال اسم المستخدم'; return; }
-    if (username === currentUser) { msgEl.textContent = 'لا يمكنك بدء محادثة مع نفسك'; return; }
+    if (!username) { msgEl.textContent = 'Please enter a username'; return; }
+    if (username === currentUser) { msgEl.textContent = 'You cannot start a chat with yourself'; return; }
 
     try {
         const userRef = doc(db, 'users', username);
         const userSnap = await getDoc(userRef);
-        if (!userSnap.exists()) { msgEl.textContent = 'المستخدم غير موجود'; return; }
+        if (!userSnap.exists()) { msgEl.textContent = 'User not found'; return; }
 
         // Send a chat request
         await addDoc(collection(db, 'chatRequests'), {
@@ -1000,22 +1030,19 @@ window.startPrivateChat = async function() {
         document.getElementById('private-chat-username').value = '';
         msgEl.textContent = '';
         msgEl.className = 'success-msg';
-        msgEl.textContent = 'تم ارسال طلب المحادثة!';
+        msgEl.textContent = 'Chat request sent!';
         setTimeout(() => { msgEl.textContent = ''; msgEl.className = 'error-msg'; }, 3000);
-    } catch (e) { msgEl.textContent = 'خطأ: ' + e.message; }
+    } catch (e) { msgEl.textContent = 'Error: ' + e.message; }
 };
 
 window.openPrivateChat = function(username) {
     currentChatUser = username;
     document.getElementById('chat-header-name').textContent = '@' + username;
-
-    // Check if blocked
     checkChatBlocked();
-
     document.getElementById('tab-content-private').classList.add('hidden');
     document.getElementById('tab-content-chat').classList.remove('hidden');
     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-
+    markPrivateChatAsRead(username);
     loadChatMessages();
 };
 
@@ -1034,7 +1061,7 @@ window.loadChatMessages = function() {
 
     if (chatMessagesListener) chatMessagesListener();
 
-    container.innerHTML = '<div class="loading">جاري التحميل...</div>';
+    container.innerHTML = '<div class="loading">Loading...</div>';
 
     const q = query(collection(db, 'privateMessages'), orderBy('createdAt', 'asc'));
     chatMessagesListener = onSnapshot(q, (snapshot) => {
@@ -1048,7 +1075,7 @@ window.loadChatMessages = function() {
                 (msg.sender !== currentChatUser || msg.receiver !== currentUser)) return;
 
             hasMessages = true;
-            const time = msg.createdAt ? formatTime(msg.createdAt.toDate()) : 'الآن';
+            const time = msg.createdAt ? formatTime(msg.createdAt.toDate()) : 'Now';
             const isSent = msg.sender === currentChatUser;
 
             html += '<div class="chat-message ' + (isSent ? 'sent' : 'received') + '">' +
@@ -1057,7 +1084,7 @@ window.loadChatMessages = function() {
             '</div>';
         });
 
-        if (!hasMessages) html = '<div class="empty" style="padding:40px 20px">لا توجد رسائل بعد. ابدأ المحادثة!</div>';
+        if (!hasMessages) html = '<div class="empty" style="padding:40px 20px">No messages yet. Start the conversation!</div>';
         container.innerHTML = html;
         container.scrollTop = container.scrollHeight;
     });
@@ -1068,7 +1095,7 @@ window.sendChatMessage = async function() {
 
     // Check if blocked
     const isBlocked = await isChatBlocked(currentChatUser);
-    if (isBlocked) { alert('لا يمكنك ارسال رسائل لهذا المستخدم'); return; }
+    if (isBlocked) { alert('You cannot send messages to this user'); return; }
 
     const input = document.getElementById('chat-message-input');
     const content = input.value.trim();
@@ -1080,15 +1107,16 @@ window.sendChatMessage = async function() {
             sender: currentUser,
             receiver: currentChatUser,
             content: content,
+            readBy: [currentUser],
             createdAt: serverTimestamp()
         });
         input.value = '';
-    } catch (e) { alert('خطأ: ' + e.message); }
+    } catch (e) { alert('Error: ' + e.message); }
 };
 
 window.blockChatUser = async function() {
     if (!currentChatUser) return;
-    if (!confirm('هل أنت متأكد من حظر ' + currentChatUser + ' من المحادثات الخاصة؟')) return;
+    if (!confirm('Are you sure you want to ban ' + currentChatUser + ' from private chats?')) return;
 
     try {
         await setDoc(doc(db, 'chatBlocks', currentUser + '_' + currentChatUser), {
@@ -1097,7 +1125,7 @@ window.blockChatUser = async function() {
             createdAt: serverTimestamp()
         });
         checkChatBlocked();
-    } catch (e) { alert('خطأ: ' + e.message); }
+    } catch (e) { alert('Error: ' + e.message); }
 };
 
 window.unblockChatUser = async function() {
@@ -1105,7 +1133,7 @@ window.unblockChatUser = async function() {
     try {
         await deleteDoc(doc(db, 'chatBlocks', currentUser + '_' + currentChatUser));
         checkChatBlocked();
-    } catch (e) { alert('خطأ: ' + e.message); }
+    } catch (e) { alert('Error: ' + e.message); }
 };
 
 async function isChatBlocked(otherUser) {
@@ -1153,52 +1181,53 @@ window.loadInbox = function() {
         const chatReqQ = query(collection(db, 'chatRequests'), orderBy('createdAt', 'desc'));
         onSnapshot(chatReqQ, (chatReqSnap) => {
             let html = '';
-            let count = 0;
+            let unreadCount = 0;
 
             // Process invites
             invitesSnap.forEach((docSnap) => {
                 const inv = docSnap.data();
                 if (inv.to !== currentUser && inv.from !== currentUser) return;
-                count++;
-                const time = inv.createdAt ? formatTime(inv.createdAt.toDate()) : 'الآن';
+                const isUnread = inv.to === currentUser && inv.status === 'pending' && (!inv.readBy || !inv.readBy.includes(currentUser));
+                if (isUnread) unreadCount++;
+                const time = inv.createdAt ? formatTime(inv.createdAt.toDate()) : 'Now';
 
                 if (inv.to === currentUser && inv.status === 'pending') {
                     html += '<div class="inbox-item">' +
                         '<div class="inbox-item-info">' +
-                            '<div class="inbox-item-title">دعوة للانضمام لمجموعة "' + inv.groupName + '"</div>' +
-                            '<div class="inbox-item-desc">من @' + inv.from + ' · ' + time + '</div>' +
+                            '<div class="inbox-item-title">Invite to join group "' + inv.groupName + '"</div>' +
+                            '<div class="inbox-item-desc">from @' + inv.from + ' · ' + time + '</div>' +
                         '</div>' +
                         '<div class="inbox-actions">' +
-                            '<button class="btn-success" onclick="acceptInvite(' + "'" + docSnap.id + "'" + ')">قبول</button>' +
-                            '<button class="btn-danger" onclick="rejectInvite(' + "'" + docSnap.id + "'" + ')">رفض</button>' +
+                            '<button class="btn-success" onclick="acceptInvite(' + "'" + docSnap.id + "'" + ')">Accept</button>' +
+                            '<button class="btn-danger" onclick="rejectInvite(' + "'" + docSnap.id + "'" + ')">Reject</button>' +
                         '</div>' +
                     '</div>';
                 } else if (inv.from === currentUser && inv.status === 'pending') {
                     html += '<div class="inbox-item">' +
                         '<div class="inbox-item-info">' +
-                            '<div class="inbox-item-title">دعوة مرسلة لـ @' + inv.to + '</div>' +
-                            '<div class="inbox-item-desc">للمجموعة "' + inv.groupName + '" · ' + time + '</div>' +
+                            '<div class="inbox-item-title">Invite sent to @' + inv.to + '</div>' +
+                            '<div class="inbox-item-desc">for group "' + inv.groupName + '" · ' + time + '</div>' +
                         '</div>' +
                         '<div class="inbox-actions">' +
-                            '<button class="btn-secondary" disabled>في الانتظار</button>' +
+                            '<button class="btn-secondary" disabled>Pending</button>' +
                         '</div>' +
                     '</div>';
                 } else if (inv.from === currentUser && inv.status === 'accepted') {
                     html += '<div class="inbox-item">' +
                         '<div class="inbox-item-info">' +
                             '<div class="inbox-item-title">@' + inv.to + ' قبل الدعوة</div>' +
-                            '<div class="inbox-item-desc">للمجموعة "' + inv.groupName + '" · ' + time + '</div>' +
+                            '<div class="inbox-item-desc">for group "' + inv.groupName + '" · ' + time + '</div>' +
                         '</div>' +
                         '<div class="inbox-actions">' +
-                            '<button class="btn-success" onclick="approveMember(' + "'" + docSnap.id + "'" + ',' + "'" + inv.to + "'" + ',' + "'" + inv.groupId + "'" + ')">موافقة</button>' +
-                            '<button class="btn-danger" onclick="rejectMember(' + "'" + docSnap.id + "'" + ')">رفض</button>' +
+                            '<button class="btn-success" onclick="approveMember(' + "'" + docSnap.id + "'" + ',' + "'" + inv.to + "'" + ',' + "'" + inv.groupId + "'" + ')">Approve</button>' +
+                            '<button class="btn-danger" onclick="rejectMember(' + "'" + docSnap.id + "'" + ')">Reject</button>' +
                         '</div>' +
                     '</div>';
                 } else if (inv.to === currentUser && inv.status === 'rejected') {
                     html += '<div class="inbox-item">' +
                         '<div class="inbox-item-info">' +
-                            '<div class="inbox-item-title">تم رفض دعوتك</div>' +
-                            '<div class="inbox-item-desc">للمجموعة "' + inv.groupName + '" · ' + time + '</div>' +
+                            '<div class="inbox-item-title">Your invite was rejected</div>' +
+                            '<div class="inbox-item-desc">for group "' + inv.groupName + '" · ' + time + '</div>' +
                         '</div>' +
                     '</div>';
                 }
@@ -1208,28 +1237,29 @@ window.loadInbox = function() {
             chatReqSnap.forEach((docSnap) => {
                 const req = docSnap.data();
                 if (req.to !== currentUser && req.from !== currentUser) return;
-                count++;
-                const time = req.createdAt ? formatTime(req.createdAt.toDate()) : 'الآن';
+                const isUnread = req.to === currentUser && req.status === 'pending' && (!req.readBy || !req.readBy.includes(currentUser));
+                if (isUnread) unreadCount++;
+                const time = req.createdAt ? formatTime(req.createdAt.toDate()) : 'Now';
 
                 if (req.to === currentUser && req.status === 'pending') {
                     html += '<div class="inbox-item">' +
                         '<div class="inbox-item-info">' +
-                            '<div class="inbox-item-title">طلب محادثة خاصة من @' + req.from + '</div>' +
+                            '<div class="inbox-item-title">Private chat request from @' + req.from + '</div>' +
                             '<div class="inbox-item-desc">' + time + '</div>' +
                         '</div>' +
                         '<div class="inbox-actions">' +
-                            '<button class="btn-success" onclick="acceptChatRequest(' + "'" + docSnap.id + "'" + ',' + "'" + req.from + "'" + ')">قبول</button>' +
-                            '<button class="btn-danger" onclick="rejectChatRequest(' + "'" + docSnap.id + "'" + ')">رفض</button>' +
+                            '<button class="btn-success" onclick="acceptChatRequest(' + "'" + docSnap.id + "'" + ',' + "'" + req.from + "'" + ')">Accept</button>' +
+                            '<button class="btn-danger" onclick="rejectChatRequest(' + "'" + docSnap.id + "'" + ')">Reject</button>' +
                         '</div>' +
                     '</div>';
                 } else if (req.from === currentUser && req.status === 'pending') {
                     html += '<div class="inbox-item">' +
                         '<div class="inbox-item-info">' +
-                            '<div class="inbox-item-title">طلب محادثة مرسل لـ @' + req.to + '</div>' +
+                            '<div class="inbox-item-title">Chat request sent to @' + req.to + '</div>' +
                             '<div class="inbox-item-desc">' + time + '</div>' +
                         '</div>' +
                         '<div class="inbox-actions">' +
-                            '<button class="btn-secondary" disabled>في الانتظار</button>' +
+                            '<button class="btn-secondary" disabled>Pending</button>' +
                         '</div>' +
                     '</div>';
                 } else if (req.to === currentUser && req.status === 'accepted') {
@@ -1249,33 +1279,66 @@ window.loadInbox = function() {
                 } else if (req.to === currentUser && req.status === 'rejected') {
                     html += '<div class="inbox-item">' +
                         '<div class="inbox-item-info">' +
-                            '<div class="inbox-item-title">تم رفض طلب المحادثة</div>' +
-                            '<div class="inbox-item-desc">من @' + req.from + ' · ' + time + '</div>' +
+                            '<div class="inbox-item-title">Chat request was rejected</div>' +
+                            '<div class="inbox-item-desc">from @' + req.from + ' · ' + time + '</div>' +
                         '</div>' +
                     '</div>';
                 }
             });
 
-            if (count === 0) html = '<div class="empty">لا توجد رسائل في الصندوق الوارد</div>';
+            if (count === 0) html = '<div class="empty">No messages in Inbox</div>';
             container.innerHTML = html;
 
             const badge = document.getElementById('inbox-badge');
-            if (count > 0) { badge.textContent = count; badge.classList.remove('hidden'); }
+            if (unreadCount > 0) { badge.textContent = unreadCount; badge.classList.remove('hidden'); }
             else { badge.classList.add('hidden'); }
         });
     });
 };
 
+// ===== PRIVATE CHAT NOTIFICATIONS =====
+window.markPrivateChatAsRead = async function(chatUser) {
+    if (!chatUser) return;
+    privateUnreadCounts[chatUser] = 0;
+    totalPrivateUnread = Object.values(privateUnreadCounts).reduce((a,b)=>a+b,0);
+    updatePrivateBadge();
+    try {
+        const q = query(collection(db, 'privateMessages'), where('receiver', '==', currentUser), where('sender', '==', chatUser));
+        const snap = await getDocs(q);
+        snap.forEach(async (docSnap) => {
+            const data = docSnap.data();
+            const readBy = data.readBy || [];
+            if (!readBy.includes(currentUser)) {
+                readBy.push(currentUser);
+                await updateDoc(doc(db, 'privateMessages', docSnap.id), { readBy: readBy });
+            }
+        });
+    } catch (e) { console.error(e); }
+};
+
+function updatePrivateBadge() {
+    const badge = document.getElementById('private-badge');
+    if (!badge) {
+        const tab = document.getElementById('tab-private');
+        if (tab && totalPrivateUnread > 0) {
+            tab.innerHTML = 'Private Chats <span id="private-badge" style="background:var(--danger);color:#fff;padding:2px 6px;border-radius:10px;font-size:10px;margin-left:4px">' + totalPrivateUnread + '</span>';
+        } else if (tab) { tab.innerHTML = 'Private Chats'; }
+        return;
+    }
+    if (totalPrivateUnread > 0) { badge.textContent = totalPrivateUnread; badge.classList.remove('hidden'); }
+    else { badge.classList.add('hidden'); }
+}
+
 window.acceptInvite = async function(inviteId) {
     try {
         await updateDoc(doc(db, 'invites', inviteId), { status: 'accepted' });
-    } catch (e) { alert('خطأ: ' + e.message); }
+    } catch (e) { alert('Error: ' + e.message); }
 };
 
 window.rejectInvite = async function(inviteId) {
     try {
         await updateDoc(doc(db, 'invites', inviteId), { status: 'rejected' });
-    } catch (e) { alert('خطأ: ' + e.message); }
+    } catch (e) { alert('Error: ' + e.message); }
 };
 
 window.approveMember = async function(inviteId, username, groupId) {
@@ -1288,13 +1351,13 @@ window.approveMember = async function(inviteId, username, groupId) {
             await updateDoc(groupRef, { members: members });
         }
         await deleteDoc(doc(db, 'invites', inviteId));
-    } catch (e) { alert('خطأ: ' + e.message); }
+    } catch (e) { alert('Error: ' + e.message); }
 };
 
 window.rejectMember = async function(inviteId) {
     try {
         await deleteDoc(doc(db, 'invites', inviteId));
-    } catch (e) { alert('خطأ: ' + e.message); }
+    } catch (e) { alert('Error: ' + e.message); }
 };
 
 // Chat request handlers
@@ -1305,16 +1368,16 @@ window.acceptChatRequest = async function(requestId, fromUser) {
         await addDoc(collection(db, 'privateMessages'), {
             sender: fromUser,
             receiver: currentUser,
-            content: 'بدأت المحادثة',
+            content: 'Chat started',
             createdAt: serverTimestamp()
         });
-    } catch (e) { alert('خطأ: ' + e.message); }
+    } catch (e) { alert('Error: ' + e.message); }
 };
 
 window.rejectChatRequest = async function(requestId) {
     try {
         await updateDoc(doc(db, 'chatRequests', requestId), { status: 'rejected' });
-    } catch (e) { alert('خطأ: ' + e.message); }
+    } catch (e) { alert('Error: ' + e.message); }
 };
 
 // ===== UTILS =====
@@ -1334,11 +1397,11 @@ function escapeHtml(text) {
 function formatTime(date) {
     const now = new Date();
     const diff = Math.floor((now - date) / 1000);
-    if (diff < 60) return 'منذ لحظات';
-    if (diff < 3600) return 'منذ ' + Math.floor(diff / 60) + ' دقيقة';
-    if (diff < 86400) return 'منذ ' + Math.floor(diff / 3600) + ' ساعة';
-    if (diff < 604800) return 'منذ ' + Math.floor(diff / 86400) + ' يوم';
-    return date.toLocaleDateString('ar-EG');
+    if (diff < 60) return 'Just now';
+    if (diff < 3600) return 'Since ' + Math.floor(diff / 60) + ' minute' + (Math.floor(diff/60) > 1 ? 's' : '');
+    if (diff < 86400) return 'Since ' + Math.floor(diff / 3600) + ' hour' + (Math.floor(diff/3600) > 1 ? 's' : '');
+    if (diff < 604800) return 'Since ' + Math.floor(diff / 86400) + ' day' + (Math.floor(diff/86400) > 1 ? 's' : '');
+    return date.toLocaleDateString('en-US');
 }
 
 window.addEventListener('beforeunload', () => { sessionStorage.removeItem('whisper_user'); });
