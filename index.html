@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,192 +10,139 @@
 .dark{--bg:#18191a;--text:#e4e6eb;--card:#242526;--border:#3a3b3c;--primary:#4dabf7;--danger:#ff6b6b;--success:#51cf66;--owner:#ff9500;--admin:#bb8fce;--ban:#ff4444;--group:#5bc0de;--shadow:0 1px 2px rgba(0,0,0,0.3)}
 body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s}
 .hidden{display:none!important}
-
-/* Animations */
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@keyframes slideInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
-@keyframes slideInLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-@keyframes bounceIn{0%{opacity:0;transform:scale(0.3)}50%{transform:scale(1.05)}70%{transform:scale(0.9)}100%{opacity:1;transform:scale(1)}}
-@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-@keyframes typing{0%,100%{opacity:0.4}50%{opacity:1}}
-
-.fade-in{animation:fadeIn 0.4s ease-out}
-.slide-in-right{animation:slideInRight 0.3s ease-out}
-.slide-in-left{animation:slideInLeft 0.3s ease-out}
-.bounce-in{animation:bounceIn 0.5s ease-out}
-
-#auth-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;background:linear-gradient(135deg,var(--bg) 0%,#e8eaf6 100%);transition:0.3s}
-.dark #auth-screen{background:linear-gradient(135deg,#18191a 0%,#1a1a2e 100%)}
-.auth-box{background:var(--card);padding:40px;border-radius:var(--radius);width:100%;max-width:420px;box-shadow:0 8px 32px rgba(0,0,0,0.12);border:1px solid var(--border);animation:fadeIn 0.5s ease-out;transition:0.3s}
-.auth-box:hover{box-shadow:0 12px 40px rgba(0,0,0,0.15);transform:translateY(-2px)}
-.auth-box h1{text-align:center;margin-bottom:25px;font-size:34px;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--group));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-1px}
-.auth-box input{width:100%;padding:14px 16px;margin:8px 0;border:2px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:15px;outline:none;transition:0.3s}
-.auth-box input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(24,119,242,0.15)}
-.auth-box button{width:100%;padding:14px;margin:10px 0;border:none;border-radius:var(--radius);font-size:16px;cursor:pointer;font-weight:600;transition:0.3s;position:relative;overflow:hidden}
-.auth-box button:hover{opacity:0.95;transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.2)}
-.auth-box button:active{transform:translateY(0)}
-.btn-primary{background:linear-gradient(135deg,var(--primary),#1565c0);color:#fff}
-.btn-success{background:linear-gradient(135deg,var(--success),#2e7d32);color:#fff}
-.btn-danger{background:linear-gradient(135deg,var(--danger),#c62828);color:#fff}
-.btn-owner{background:linear-gradient(135deg,var(--owner),#e65100);color:#fff}
-.btn-admin{background:linear-gradient(135deg,var(--admin),#7b1fa2);color:#fff}
-.btn-ban{background:linear-gradient(135deg,var(--ban),#b71c1c);color:#fff}
-.btn-group{background:linear-gradient(135deg,var(--group),#00695c);color:#fff}
-.btn-secondary{background:var(--card);color:var(--text);border:2px solid var(--border)!important}
-.btn-secondary:hover{background:var(--bg);border-color:var(--primary)!important}
-.auth-toggle{text-align:center;margin-top:18px;cursor:pointer;color:var(--primary);font-weight:600;font-size:14px;transition:0.2s;padding:8px;border-radius:var(--radius)}
-.auth-toggle:hover{background:rgba(24,119,242,0.08);transform:scale(1.02)}
-#chat-screen{max-width:720px;margin:0 auto;padding-bottom:20px}
-.header{position:sticky;top:0;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);padding:12px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:var(--shadow);transition:0.3s}
-.dark .header{background:rgba(36,37,38,0.95)}
-.header h2{font-size:22px;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--group));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.5px}
-.header-btns{display:flex;gap:10px}
-.header-btns button{padding:8px 16px;border:none;border-radius:var(--radius);cursor:pointer;font-size:13px;font-weight:600;transition:0.3s;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
-.header-btns button:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 4px 8px rgba(0,0,0,0.15)}
-.nav-tabs{display:flex;gap:6px;padding:12px 20px;background:var(--card);border-bottom:1px solid var(--border);overflow-x:auto;position:sticky;top:57px;z-index:99}
-.nav-tab{padding:10px 20px;border:none;border-radius:24px;background:transparent;color:var(--text);cursor:pointer;font-size:14px;font-weight:600;white-space:nowrap;transition:0.3s;position:relative}
-.nav-tab.active{background:linear-gradient(135deg,var(--primary),#1565c0);color:#fff;box-shadow:0 4px 12px rgba(24,119,242,0.3)}
-.nav-tab:hover:not(.active){background:var(--bg);transform:translateY(-1px)}
-.nav-tab:active{transform:scale(0.97)}
-.post-box{padding:20px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin:16px 20px;box-shadow:var(--shadow);animation:fadeIn 0.4s ease-out;transition:0.3s}
-.post-box:hover{box-shadow:0 4px 16px rgba(0,0,0,0.1)}
-.post-box textarea{width:100%;padding:14px;border:2px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:15px;resize:vertical;min-height:90px;outline:none;transition:0.3s}
-.post-box textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(24,119,242,0.12)}
-.post-box .char-count{text-align:left;font-size:12px;color:#888;margin-top:8px;font-weight:500}
-.post-btn{margin-top:12px;padding:10px 28px;border-radius:24px!important}
-.group-box{padding:20px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin:16px 20px;box-shadow:var(--shadow);animation:fadeIn 0.4s ease-out;transition:0.3s}
-.group-box:hover{box-shadow:0 4px 16px rgba(0,0,0,0.1)}
-.group-box input{width:100%;padding:14px;margin:10px 0;border:2px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:15px;outline:none;transition:0.3s}
-.group-box input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(24,119,242,0.12)}
-.posts-container{padding:0 20px}
-.post{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:var(--shadow);animation:fadeIn 0.4s ease-out;transition:0.3s}
-.post:hover{box-shadow:0 4px 16px rgba(0,0,0,0.1);transform:translateY(-1px)}
-.post-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border)}
-.post-author{font-weight:700;font-size:15px;color:var(--primary);display:flex;align-items:center;gap:8px}
-.post-time{font-size:12px;color:#888;font-weight:500}
-.post-content{font-size:15px;line-height:1.7;margin-bottom:14px;word-wrap:break-word;color:var(--text)}
-.post-actions{display:flex;gap:14px;padding-top:12px;border-top:1px solid var(--border);flex-wrap:wrap}
-.post-actions button{background:none;border:none;color:var(--text);cursor:pointer;font-size:13px;display:flex;align-items:center;gap:5px;padding:8px 14px;border-radius:20px;transition:0.3s;font-weight:600}
-.post-actions button:hover{background:var(--bg);color:var(--primary);transform:scale(1.05)}
-.post-actions button:active{transform:scale(0.95)}
-.post-staff-actions{display:flex;gap:10px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);flex-wrap:wrap}
-.post-staff-actions button{padding:6px 14px;border:none;border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;color:#fff;transition:0.3s;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
-.post-staff-actions button:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 4px 8px rgba(0,0,0,0.15)}
-.comments-section{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);animation:fadeIn 0.3s ease-out}
-.comment{background:var(--bg);padding:12px;border-radius:var(--radius);margin-bottom:10px;border:1px solid var(--border);position:relative;animation:slideInRight 0.3s ease-out;transition:0.3s}
-.comment:hover{box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-.comment-author{font-weight:700;font-size:13px;color:var(--primary);margin-bottom:5px;display:flex;align-items:center;gap:6px}
-.comment-text{font-size:14px;line-height:1.6}
-.comment-time{font-size:11px;color:#888;margin-top:5px;font-weight:500}
-.comment-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.comment-actions button{padding:5px 12px;border:none;border-radius:20px;cursor:pointer;font-size:11px;font-weight:600;color:#fff;transition:0.3s;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
-.comment-actions button:hover{opacity:0.9;transform:translateY(-1px)}
-.comment-input{display:flex;gap:12px;margin-top:12px}
-.comment-input input{flex:1;padding:12px;border:2px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:14px;outline:none;transition:0.3s}
-.comment-input input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(24,119,242,0.12)}
-.comment-input button{padding:10px 18px;border-radius:20px!important}
-.tag{padding:3px 10px;border-radius:6px;font-size:10px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:0.5px}
-.tag-owner{background:linear-gradient(135deg,var(--owner),#e65100)}
-.tag-admin{background:linear-gradient(135deg,var(--admin),#7b1fa2)}
-.tag-banned{background:linear-gradient(135deg,var(--ban),#b71c1c)}
-.tag-group{background:linear-gradient(135deg,var(--group),#00695c)}
-.loading{text-align:center;padding:50px;color:#888;font-size:15px}
-.empty{text-align:center;padding:70px 20px;color:#888;font-size:17px;font-weight:500}
-.error-msg{color:var(--danger);text-align:center;margin:12px 0;font-size:14px;font-weight:600}
-.success-msg{color:var(--success);text-align:center;margin:12px 0;font-size:14px;font-weight:600}
-.inbox-container{padding:0 20px}
-.inbox-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;animation:fadeIn 0.3s ease-out;transition:0.3s}
-.inbox-item:hover{box-shadow:0 4px 16px rgba(0,0,0,0.1);transform:translateY(-1px)}
+#auth-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.auth-box{background:var(--card);padding:40px;border-radius:var(--radius);width:100%;max-width:400px;box-shadow:var(--shadow);border:1px solid var(--border)}
+.auth-box h1{text-align:center;margin-bottom:25px;font-size:32px;font-weight:700}
+.auth-box input{width:100%;padding:14px;margin:8px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:15px;outline:none}
+.auth-box input:focus{border-color:var(--primary)}
+.auth-box button{width:100%;padding:14px;margin:8px 0;border:none;border-radius:var(--radius);font-size:16px;cursor:pointer;font-weight:600;transition:0.2s}
+.auth-box button:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-success{background:var(--success);color:#fff}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-owner{background:var(--owner);color:#fff}
+.btn-admin{background:var(--admin);color:#fff}
+.btn-ban{background:var(--ban);color:#fff}
+.btn-group{background:var(--group);color:#fff}
+.btn-secondary{background:var(--card);color:var(--text);border:1px solid var(--border)!important}
+.auth-toggle{text-align:center;margin-top:15px;cursor:pointer;color:var(--primary);font-weight:500}
+#chat-screen{max-width:680px;margin:0 auto;padding-bottom:20px}
+.header{position:sticky;top:0;background:var(--card);padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:var(--shadow)}
+.header h2{font-size:20px;font-weight:700}
+.header-btns{display:flex;gap:8px}
+.header-btns button{padding:8px 14px;border:none;border-radius:var(--radius);cursor:pointer;font-size:13px;font-weight:600;transition:0.2s}
+.header-btns button:hover{opacity:0.9}
+.nav-tabs{display:flex;gap:4px;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--border);overflow-x:auto}
+.nav-tab{padding:8px 16px;border:none;border-radius:20px;background:transparent;color:var(--text);cursor:pointer;font-size:14px;font-weight:600;white-space:nowrap;transition:0.2s}
+.nav-tab.active{background:var(--primary);color:#fff}
+.nav-tab:hover:not(.active){background:var(--bg)}
+.post-box{padding:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin:12px 16px;box-shadow:var(--shadow)}
+.post-box textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:15px;resize:vertical;min-height:80px;outline:none}
+.post-box textarea:focus{border-color:var(--primary)}
+.post-box .char-count{text-align:left;font-size:12px;color:#888;margin-top:6px}
+.post-btn{margin-top:10px;padding:10px 24px}
+.group-box{padding:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin:12px 16px;box-shadow:var(--shadow)}
+.group-box input{width:100%;padding:12px;margin:8px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:15px;outline:none}
+.group-box input:focus{border-color:var(--primary)}
+.posts-container{padding:0 16px}
+.post{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.post-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.post-author{font-weight:700;font-size:15px;color:var(--primary);display:flex;align-items:center;gap:6px}
+.post-time{font-size:12px;color:#888}
+.post-content{font-size:15px;line-height:1.6;margin-bottom:12px;word-wrap:break-word}
+.post-actions{display:flex;gap:12px;padding-top:10px;border-top:1px solid var(--border);flex-wrap:wrap}
+.post-actions button{background:none;border:none;color:var(--text);cursor:pointer;font-size:13px;display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:var(--radius);transition:0.2s}
+.post-actions button:hover{background:var(--bg);color:var(--primary)}
+.post-staff-actions{display:flex;gap:8px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);flex-wrap:wrap}
+.post-staff-actions button{padding:5px 12px;border:none;border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:600;color:#fff;transition:0.2s}
+.post-staff-actions button:hover{opacity:0.9}
+.comments-section{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.comment{background:var(--bg);padding:10px;border-radius:var(--radius);margin-bottom:8px;border:1px solid var(--border);position:relative}
+.comment-author{font-weight:700;font-size:13px;color:var(--primary);margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.comment-text{font-size:14px;line-height:1.5}
+.comment-time{font-size:11px;color:#888;margin-top:4px}
+.comment-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.comment-actions button{padding:4px 10px;border:none;border-radius:var(--radius);cursor:pointer;font-size:11px;font-weight:600;color:#fff;transition:0.2s}
+.comment-actions button:hover{opacity:0.9}
+.comment-input{display:flex;gap:10px;margin-top:10px}
+.comment-input input{flex:1;padding:10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:14px;outline:none}
+.comment-input input:focus{border-color:var(--primary)}
+.comment-input button{padding:10px 16px}
+.tag{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;color:#fff;text-transform:uppercase}
+.tag-owner{background:var(--owner)}
+.tag-admin{background:var(--admin)}
+.tag-banned{background:var(--ban)}
+.tag-group{background:var(--group)}
+.loading{text-align:center;padding:40px;color:#888}
+.empty{text-align:center;padding:60px 20px;color:#888;font-size:16px}
+.error-msg{color:var(--danger);text-align:center;margin:10px 0;font-size:14px}
+.inbox-container{padding:0 16px}
+.inbox-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 .inbox-item-info{flex:1}
-.inbox-item-title{font-weight:700;font-size:15px;margin-bottom:5px;color:var(--text)}
-.inbox-item-desc{font-size:13px;color:#888;font-weight:500}
-.inbox-actions{display:flex;gap:10px}
-.inbox-actions button{padding:7px 16px;border:none;border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;color:#fff;transition:0.3s;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
-.inbox-actions button:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 4px 8px rgba(0,0,0,0.15)}
-.group-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow);animation:fadeIn 0.3s ease-out;transition:0.3s}
-.group-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.1);transform:translateY(-1px)}
-.group-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.group-card-name{font-weight:700;font-size:17px;color:var(--primary)}
-.group-card-owner{font-size:12px;color:#888;font-weight:500}
-.group-card-actions{display:flex;gap:10px;margin-top:12px}
-.group-card-actions button{padding:7px 14px;border:none;border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;color:#fff;transition:0.3s;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
-.group-card-actions button:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 4px 8px rgba(0,0,0,0.15)}
-.group-members{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
-.group-member{display:flex;justify-content:space-between;align-items:center;padding:7px 0}
-.group-member-name{font-size:13px;font-weight:500}
-.group-invite-box{background:var(--bg);padding:14px;border-radius:var(--radius);margin-top:12px;border:1px solid var(--border)}
-.group-invite-box input{width:100%;padding:12px;margin-bottom:10px;border:2px solid var(--border);border-radius:var(--radius);background:var(--card);color:var(--text);font-size:14px;outline:none;transition:0.3s}
-.group-invite-box input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(24,119,242,0.12)}
-.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;backdrop-filter:blur(4px);animation:fadeIn 0.2s ease-out}
-.modal-content{background:var(--card);padding:28px;border-radius:var(--radius);width:100%;max-width:440px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,0.2);animation:bounceIn 0.4s ease-out}
-.modal-content h3{margin-bottom:18px;font-size:20px;font-weight:700;color:var(--text)}
-.modal-content textarea,.modal-content input{width:100%;padding:14px;margin-bottom:14px;border:2px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:14px;outline:none;resize:vertical;transition:0.3s}
-.modal-content textarea:focus,.modal-content input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(24,119,242,0.12)}
-.modal-btns{display:flex;gap:12px;margin-top:18px}
-.modal-btns button{flex:1;padding:12px;border:none;border-radius:var(--radius);cursor:pointer;font-size:14px;font-weight:600;transition:0.3s;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
-.modal-btns button:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 4px 8px rgba(0,0,0,0.15)}
-.banned-notice{background:linear-gradient(135deg,var(--ban),#b71c1c);color:#fff;padding:18px;text-align:center;border-radius:var(--radius);margin:16px 20px;font-weight:700;font-size:15px;box-shadow:0 4px 12px rgba(220,53,69,0.3);animation:pulse 2s infinite}
-.edited-tag{font-size:11px;color:#888;margin-left:8px;font-weight:500}
+.inbox-item-title{font-weight:700;font-size:14px;margin-bottom:4px}
+.inbox-item-desc{font-size:13px;color:#888}
+.inbox-actions{display:flex;gap:8px}
+.inbox-actions button{padding:6px 14px;border:none;border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:600;color:#fff;transition:0.2s}
+.inbox-actions button:hover{opacity:0.9}
+.group-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow)}
+.group-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.group-card-name{font-weight:700;font-size:16px;color:var(--primary)}
+.group-card-owner{font-size:12px;color:#888}
+.group-card-actions{display:flex;gap:8px;margin-top:10px}
+.group-card-actions button{padding:6px 12px;border:none;border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:600;color:#fff;transition:0.2s}
+.group-card-actions button:hover{opacity:0.9}
+.group-members{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.group-member{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
+.group-member-name{font-size:13px}
+.group-invite-box{background:var(--bg);padding:12px;border-radius:var(--radius);margin-top:10px;border:1px solid var(--border)}
+.group-invite-box input{width:100%;padding:10px;margin-bottom:8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);color:var(--text);font-size:14px;outline:none}
+.group-invite-box input:focus{border-color:var(--primary)}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.modal-content{background:var(--card);padding:24px;border-radius:var(--radius);width:100%;max-width:420px;border:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+.modal-content h3{margin-bottom:16px;font-size:18px}
+.modal-content textarea,.modal-content input{width:100%;padding:12px;margin-bottom:12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:14px;outline:none;resize:vertical}
+.modal-content textarea:focus,.modal-content input:focus{border-color:var(--primary)}
+.modal-btns{display:flex;gap:10px;margin-top:16px}
+.modal-btns button{flex:1;padding:12px;border:none;border-radius:var(--radius);cursor:pointer;font-size:14px;font-weight:600;transition:0.2s}
+.modal-btns button:hover{opacity:0.9}
+.banned-notice{background:var(--ban);color:#fff;padding:16px;text-align:center;border-radius:var(--radius);margin:12px 16px;font-weight:600}
+.edited-tag{font-size:11px;color:#888;margin-left:8px}
 
 /* Private Chat Styles */
-.chat-list-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:0.3s;animation:fadeIn 0.3s ease-out}
-.chat-list-item:hover{background:var(--bg);box-shadow:0 4px 16px rgba(0,0,0,0.1);transform:translateY(-2px)}
-.chat-list-item:active{transform:scale(0.98)}
+.chat-list-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:0.2s}
+.chat-list-item:hover{background:var(--bg)}
 .chat-list-item-info{flex:1}
-.chat-list-item-name{font-weight:700;font-size:16px;margin-bottom:5px;color:var(--text)}
-.chat-list-item-last{font-size:13px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px;font-weight:500}
-.chat-list-item-time{font-size:11px;color:#888;font-weight:500}
-.chat-window{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin:16px 20px;box-shadow:0 8px 32px rgba(0,0,0,0.12);display:flex;flex-direction:column;height:calc(100vh - 200px);max-height:650px;animation:fadeIn 0.4s ease-out;overflow:hidden}
-.chat-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:linear-gradient(135deg,var(--bg),var(--card));border-radius:var(--radius) var(--radius) 0 0}
-.chat-header-info{font-weight:700;font-size:16px;display:flex;align-items:center;gap:8px}
-.chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
-.chat-message{max-width:65%;padding:12px 16px;border-radius:18px;font-size:14px;line-height:1.6;word-wrap:break-word;animation:fadeIn 0.2s ease-out;box-shadow:0 2px 8px rgba(0,0,0,0.08);transition:0.2s}
-.chat-message:hover{box-shadow:0 4px 12px rgba(0,0,0,0.12)}
-.chat-message.sent{align-self:flex-start;background:linear-gradient(135deg,var(--primary),#1565c0);color:#fff;border-bottom-left-radius:4px}
-.chat-message.received{align-self:flex-end;background:var(--bg);border:1px solid var(--border);border-bottom-right-radius:4px}
-.chat-message-time{font-size:10px;opacity:0.7;margin-top:6px;text-align:left;font-weight:500}
-.chat-input-area{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:12px;align-items:flex-end;background:var(--bg)}
-.chat-input-area input{flex:1;padding:12px 16px;border:2px solid var(--border);border-radius:24px;background:var(--card);color:var(--text);font-size:14px;outline:none;transition:0.3s}
-.chat-input-area input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(24,119,242,0.12)}
-.chat-input-area button{padding:12px 20px;border-radius:24px!important}
-.chat-blocked-notice{background:linear-gradient(135deg,var(--ban),#b71c1c);color:#fff;padding:14px;text-align:center;font-size:14px;font-weight:700;animation:fadeIn 0.3s ease-out}
-.chat-blocked-by-notice{background:linear-gradient(135deg,#ff9800,#f57c00);color:#fff;padding:14px;text-align:center;font-size:14px;font-weight:700;animation:fadeIn 0.3s ease-out}
+.chat-list-item-name{font-weight:700;font-size:15px;margin-bottom:4px}
+.chat-list-item-last{font-size:13px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:250px}
+.chat-list-item-time{font-size:11px;color:#888}
+.chat-window{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin:12px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column;height:calc(100vh - 200px);max-height:600px}
+.chat-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--bg);border-radius:var(--radius) var(--radius) 0 0}
+.chat-header-info{font-weight:700;font-size:15px}
+.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.chat-message{max-width:70%;padding:10px 14px;border-radius:var(--radius);font-size:14px;line-height:1.5;word-wrap:break-word}
+.chat-message.sent{align-self:flex-start;background:var(--primary);color:#fff;border-bottom-left-radius:2px}
+.chat-message.received{align-self:flex-end;background:var(--bg);border:1px solid var(--border);border-bottom-right-radius:2px}
+.chat-message-time{font-size:10px;opacity:0.7;margin-top:4px;text-align:left}
+.chat-input-area{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:flex-end}
+.chat-input-area input{flex:1;padding:10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:14px;outline:none}
+.chat-input-area input:focus{border-color:var(--primary)}
+.chat-input-area button{padding:10px 16px}
+.chat-blocked-notice{background:var(--ban);color:#fff;padding:10px;text-align:center;font-size:13px;font-weight:600}
 
 /* Group Chat Styles */
-.group-chat-section{margin-top:14px;padding-top:14px;border-top:1px solid var(--border);animation:fadeIn 0.3s ease-out}
-.group-chat-messages{max-height:320px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;margin-bottom:12px;scroll-behavior:smooth}
-.group-chat-message{padding:10px 14px;border-radius:16px;font-size:13px;line-height:1.5;word-wrap:break-word;animation:fadeIn 0.2s ease-out;box-shadow:0 1px 4px rgba(0,0,0,0.08);transition:0.2s}
-.group-chat-message:hover{box-shadow:0 2px 8px rgba(0,0,0,0.12)}
-.group-chat-message.sent{align-self:flex-start;background:linear-gradient(135deg,var(--primary),#1565c0);color:#fff;border-bottom-left-radius:4px}
-.group-chat-message.received{align-self:flex-end;background:var(--bg);border:1px solid var(--border);border-bottom-right-radius:4px}
-.group-chat-message-author{font-size:11px;font-weight:700;margin-bottom:3px;opacity:0.85}
-.group-chat-message-time{font-size:10px;opacity:0.7;margin-top:3px;text-align:left;font-weight:500}
-.group-chat-input{display:flex;gap:10px;margin-top:10px}
-.group-chat-input input{flex:1;padding:10px 14px;border:2px solid var(--border);border-radius:20px;background:var(--bg);color:var(--text);font-size:13px;outline:none;transition:0.3s}
-.group-chat-input input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(24,119,242,0.12)}
-.group-chat-input button{padding:10px 16px;font-size:13px;border-radius:20px!important}
+.group-chat-section{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.group-chat-messages{max-height:300px;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.group-chat-message{padding:8px 12px;border-radius:var(--radius);font-size:13px;line-height:1.4;word-wrap:break-word}
+.group-chat-message.sent{align-self:flex-start;background:var(--primary);color:#fff;border-bottom-left-radius:2px}
+.group-chat-message.received{align-self:flex-end;background:var(--bg);border:1px solid var(--border);border-bottom-right-radius:2px}
+.group-chat-message-author{font-size:11px;font-weight:700;margin-bottom:2px;opacity:0.8}
+.group-chat-message-time{font-size:10px;opacity:0.7;margin-top:2px;text-align:left}
+.group-chat-input{display:flex;gap:8px;margin-top:8px}
+.group-chat-input input{flex:1;padding:8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:13px;outline:none}
+.group-chat-input input:focus{border-color:var(--primary)}
+.group-chat-input button{padding:8px 14px;font-size:13px}
 
-/* Badge */
-.badge{background:linear-gradient(135deg,var(--danger),#c62828);color:#fff;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:700;animation:pulse 2s infinite;box-shadow:0 2px 6px rgba(220,53,69,0.3)}
-
-/* Scrollbar styling */
-::-webkit-scrollbar{width:8px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:#999}
-
-@media(max-width:600px){
-.header h2{font-size:18px}
-.post-content{font-size:14px}
-.nav-tab{padding:8px 14px;font-size:13px}
-.chat-list-item-last{max-width:180px}
-.chat-message{max-width:80%}
-.chat-window{margin:12px 12px;height:calc(100vh - 180px)}
-.post-box,.group-box{margin:12px 12px}
-.posts-container{padding:0 12px}
-.inbox-container{padding:0 12px}
-}
+@media(max-width:600px){.header h2{font-size:16px}.post-content{font-size:14px}.nav-tab{padding:6px 12px;font-size:13px}.chat-list-item-last{max-width:180px}.chat-message{max-width:85%}}
 </style>
 </head>
 <body>
@@ -203,13 +150,13 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s}
 <div class="auth-box">
 <h1>Whisper Chat</h1>
 <div id="auth-form">
-<input type="text" id="username" placeholder="username" maxlength="30">
-<input type="password" id="password" placeholder="password" maxlength="50">
+<input type="text" id="username" placeholder="اسم المستخدم" maxlength="30">
+<input type="password" id="password" placeholder="كلمة المرور" maxlength="50">
 <div id="auth-msg" class="error-msg"></div>
-<button class="btn-primary" id="auth-btn" onclick="handleAuth()">Login</button>
-<button class="btn-success hidden" id="signup-btn" onclick="handleSignup()">SignIn</button>
+<button class="btn-primary" id="auth-btn" onclick="handleAuth()">تسجيل الدخول</button>
+<button class="btn-success hidden" id="signup-btn" onclick="handleSignup()">انشاء حساب</button>
 </div>
-<div class="auth-toggle" id="auth-toggle" onclick="toggleAuthMode()">Don't Have Account? Sign in</div>
+<div class="auth-toggle" id="auth-toggle" onclick="toggleAuthMode()">ليس لديك حساب؟ سجل الان</div>
 </div>
 </div>
 <div id="chat-screen" class="hidden">
@@ -222,10 +169,10 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s}
 </div>
 </div>
 <div class="nav-tabs" id="nav-tabs">
-<button class="nav-tab active" onclick="switchTab('home')" id="tab-home">Home</button>
-<button class="nav-tab" onclick="switchTab('groups')" id="tab-groups">Groups</button>
-<button class="nav-tab" onclick="switchTab('private')" id="tab-private">Private Message</button>
-<button class="nav-tab" onclick="switchTab('inbox')" id="tab-inbox">Inbox <span id="inbox-badge" class="hidden badge">0</span></button>
+<button class="nav-tab active" onclick="switchTab('home')" id="tab-home">الرئيسية</button>
+<button class="nav-tab" onclick="switchTab('groups')" id="tab-groups">المجموعات</button>
+<button class="nav-tab" onclick="switchTab('private')" id="tab-private">المحادثات الخاصة</button>
+<button class="nav-tab" onclick="switchTab('inbox')" id="tab-inbox">الصندوق <span id="inbox-badge" class="hidden" style="background:var(--danger);color:#fff;padding:2px 6px;border-radius:10px;font-size:10px;margin-right:4px">0</span></button>
 </div>
 <div id="banned-notice" class="banned-notice hidden">
 انت محظور من المنصة. لا يمكنك النشر او التعليق.
@@ -234,29 +181,29 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s}
 <div class="post-box" id="post-box-area">
 <textarea id="post-content" placeholder="اكتب منشورك هنا..." maxlength="1000" oninput="updateCharCount('post-content','post-count')"></textarea>
 <div class="char-count" id="post-count">1000 / 1000</div>
-<button class="btn-primary post-btn" onclick="createPost()">Post</button>
+<button class="btn-primary post-btn" onclick="createPost()">نشر</button>
 </div>
 <div class="posts-container" id="posts-container">
-<div class="loading">Loading...</div>
+<div class="loading">جاري التحميل...</div>
 </div>
 </div>
 <div id="tab-content-groups" class="hidden">
 <div class="group-box" id="create-group-box">
-<h3 style="margin-bottom:12px;font-size:18px;font-weight:700">Create a new group</h3>
-<input type="text" id="group-name" placeholder="Group Name" maxlength="50">
-<button class="btn-group post-btn" onclick="createGroup()">Create a group</button>
-<div id="group-msg" class="error-msg" style="margin-top:10px"></div>
+<h3 style="margin-bottom:10px">انشاء مجموعة جديدة</h3>
+<input type="text" id="group-name" placeholder="اسم المجموعة" maxlength="50">
+<button class="btn-group post-btn" onclick="createGroup()">انشاء مجموعة</button>
+<div id="group-msg" class="error-msg" style="margin-top:8px"></div>
 </div>
 <div class="posts-container" id="groups-container">
-<div class="loading">Loading...</div>
+<div class="loading">جاري التحميل...</div>
 </div>
 </div>
 <div id="tab-content-private" class="hidden">
 <div class="group-box" id="add-chat-box">
-<h3 style="margin-bottom:12px;font-size:18px;font-weight:700">اضافة محادثة جديدة</h3>
+<h3 style="margin-bottom:10px">اضافة محادثة جديدة</h3>
 <input type="text" id="private-chat-username" placeholder="اسم المستخدم">
 <button class="btn-primary post-btn" onclick="startPrivateChat()">اضافة محادثة</button>
-<div id="private-chat-msg" class="error-msg" style="margin-top:10px"></div>
+<div id="private-chat-msg" class="error-msg" style="margin-top:8px"></div>
 </div>
 <div class="posts-container" id="private-chats-container">
 <div class="empty">لا توجد محادثات خاصة</div>
@@ -272,43 +219,42 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s}
 </div>
 </div>
 <div id="chat-blocked-notice" class="chat-blocked-notice hidden">تم حظر هذا المستخدم. لا يمكنك ارسال رسائل اليه.</div>
-<div id="chat-blocked-by-notice" class="chat-blocked-by-notice hidden">تم حظرك من هذه المحادثة. لا يمكنك ارسال رسائل.</div>
 <div class="chat-messages" id="chat-messages"></div>
 <div class="chat-input-area" id="chat-input-area">
 <input type="text" id="chat-message-input" placeholder="اكتب رسالتك..." maxlength="1000" onkeypress="if(event.key==='Enter')sendChatMessage()">
-<button class="btn-primary" onclick="sendChatMessage()">Send</button>
+<button class="btn-primary" onclick="sendChatMessage()">ارسال</button>
 </div>
 </div>
 </div>
 <div id="tab-content-inbox" class="hidden">
 <div class="inbox-container" id="inbox-container">
-<div class="empty">Empty</div>
+<div class="empty">لا توجد رسائل في الصندوق الوارد</div>
 </div>
 </div>
 </div>
 <div id="edit-modal" class="hidden modal">
 <div class="modal-content">
-<h3>Edit</h3>
+<h3>تعديل</h3>
 <textarea id="edit-text" maxlength="1000"></textarea>
 <div class="modal-btns">
-<button class="btn-success" onclick="saveEdit()">Save</button>
-<button class="btn-secondary" onclick="closeEditModal()">Cancel</button>
+<button class="btn-success" onclick="saveEdit()">حفظ</button>
+<button class="btn-secondary" onclick="closeEditModal()">الغاء</button>
 </div>
 </div>
 </div>
 <div id="ban-modal" class="hidden modal">
 <div class="modal-content">
-<h3>Ban List</h3>
+<h3>قائمة المحظورين</h3>
 <div id="ban-list-container" style="max-height:300px;overflow-y:auto"></div>
 <div class="modal-btns">
-<button class="btn-danger" onclick="closeBanModal()">Close</button>
+<button class="btn-danger" onclick="closeBanModal()">اغلاق</button>
 </div>
 </div>
 </div>
 <div id="invite-modal" class="hidden modal">
 <div class="modal-content">
-<h3>Group Invite</h3>
-<div id="invite-info" style="margin-bottom:14px;font-size:14px"></div>
+<h3>دعوة لمجموعة</h3>
+<div id="invite-info" style="margin-bottom:12px;font-size:14px"></div>
 <input type="text" id="invite-username" placeholder="اسم المستخدم">
 <div class="modal-btns">
 <button class="btn-success" onclick="sendInvite()">ارسال دعوة</button>
@@ -354,7 +300,6 @@ let currentTab = 'home';
 let inviteGroupId = null;
 let currentChatUser = null;
 let currentGroupId = null;
-let lastInboxCount = 0;
 
 function isOwner() { return currentUser === OWNER_USERNAME; }
 function isAdmin() { return ADMIN_USERNAMES.includes(currentUser); }
@@ -429,7 +374,6 @@ window.logout = function() {
     bannedUsers = [];
     currentChatUser = null;
     currentGroupId = null;
-    lastInboxCount = 0;
     document.getElementById('chat-screen').classList.add('hidden');
     document.getElementById('auth-screen').classList.remove('hidden');
     document.getElementById('username').value = '';
@@ -462,11 +406,7 @@ window.switchTab = function(tab) {
     document.getElementById('tab-content-inbox').classList.add('hidden');
     document.getElementById('tab-content-' + tab).classList.remove('hidden');
     if (tab === 'groups') loadGroups();
-    if (tab === 'inbox') {
-        loadInbox();
-        // Mark inbox as read when opened
-        markInboxRead();
-    }
+    if (tab === 'inbox') loadInbox();
     if (tab === 'private') loadPrivateChats();
 };
 
@@ -522,10 +462,10 @@ window.showBanList = function() {
         html = '<div style="text-align:center;color:#888;padding:20px">لا يوجد محظورين</div>';
     } else {
         bannedUsers.forEach((username) => {
-            html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid var(--border)">' +
-                '<span style="font-weight:700">@' + username + '</span>' +
-                '<button class="btn-success" onclick="unbanUser(' + "'" + username + "'" + '); closeBanModal();" style="padding:6px 12px;border:none;border-radius:6px;cursor:pointer;font-size:12px">فك الحظر</button>' +
-            '</div>';
+            html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid var(--border)">
+                <span style="font-weight:700">@${username}</span>
+                <button class="btn-success" onclick="unbanUser('${username}'); closeBanModal();" style="padding:6px 12px;border:none;border-radius:6px;cursor:pointer;font-size:12px">فك الحظر</button>
+            </div>`;
         });
     }
     container.innerHTML = html;
@@ -566,37 +506,37 @@ window.loadPosts = function() {
             const editedTag = post.edited ? '<span class="edited-tag">(تم التعديل)</span>' : '';
             let staffActions = '';
             if (isStaff()) {
-                staffActions = '<div class="post-staff-actions">' +
-                    '<button class="btn-owner" onclick="editPost(' + "'" + postId + "'" + ',' + "'" + escapeHtml(post.content) + "'" + ')">تعديل</button>' +
-                    '<button class="btn-danger" onclick="deletePost(' + "'" + postId + "'" + ')">مسح</button>' +
-                    '<button class="btn-ban" onclick="banUser(' + "'" + post.username + "'" + ')">حظر صاحب المنشور</button>' +
-                '</div>';
+                staffActions = `<div class="post-staff-actions">
+                    <button class="btn-owner" onclick="editPost('${postId}', '${escapeHtml(post.content)}')">تعديل</button>
+                    <button class="btn-danger" onclick="deletePost('${postId}')">مسح</button>
+                    <button class="btn-ban" onclick="banUser('${post.username}')">حظر صاحب المنشور</button>
+                </div>`;
             } else if (post.username === currentUser) {
-                staffActions = '<div class="post-staff-actions">' +
-                    '<button class="btn-owner" onclick="editPost(' + "'" + postId + "'" + ',' + "'" + escapeHtml(post.content) + "'" + ')">تعديل</button>' +
-                    '<button class="btn-danger" onclick="deletePost(' + "'" + postId + "'" + ')">مسح</button>' +
-                '</div>';
+                staffActions = `<div class="post-staff-actions">
+                    <button class="btn-owner" onclick="editPost('${postId}', '${escapeHtml(post.content)}')">تعديل</button>
+                    <button class="btn-danger" onclick="deletePost('${postId}')">مسح</button>
+                </div>`;
             }
-            html += '<div class="post" id="post-' + postId + '">' +
-                '<div class="post-header">' +
-                    '<span class="post-author">@' + post.username + ' ' + getTag(post.username) + '</span>' +
-                    '<span class="post-time">' + time + editedTag + '</span>' +
-                '</div>' +
-                '<div class="post-content">' + escapeHtml(post.content) + '</div>' +
-                '<div class="post-actions">' +
-                    '<button onclick="likePost(' + "'" + postId + "'" + ')">❤️ <span id="likes-' + postId + '">' + (post.likes || 0) + '</span></button>' +
-                    '<button onclick="dislikePost(' + "'" + postId + "'" + ')">👎 <span id="dislikes-' + postId + '">' + (post.dislikes || 0) + '</span></button>' +
-                    '<button onclick="toggleComments(' + "'" + postId + "'" + ')">💬 تعليق</button>' +
-                '</div>' +
-                staffActions +
-                '<div class="comments-section hidden" id="comments-' + postId + '">' +
-                    '<div id="comments-list-' + postId + '"><div class="loading">جاري تحميل التعليقات...</div></div>' +
-                    '<div class="comment-input">' +
-                        '<input type="text" id="comment-input-' + postId + '" placeholder="اكتب تعليق..." maxlength="1000">' +
-                        '<button class="btn-primary" onclick="addComment(' + "'" + postId + "'" + ')">ارسال</button>' +
-                    '</div>' +
-                '</div>' +
-            '</div>';
+            html += `<div class="post" id="post-${postId}">
+                <div class="post-header">
+                    <span class="post-author">@${post.username} ${getTag(post.username)}</span>
+                    <span class="post-time">${time}${editedTag}</span>
+                </div>
+                <div class="post-content">${escapeHtml(post.content)}</div>
+                <div class="post-actions">
+                    <button onclick="likePost('${postId}')">❤️ <span id="likes-${postId}">${post.likes || 0}</span></button>
+                    <button onclick="dislikePost('${postId}')">👎 <span id="dislikes-${postId}">${post.dislikes || 0}</span></button>
+                    <button onclick="toggleComments('${postId}')">💬 تعليق</button>
+                </div>
+                ${staffActions}
+                <div class="comments-section hidden" id="comments-${postId}">
+                    <div id="comments-list-${postId}"><div class="loading">جاري تحميل التعليقات...</div></div>
+                    <div class="comment-input">
+                        <input type="text" id="comment-input-${postId}" placeholder="اكتب تعليق..." maxlength="1000">
+                        <button class="btn-primary" onclick="addComment('${postId}')">ارسال</button>
+                    </div>
+                </div>
+            </div>`;
         });
         container.innerHTML = html;
         snapshot.forEach((docSnap) => { loadComments(docSnap.id); });
@@ -687,23 +627,23 @@ window.loadComments = function(postId) {
             const editedTag = c.edited ? '<span class="edited-tag">(تم التعديل)</span>' : '';
             let actions = '';
             if (isStaff()) {
-                actions = '<div class="comment-actions">' +
-                    '<button class="btn-owner" onclick="editComment(' + "'" + commentId + "'" + ',' + "'" + escapeHtml(c.content) + "'" + ')">تعديل</button>' +
-                    '<button class="btn-danger" onclick="deleteComment(' + "'" + commentId + "'" + ')">مسح</button>' +
-                    '<button class="btn-ban" onclick="banUser(' + "'" + c.username + "'" + ')">حظر</button>' +
-                '</div>';
+                actions = `<div class="comment-actions">
+                    <button class="btn-owner" onclick="editComment('${commentId}', '${escapeHtml(c.content)}')">تعديل</button>
+                    <button class="btn-danger" onclick="deleteComment('${commentId}')">مسح</button>
+                    <button class="btn-ban" onclick="banUser('${c.username}')">حظر</button>
+                </div>`;
             } else if (c.username === currentUser) {
-                actions = '<div class="comment-actions">' +
-                    '<button class="btn-owner" onclick="editComment(' + "'" + commentId + "'" + ',' + "'" + escapeHtml(c.content) + "'" + ')">تعديل</button>' +
-                    '<button class="btn-danger" onclick="deleteComment(' + "'" + commentId + "'" + ')">مسح</button>' +
-                '</div>';
+                actions = `<div class="comment-actions">
+                    <button class="btn-owner" onclick="editComment('${commentId}', '${escapeHtml(c.content)}')">تعديل</button>
+                    <button class="btn-danger" onclick="deleteComment('${commentId}')">مسح</button>
+                </div>`;
             }
-            html += '<div class="comment" id="comment-' + commentId + '">' +
-                '<div class="comment-author">@' + c.username + ' ' + getTag(c.username) + '</div>' +
-                '<div class="comment-text">' + escapeHtml(c.content) + editedTag + '</div>' +
-                '<div class="comment-time">' + time + '</div>' +
-                actions +
-            '</div>';
+            html += `<div class="comment" id="comment-${commentId}">
+                <div class="comment-author">@${c.username} ${getTag(c.username)}</div>
+                <div class="comment-text">${escapeHtml(c.content)}${editedTag}</div>
+                <div class="comment-time">${time}</div>
+                ${actions}
+            </div>`;
         });
         if (!hasComments) html = '<div style="color:#888;font-size:14px;text-align:center;padding:10px">لا توجد تعليقات</div>';
         container.innerHTML = html;
@@ -803,48 +743,48 @@ window.loadGroups = function() {
             const isOwner = g.owner === currentUser;
             let actions = '';
             if (isOwner) {
-                actions = '<div class="group-card-actions">' +
-                    '<button class="btn-group" onclick="showInviteModal(' + "'" + groupId + "'" + ')">دعوة</button>' +
-                    '<button class="btn-danger" onclick="deleteGroup(' + "'" + groupId + "'" + ')">حذف</button>' +
-                '</div>';
+                actions = `<div class="group-card-actions">
+                    <button class="btn-group" onclick="showInviteModal('${groupId}')">دعوة</button>
+                    <button class="btn-danger" onclick="deleteGroup('${groupId}')">حذف</button>
+                </div>`;
             } else if (!isMember) {
-                actions = '<div class="group-card-actions">' +
-                    '<button class="btn-primary" onclick="joinGroup(' + "'" + groupId + "'" + ')">انضمام</button>' +
-                '</div>';
+                actions = `<div class="group-card-actions">
+                    <button class="btn-primary" onclick="joinGroup('${groupId}')">انضمام</button>
+                </div>`;
             } else {
-                actions = '<div class="group-card-actions">' +
-                    '<button class="btn-secondary" onclick="leaveGroup(' + "'" + groupId + "'" + ')">مغادرة</button>' +
-                '</div>';
+                actions = `<div class="group-card-actions">
+                    <button class="btn-secondary" onclick="leaveGroup('${groupId}')">مغادرة</button>
+                </div>`;
             }
             let membersHtml = '';
             if (g.members && g.members.length > 0) {
-                membersHtml = '<div class="group-members"><strong>الأعضاء:</strong> ' + g.members.map(m => '@' + m).join(', ') + '</div>';
+                membersHtml = `<div class="group-members"><strong>الأعضاء:</strong> ${g.members.map(m => '@' + m).join(', ')}</div>`;
             }
 
             // Group chat section (only for members)
             let groupChatHtml = '';
             if (isMember) {
-                groupChatHtml = '<div class="group-chat-section">' +
-                    '<h4 style="margin-bottom:10px;font-size:14px;font-weight:700">محادثة المجموعة</h4>' +
-                    '<div class="group-chat-messages" id="group-chat-messages-' + groupId + '">' +
-                        '<div class="loading">Loading...</div>' +
-                    '</div>' +
-                    '<div class="group-chat-input">' +
-                        '<input type="text" id="group-chat-input-' + groupId + '" placeholder="Type your Message" maxlength="1000" onkeypress="if(event.key==='Enter')sendGroupMessage(' + "'" + groupId + "'" + ')">' +
-                        '<button class="btn-primary" onclick="sendGroupMessage(' + "'" + groupId + "'" + ')">Send</button>' +
-                    '</div>' +
-                '</div>';
+                groupChatHtml = `<div class="group-chat-section">
+                    <h4 style="margin-bottom:8px;font-size:14px">محادثة المجموعة</h4>
+                    <div class="group-chat-messages" id="group-chat-messages-${groupId}">
+                        <div class="loading">جاري التحميل...</div>
+                    </div>
+                    <div class="group-chat-input">
+                        <input type="text" id="group-chat-input-${groupId}" placeholder="اكتب رسالة..." maxlength="1000" onkeypress="if(event.key==='Enter')sendGroupMessage('${groupId}')">
+                        <button class="btn-primary" onclick="sendGroupMessage('${groupId}')">ارسال</button>
+                    </div>
+                </div>`;
             }
 
-            html += '<div class="group-card">' +
-                '<div class="group-card-header">' +
-                    '<span class="group-card-name">' + g.name + '</span>' +
-                    '<span class="group-card-owner">From @' + g.owner + '</span>' +
-                '</div>' +
-                actions +
-                membersHtml +
-                groupChatHtml +
-            '</div>';
+            html += `<div class="group-card">
+                <div class="group-card-header">
+                    <span class="group-card-name">${g.name}</span>
+                    <span class="group-card-owner">بواسطة @${g.owner}</span>
+                </div>
+                ${actions}
+                ${membersHtml}
+                ${groupChatHtml}
+            </div>`;
         });
         container.innerHTML = html;
         // Load group chat messages for each group
@@ -854,7 +794,7 @@ window.loadGroups = function() {
                 loadGroupChat(docSnap.id);
             }
         });
-    }, (error) => { container.innerHTML = '<div class="error-msg">Error: ' + error.message + '</div>'; });
+    }, (error) => { container.innerHTML = '<div class="error-msg">خطأ: ' + error.message + '</div>'; });
 };
 
 // ===== GROUP CHAT =====
@@ -871,15 +811,15 @@ window.loadGroupChat = function(groupId) {
             const msg = docSnap.data();
             if (msg.groupId !== groupId) return;
             hasMessages = true;
-            const time = msg.createdAt ? formatTime(msg.createdAt.toDate()) : 'Now';
+            const time = msg.createdAt ? formatTime(msg.createdAt.toDate()) : 'الآن';
             const isSent = msg.username === currentUser;
-            html += '<div class="group-chat-message ' + (isSent ? 'sent' : 'received') + '">' +
-                '<div class="group-chat-message-author">@' + msg.username + ' ' + getTag(msg.username) + '</div>' +
-                '<div>' + escapeHtml(msg.content) + '</div>' +
-                '<div class="group-chat-message-time">' + time + '</div>' +
-            '</div>';
+            html += `<div class="group-chat-message ${isSent ? 'sent' : 'received'}">
+                <div class="group-chat-message-author">@${msg.username} ${getTag(msg.username)}</div>
+                <div>${escapeHtml(msg.content)}</div>
+                <div class="group-chat-message-time">${time}</div>
+            </div>`;
         });
-        if (!hasMessages) html = '<div style="color:#888;font-size:13px;text-align:center;padding:10px">No message yet</div>';
+        if (!hasMessages) html = '<div style="color:#888;font-size:13px;text-align:center;padding:10px">لا توجد رسائل بعد</div>';
         container.innerHTML = html;
         container.scrollTop = container.scrollHeight;
     });
@@ -898,7 +838,7 @@ window.sendGroupMessage = async function(groupId) {
             createdAt: serverTimestamp()
         });
         input.value = '';
-    } catch (e) { alert('error: ' + e.message); }
+    } catch (e) { alert('خطأ: ' + e.message); }
 };
 
 window.joinGroup = async function(groupId) {
@@ -912,7 +852,7 @@ window.joinGroup = async function(groupId) {
                 await updateDoc(groupRef, { members: members });
             }
         }
-    } catch (e) { alert('error: ' + e.message); }
+    } catch (e) { alert('خطأ: ' + e.message); }
 };
 
 window.leaveGroup = async function(groupId) {
@@ -924,11 +864,11 @@ window.leaveGroup = async function(groupId) {
             members = members.filter(m => m !== currentUser);
             await updateDoc(groupRef, { members: members });
         }
-    } catch (e) { alert('error: ' + e.message); }
+    } catch (e) { alert('خطأ: ' + e.message); }
 };
 
 window.deleteGroup = async function(groupId) {
-    if (!confirm('Are you sure you want to delete this Group?')) return;
+    if (!confirm('هل أنت متأكد من حذف هذه المجموعة؟')) return;
     try { 
         await deleteDoc(doc(db, 'groups', groupId));
         // Also delete group messages
@@ -936,7 +876,7 @@ window.deleteGroup = async function(groupId) {
         const msgsSnap = await getDocs(msgsQuery);
         msgsSnap.forEach(async (m) => { await deleteDoc(doc(db, 'groupMessages', m.id)); });
     }
-    catch (e) { alert('Wrong: ' + e.message); }
+    catch (e) { alert('خطأ: ' + e.message); }
 };
 
 // ===== INVITE SYSTEM =====
@@ -945,7 +885,7 @@ window.showInviteModal = function(groupId) {
     const groupRef = doc(db, 'groups', groupId);
     getDoc(groupRef).then((snap) => {
         if (snap.exists()) {
-            document.getElementById('invite-info').innerHTML = 'Invite: <strong>' + snap.data().name + '</strong>';
+            document.getElementById('invite-info').innerHTML = 'دعوة شخص للمجموعة: <strong>' + snap.data().name + '</strong>';
             document.getElementById('invite-modal').classList.remove('hidden');
         }
     });
@@ -983,7 +923,7 @@ window.sendInvite = async function() {
         });
         alert('تم إرسال الدعوة بنجاح!');
         closeInviteModal();
-    } catch (e) { alert('Wrong: ' + e.message); }
+    } catch (e) { alert('خطأ: ' + e.message); }
 };
 
 // ===== PRIVATE CHATS =====
@@ -993,6 +933,7 @@ window.loadPrivateChats = function() {
 
     if (privateChatsListener) privateChatsListener();
 
+    // Listen to all private messages to build chat list
     const q = query(collection(db, 'privateMessages'), orderBy('createdAt', 'desc'));
     privateChatsListener = onSnapshot(q, (snapshot) => {
         if (!container) return;
@@ -1001,6 +942,7 @@ window.loadPrivateChats = function() {
 
         snapshot.forEach((docSnap) => {
             const msg = docSnap.data();
+            // Only include messages where current user is sender or receiver
             if (msg.sender !== currentUser && msg.receiver !== currentUser) return;
 
             const otherUser = msg.sender === currentUser ? msg.receiver : msg.sender;
@@ -1047,26 +989,7 @@ window.startPrivateChat = async function() {
         const userSnap = await getDoc(userRef);
         if (!userSnap.exists()) { msgEl.textContent = 'المستخدم غير موجود'; return; }
 
-        // Check if already has an accepted chat request
-        const existingQuery = query(collection(db, 'chatRequests'));
-        const existingSnap = await getDocs(existingQuery);
-        let alreadyConnected = false;
-        existingSnap.forEach((d) => {
-            const data = d.data();
-            if (data.status === 'accepted' && 
-                ((data.from === currentUser && data.to === username) || 
-                 (data.from === username && data.to === currentUser))) {
-                alreadyConnected = true;
-            }
-        });
-
-        if (alreadyConnected) {
-            msgEl.className = 'success-msg';
-            msgEl.textContent = 'المحادثة موجودة بالفعل!';
-            setTimeout(() => { msgEl.textContent = ''; msgEl.className = 'error-msg'; }, 3000);
-            return;
-        }
-
+        // Send a chat request
         await addDoc(collection(db, 'chatRequests'), {
             from: currentUser,
             to: username,
@@ -1079,15 +1002,15 @@ window.startPrivateChat = async function() {
         msgEl.className = 'success-msg';
         msgEl.textContent = 'تم ارسال طلب المحادثة!';
         setTimeout(() => { msgEl.textContent = ''; msgEl.className = 'error-msg'; }, 3000);
-    } catch (e) { msgEl.textContent = 'error: ' + e.message; }
+    } catch (e) { msgEl.textContent = 'خطأ: ' + e.message; }
 };
 
 window.openPrivateChat = function(username) {
     currentChatUser = username;
     document.getElementById('chat-header-name').textContent = '@' + username;
 
-    // Check blocking status (both directions)
-    checkChatBlockStatus();
+    // Check if blocked
+    checkChatBlocked();
 
     document.getElementById('tab-content-private').classList.add('hidden');
     document.getElementById('tab-content-chat').classList.remove('hidden');
@@ -1111,7 +1034,7 @@ window.loadChatMessages = function() {
 
     if (chatMessagesListener) chatMessagesListener();
 
-    container.innerHTML = '<div class="loading">Loading...</div>';
+    container.innerHTML = '<div class="loading">جاري التحميل...</div>';
 
     const q = query(collection(db, 'privateMessages'), orderBy('createdAt', 'asc'));
     chatMessagesListener = onSnapshot(q, (snapshot) => {
@@ -1125,7 +1048,7 @@ window.loadChatMessages = function() {
                 (msg.sender !== currentChatUser || msg.receiver !== currentUser)) return;
 
             hasMessages = true;
-            const time = msg.createdAt ? formatTime(msg.createdAt.toDate()) : 'Now';
+            const time = msg.createdAt ? formatTime(msg.createdAt.toDate()) : 'الآن';
             const isSent = msg.sender === currentChatUser;
 
             html += '<div class="chat-message ' + (isSent ? 'sent' : 'received') + '">' +
@@ -1143,6 +1066,10 @@ window.loadChatMessages = function() {
 window.sendChatMessage = async function() {
     if (!currentChatUser) return;
 
+    // Check if blocked
+    const isBlocked = await isChatBlocked(currentChatUser);
+    if (isBlocked) { alert('لا يمكنك ارسال رسائل لهذا المستخدم'); return; }
+
     const input = document.getElementById('chat-message-input');
     const content = input.value.trim();
     if (!content) return;
@@ -1156,10 +1083,9 @@ window.sendChatMessage = async function() {
             createdAt: serverTimestamp()
         });
         input.value = '';
-    } catch (e) { alert('Error: ' + e.message); }
+    } catch (e) { alert('خطأ: ' + e.message); }
 };
 
-// ===== CHAT BLOCK SYSTEM (BOTH DIRECTIONS) =====
 window.blockChatUser = async function() {
     if (!currentChatUser) return;
     if (!confirm('هل أنت متأكد من حظر ' + currentChatUser + ' من المحادثات الخاصة؟')) return;
@@ -1170,19 +1096,19 @@ window.blockChatUser = async function() {
             blocked: currentChatUser,
             createdAt: serverTimestamp()
         });
-        checkChatBlockStatus();
-    } catch (e) { alert('Error: ' + e.message); }
+        checkChatBlocked();
+    } catch (e) { alert('خطأ: ' + e.message); }
 };
 
 window.unblockChatUser = async function() {
     if (!currentChatUser) return;
     try {
         await deleteDoc(doc(db, 'chatBlocks', currentUser + '_' + currentChatUser));
-        checkChatBlockStatus();
-    } catch (e) { alert('Error: ' + e.message); }
+        checkChatBlocked();
+    } catch (e) { alert('خطأ: ' + e.message); }
 };
 
-async function isChatBlockedByMe(otherUser) {
+async function isChatBlocked(otherUser) {
     try {
         const blockRef = doc(db, 'chatBlocks', currentUser + '_' + otherUser);
         const blockSnap = await getDoc(blockRef);
@@ -1190,55 +1116,29 @@ async function isChatBlockedByMe(otherUser) {
     } catch (e) { return false; }
 }
 
-async function isChatBlockedByOther(otherUser) {
-    try {
-        const blockRef = doc(db, 'chatBlocks', otherUser + '_' + currentUser);
-        const blockSnap = await getDoc(blockRef);
-        return blockSnap.exists();
-    } catch (e) { return false; }
-}
-
-async function checkChatBlockStatus() {
+async function checkChatBlocked() {
     if (!currentChatUser) return;
-
-    const blockedByMe = await isChatBlockedByMe(currentChatUser);
-    const blockedByOther = await isChatBlockedByOther(currentChatUser);
-
-    const noticeBlocked = document.getElementById('chat-blocked-notice');
-    const noticeBlockedBy = document.getElementById('chat-blocked-by-notice');
+    const isBlocked = await isChatBlocked(currentChatUser);
+    const notice = document.getElementById('chat-blocked-notice');
     const blockBtn = document.getElementById('chat-block-btn');
     const inputArea = document.getElementById('chat-input-area');
 
-    // Reset all notices
-    noticeBlocked.classList.add('hidden');
-    noticeBlockedBy.classList.add('hidden');
-
-    if (blockedByMe) {
-        // I blocked the other user
-        noticeBlocked.classList.remove('hidden');
-        blockBtn.textContent = 'UnBlock';
+    if (isBlocked) {
+        notice.classList.remove('hidden');
+        blockBtn.textContent = 'فك الحظر';
         blockBtn.onclick = unblockChatUser;
         blockBtn.className = 'btn-success';
         inputArea.classList.add('hidden');
-    } else if (blockedByOther) {
-        // Other user blocked me
-        noticeBlockedBy.classList.remove('hidden');
-        blockBtn.textContent = 'Block';
-        blockBtn.onclick = blockChatUser;
-        blockBtn.className = 'btn-ban';
-        inputArea.classList.add('hidden');
     } else {
-        // No blocking
-        blockBtn.textContent = 'Block';
+        notice.classList.add('hidden');
+        blockBtn.textContent = 'حظر';
         blockBtn.onclick = blockChatUser;
         blockBtn.className = 'btn-ban';
         inputArea.classList.remove('hidden');
     }
 }
 
-// ===== INBOX (FIXED) =====
-let inboxReadTimestamp = 0;
-
+// ===== INBOX =====
 window.loadInbox = function() {
     const container = document.getElementById('inbox-container');
     if (!container) return;
@@ -1253,26 +1153,24 @@ window.loadInbox = function() {
         const chatReqQ = query(collection(db, 'chatRequests'), orderBy('createdAt', 'desc'));
         onSnapshot(chatReqQ, (chatReqSnap) => {
             let html = '';
-            let unreadCount = 0;
+            let count = 0;
 
             // Process invites
             invitesSnap.forEach((docSnap) => {
                 const inv = docSnap.data();
                 if (inv.to !== currentUser && inv.from !== currentUser) return;
-
-                const time = inv.createdAt ? formatTime(inv.createdAt.toDate()) : 'Now';
-                const isUnread = inv.createdAt && inv.createdAt.toDate().getTime() > inboxReadTimestamp;
+                count++;
+                const time = inv.createdAt ? formatTime(inv.createdAt.toDate()) : 'الآن';
 
                 if (inv.to === currentUser && inv.status === 'pending') {
-                    if (isUnread) unreadCount++;
-                    html += '<div class="inbox-item" data-unread="' + (isUnread ? 'true' : 'false') + '">' +
+                    html += '<div class="inbox-item">' +
                         '<div class="inbox-item-info">' +
                             '<div class="inbox-item-title">دعوة للانضمام لمجموعة "' + inv.groupName + '"</div>' +
                             '<div class="inbox-item-desc">من @' + inv.from + ' · ' + time + '</div>' +
                         '</div>' +
                         '<div class="inbox-actions">' +
-                            '<button class="btn-success" onclick="acceptInvite(' + "'" + docSnap.id + "'" + ')">Accept</button>' +
-                            '<button class="btn-danger" onclick="rejectInvite(' + "'" + docSnap.id + "'" + ')">Reject</button>' +
+                            '<button class="btn-success" onclick="acceptInvite(' + "'" + docSnap.id + "'" + ')">قبول</button>' +
+                            '<button class="btn-danger" onclick="rejectInvite(' + "'" + docSnap.id + "'" + ')">رفض</button>' +
                         '</div>' +
                     '</div>';
                 } else if (inv.from === currentUser && inv.status === 'pending') {
@@ -1286,8 +1184,7 @@ window.loadInbox = function() {
                         '</div>' +
                     '</div>';
                 } else if (inv.from === currentUser && inv.status === 'accepted') {
-                    if (isUnread) unreadCount++;
-                    html += '<div class="inbox-item" data-unread="' + (isUnread ? 'true' : 'false') + '">' +
+                    html += '<div class="inbox-item">' +
                         '<div class="inbox-item-info">' +
                             '<div class="inbox-item-title">@' + inv.to + ' قبل الدعوة</div>' +
                             '<div class="inbox-item-desc">للمجموعة "' + inv.groupName + '" · ' + time + '</div>' +
@@ -1298,8 +1195,7 @@ window.loadInbox = function() {
                         '</div>' +
                     '</div>';
                 } else if (inv.to === currentUser && inv.status === 'rejected') {
-                    if (isUnread) unreadCount++;
-                    html += '<div class="inbox-item" data-unread="' + (isUnread ? 'true' : 'false') + '">' +
+                    html += '<div class="inbox-item">' +
                         '<div class="inbox-item-info">' +
                             '<div class="inbox-item-title">تم رفض دعوتك</div>' +
                             '<div class="inbox-item-desc">للمجموعة "' + inv.groupName + '" · ' + time + '</div>' +
@@ -1312,13 +1208,11 @@ window.loadInbox = function() {
             chatReqSnap.forEach((docSnap) => {
                 const req = docSnap.data();
                 if (req.to !== currentUser && req.from !== currentUser) return;
-
+                count++;
                 const time = req.createdAt ? formatTime(req.createdAt.toDate()) : 'الآن';
-                const isUnread = req.createdAt && req.createdAt.toDate().getTime() > inboxReadTimestamp;
 
                 if (req.to === currentUser && req.status === 'pending') {
-                    if (isUnread) unreadCount++;
-                    html += '<div class="inbox-item" data-unread="' + (isUnread ? 'true' : 'false') + '">' +
+                    html += '<div class="inbox-item">' +
                         '<div class="inbox-item-info">' +
                             '<div class="inbox-item-title">طلب محادثة خاصة من @' + req.from + '</div>' +
                             '<div class="inbox-item-desc">' + time + '</div>' +
@@ -1339,24 +1233,21 @@ window.loadInbox = function() {
                         '</div>' +
                     '</div>';
                 } else if (req.to === currentUser && req.status === 'accepted') {
-                    if (isUnread) unreadCount++;
-                    html += '<div class="inbox-item" data-unread="' + (isUnread ? 'true' : 'false') + '">' +
+                    html += '<div class="inbox-item">' +
                         '<div class="inbox-item-info">' +
                             '<div class="inbox-item-title">@' + req.from + ' قبل طلب المحادثة</div>' +
                             '<div class="inbox-item-desc">' + time + '</div>' +
                         '</div>' +
                     '</div>';
                 } else if (req.from === currentUser && req.status === 'accepted') {
-                    if (isUnread) unreadCount++;
-                    html += '<div class="inbox-item" data-unread="' + (isUnread ? 'true' : 'false') + '">' +
+                    html += '<div class="inbox-item">' +
                         '<div class="inbox-item-info">' +
                             '<div class="inbox-item-title">@' + req.to + ' قبل طلب المحادثة</div>' +
                             '<div class="inbox-item-desc">' + time + '</div>' +
                         '</div>' +
                     '</div>';
                 } else if (req.to === currentUser && req.status === 'rejected') {
-                    if (isUnread) unreadCount++;
-                    html += '<div class="inbox-item" data-unread="' + (isUnread ? 'true' : 'false') + '">' +
+                    html += '<div class="inbox-item">' +
                         '<div class="inbox-item-info">' +
                             '<div class="inbox-item-title">تم رفض طلب المحادثة</div>' +
                             '<div class="inbox-item-desc">من @' + req.from + ' · ' + time + '</div>' +
@@ -1365,29 +1256,15 @@ window.loadInbox = function() {
                 }
             });
 
-            if (html === '') html = '<div class="empty">لا توجد رسائل في الصندوق الوارد</div>';
+            if (count === 0) html = '<div class="empty">لا توجد رسائل في الصندوق الوارد</div>';
             container.innerHTML = html;
 
             const badge = document.getElementById('inbox-badge');
-            if (unreadCount > 0) { 
-                badge.textContent = unreadCount; 
-                badge.classList.remove('hidden'); 
-            }
-            else { 
-                badge.classList.add('hidden'); 
-            }
-            lastInboxCount = unreadCount;
+            if (count > 0) { badge.textContent = count; badge.classList.remove('hidden'); }
+            else { badge.classList.add('hidden'); }
         });
     });
 };
-
-function markInboxRead() {
-    inboxReadTimestamp = Date.now();
-    const badge = document.getElementById('inbox-badge');
-    badge.classList.add('hidden');
-    badge.textContent = '0';
-    lastInboxCount = 0;
-}
 
 window.acceptInvite = async function(inviteId) {
     try {
@@ -1424,6 +1301,13 @@ window.rejectMember = async function(inviteId) {
 window.acceptChatRequest = async function(requestId, fromUser) {
     try {
         await updateDoc(doc(db, 'chatRequests', requestId), { status: 'accepted' });
+        // Send a welcome message
+        await addDoc(collection(db, 'privateMessages'), {
+            sender: fromUser,
+            receiver: currentUser,
+            content: 'بدأت المحادثة',
+            createdAt: serverTimestamp()
+        });
     } catch (e) { alert('خطأ: ' + e.message); }
 };
 
@@ -1451,9 +1335,9 @@ function formatTime(date) {
     const now = new Date();
     const diff = Math.floor((now - date) / 1000);
     if (diff < 60) return 'منذ لحظات';
-    if (diff < 3600) return 'منذ ' + Math.floor(diff / 60) + ' Minute';
-    if (diff < 86400) return 'منذ ' + Math.floor(diff / 3600) + ' Hour';
-    if (diff < 604800) return 'منذ ' + Math.floor(diff / 86400) + ' Day';
+    if (diff < 3600) return 'منذ ' + Math.floor(diff / 60) + ' دقيقة';
+    if (diff < 86400) return 'منذ ' + Math.floor(diff / 3600) + ' ساعة';
+    if (diff < 604800) return 'منذ ' + Math.floor(diff / 86400) + ' يوم';
     return date.toLocaleDateString('ar-EG');
 }
 
