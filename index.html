@@ -1310,7 +1310,7 @@
             loginForm.style.display = 'block';
         });
 
-        // ─── LOGIN ───
+        // ─── LOGIN (WITH IMPROVED ERROR HANDLING) ───
         btnLogin.addEventListener('click', async () => {
             clearErrors();
             const username = loginUsername.value.trim();
@@ -1333,13 +1333,25 @@
                 // onAuthStateChanged will handle the rest
             } catch (err) {
                 console.error('Login error:', err);
-                if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' ||
-                    err.code === 'auth/invalid-credential') {
-                    showError(loginError, 'Invalid username or password.');
-                } else if (err.code === 'auth/invalid-email') {
-                    showError(loginError, 'Invalid username format.');
-                } else {
-                    showError(loginError, 'Login failed. Please try again.');
+                // Provide specific feedback based on Firebase error codes
+                switch (err.code) {
+                    case 'auth/user-not-found':
+                    case 'auth/wrong-password':
+                    case 'auth/invalid-credential':
+                        showError(loginError, 'Invalid username or password.');
+                        break;
+                    case 'auth/invalid-email':
+                        showError(loginError, 'Invalid username format.');
+                        break;
+                    case 'auth/too-many-requests':
+                        showError(loginError, 'Too many attempts. Please try again later.');
+                        break;
+                    case 'auth/network-request-failed':
+                        showError(loginError, 'Network error. Check your connection.');
+                        break;
+                    default:
+                        showError(loginError, 'Login failed. Please try again.');
+                        break;
                 }
             }
         });
