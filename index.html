@@ -10,22 +10,25 @@
 .dark{--bg:#18191a;--text:#e4e6eb;--card:#242526;--border:#3a3b3c;--primary:#4dabf7;--danger:#ff6b6b;--success:#51cf66;--owner:#ff9500;--admin:#bb8fce;--ban:#ff4444;--group:#5bc0de;--shadow:0 1px 2px rgba(0,0,0,0.3)}
 body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s}
 .hidden{display:none!important}
-#auth-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-.auth-box{background:var(--card);padding:40px;border-radius:var(--radius);width:100%;max-width:400px;box-shadow:var(--shadow);border:1px solid var(--border)}
-.auth-box h1{text-align:center;margin-bottom:25px;font-size:32px;font-weight:700}
-.auth-box input{width:100%;padding:14px;margin:8px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:15px;outline:none}
-.auth-box input:focus{border-color:var(--primary)}
-.auth-box button{width:100%;padding:14px;margin:8px 0;border:none;border-radius:var(--radius);font-size:16px;cursor:pointer;font-weight:600;transition:0.2s}
-.auth-box button:hover{opacity:0.9;transform:translateY(-1px)}
-.btn-primary{background:var(--primary);color:#fff}
-.btn-success{background:var(--success);color:#fff}
-.btn-danger{background:var(--danger);color:#fff}
-.btn-owner{background:var(--owner);color:#fff}
-.btn-admin{background:var(--admin);color:#fff}
-.btn-ban{background:var(--ban);color:#fff}
-.btn-group{background:var(--group);color:#fff}
-.btn-secondary{background:var(--card);color:var(--text);border:1px solid var(--border)!important}
-.auth-toggle{text-align:center;margin-top:15px;cursor:pointer;color:var(--primary);font-weight:500}
+#auth-screen{display:flex;flex-direction:row;align-items:center;justify-content:center;min-height:100vh;padding:20px;background:#e9ebee;gap:80px}
+.auth-left{width:100%;max-width:396px}
+.auth-box{background:#fff;padding:10px 0 24px;border-radius:8px;width:100%;box-shadow:0 2px 4px rgba(0,0,0,0.1),0 8px 16px rgba(0,0,0,0.1);border:none;text-align:center}
+.auth-right{width:100%;max-width:500px}
+.auth-box input{width:calc(100% - 32px);padding:14px 16px;margin:6px 16px;border:1px solid #dddfe2;border-radius:6px;background:#fff;color:#1d2129;font-size:17px;outline:none;font-family:Helvetica,Arial,sans-serif;line-height:22px;display:block}
+.auth-box input:focus{border-color:#1877f2;box-shadow:0 0 0 2px #e7f3ff}
+.auth-box button{width:calc(100% - 32px);margin:6px 16px;border:none;border-radius:6px;font-size:20px;cursor:pointer;font-weight:bold;transition:0.2s;font-family:Helvetica,Arial,sans-serif;line-height:48px;padding:0 16px;display:block}
+.auth-box button:hover{opacity:0.9;transform:none}
+.btn-primary{background:#1877f2;color:#fff}
+.btn-success{background:#42b72a;color:#fff}
+.btn-danger{background:#e41e3f;color:#fff}
+.btn-owner{background:#ff6b00;color:#fff}
+.btn-admin{background:#9b59b6;color:#fff}
+.btn-ban{background:#dc3545;color:#fff}
+.btn-group{background:#17a2b8;color:#fff}
+.btn-secondary{background:#42b72a;color:#fff;border:none!important}
+.auth-toggle{text-align:center;margin:6px 16px;cursor:pointer;color:#fff;font-size:17px;font-family:Helvetica,Arial,sans-serif;font-weight:bold;background:#42b72a;padding:14px 16px;border-radius:6px;line-height:22px}
+#auth-form{padding:10px 0 0}
+#auth-msg{font-size:14px;font-family:Helvetica,Arial,sans-serif;margin:4px 16px}
 #chat-screen{max-width:680px;margin:0 auto;padding-bottom:20px}
 .header{position:sticky;top:0;background:var(--card);padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:var(--shadow)}
 .header h2{font-size:20px;font-weight:700}
@@ -148,16 +151,24 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s}
 </head>
 <body>
 <div id="auth-screen">
+<div class="auth-left">
 <div class="auth-box">
-<h1>Whisper Chat</h1>
 <div id="auth-form">
-<input type="text" id="username" placeholder="Username" maxlength="30">
-<input type="password" id="password" placeholder="Password" maxlength="50">
+<input type="text" id="username" placeholder="اسم المستخدم" maxlength="30">
+<input type="password" id="password" placeholder="كلمة المرور" maxlength="50">
+
 <div id="auth-msg" class="error-msg"></div>
-<button class="btn-primary" id="auth-btn" onclick="handleAuth()">Login</button>
-<button class="btn-success hidden" id="signup-btn" onclick="handleSignup()">Sign Up</button>
+<button class="btn-primary" id="auth-btn" onclick="handleAuth()">تسجيل الدخول</button>
+<button class="btn-success hidden" id="signup-btn" onclick="handleSignup()">إنشاء حساب جديد</button>
+<div style="text-align:center;margin:10px 0"><a href="#" style="color:#1877f2;font-size:14px;text-decoration:none;font-family:Helvetica,Arial,sans-serif">هل نسيت كلمة المرور؟</a></div>
+<div style="border-top:1px solid #dadde1;margin:20px 16px"></div>
+<div class="auth-toggle" id="auth-toggle" onclick="toggleAuthMode()">إنشاء حساب جديد</div>
 </div>
-<div class="auth-toggle" id="auth-toggle" onclick="toggleAuthMode()">Don't have an account? Sign up now</div>
+</div>
+</div>
+<div class="auth-right">
+<h1 style="font-size:60px;font-weight:bold;color:#1877f2;font-family:Helvetica,Arial,sans-serif;margin-bottom:10px">Whisper Chat</h1>
+<p style="font-size:24px;color:#1c1e21;font-family:Helvetica,Arial,sans-serif">تواصل مع أصدقائك وشارك لحظاتك مع العالم.</p>
 </div>
 </div>
 <div id="chat-screen" class="hidden">
