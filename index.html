@@ -317,9 +317,6 @@ function getTag(username) {
     return '';
 }
 
-const savedUser = localStorage.getItem('whisper_user');
-if (savedUser) { currentUser = savedUser; showChat(); }
-
 window.toggleAuthMode = function() {
     isLoginMode = !isLoginMode;
     document.getElementById('auth-btn').classList.toggle('hidden');
@@ -1405,7 +1402,11 @@ function formatTime(date) {
     return date.toLocaleDateString('en-US');
 }
 
-window.addEventListener('beforeunload', () => { localStorage.removeItem('whisper_user'); });
+
+
+const savedUser = localStorage.getItem('whisper_user');
+if (savedUser) { currentUser = savedUser; showChat(); }
+
 </script>
 </body>
 </html>
