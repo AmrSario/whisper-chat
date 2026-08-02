@@ -142,13 +142,9 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s}
 .group-chat-input input:focus{border-color:var(--primary)}
 .group-chat-input button{padding:8px 14px;font-size:13px}
 
-/* Remember Me checkbox */
-.remember-row{display:flex;align-items:center;gap:8px;margin:12px 0}
-.remember-row input[type="checkbox"]{width:auto;margin:0;accent-color:var(--primary);transform:scale(1.1);cursor:pointer}
-.remember-row label{font-size:14px;color:var(--text);cursor:pointer;user-select:none}
-
 @media(max-width:600px){.header h2{font-size:16px}.post-content{font-size:14px}.nav-tab{padding:6px 12px;font-size:13px}.chat-list-item-last{max-width:180px}.chat-message{max-width:85%}}
 </style>
+<base target="_blank">
 </head>
 <body>
 <div id="auth-screen">
@@ -157,10 +153,6 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s}
 <div id="auth-form">
 <input type="text" id="username" placeholder="Username" maxlength="30">
 <input type="password" id="password" placeholder="Password" maxlength="50">
-<div class="remember-row">
-  <input type="checkbox" id="remember-me">
-  <label for="remember-me">Remember Me</label>
-</div>
 <div id="auth-msg" class="error-msg"></div>
 <button class="btn-primary" id="auth-btn" onclick="handleAuth()">Login</button>
 <button class="btn-success hidden" id="signup-btn" onclick="handleSignup()">Sign Up</button>
@@ -325,16 +317,8 @@ function getTag(username) {
     return '';
 }
 
-// استعادة الجلسة - يفحص localStorage ثم sessionStorage
-const savedUserLocal = localStorage.getItem('whisper_user');
-const savedUserSession = sessionStorage.getItem('whisper_user');
-if (savedUserLocal) {
-    currentUser = savedUserLocal;
-    showChat();
-} else if (savedUserSession) {
-    currentUser = savedUserSession;
-    showChat();
-}
+const savedUser = localStorage.getItem('whisper_user');
+if (savedUser) { currentUser = savedUser; showChat(); }
 
 window.toggleAuthMode = function() {
     isLoginMode = !isLoginMode;
@@ -348,7 +332,6 @@ window.handleAuth = async function() {
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
     const msgEl = document.getElementById('auth-msg');
-    const rememberMe = document.getElementById('remember-me').checked;
     if (!username || !password) { msgEl.textContent = 'Please fill in all fields'; return; }
     try {
         const userRef = doc(db, 'users', username);
@@ -356,13 +339,7 @@ window.handleAuth = async function() {
         if (!userSnap.exists()) { msgEl.textContent = 'Username not found'; return; }
         if (userSnap.data().password !== password) { msgEl.textContent = 'Incorrect password'; return; }
         currentUser = username;
-        if (rememberMe) {
-            localStorage.setItem('whisper_user', username);
-            sessionStorage.removeItem('whisper_user');
-        } else {
-            sessionStorage.setItem('whisper_user', username);
-            localStorage.removeItem('whisper_user');
-        }
+        localStorage.setItem('whisper_user', username);
         showChat();
     } catch (e) { msgEl.textContent = 'Error: ' + e.message; }
 };
@@ -371,7 +348,6 @@ window.handleSignup = async function() {
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
     const msgEl = document.getElementById('auth-msg');
-    const rememberMe = document.getElementById('remember-me').checked;
     if (!username || !password) { msgEl.textContent = 'Please fill in all fields'; return; }
     if (username.length < 3) { msgEl.textContent = 'Username must be at least 3 characters'; return; }
     if (password.length < 4) { msgEl.textContent = 'Password must be at least 4 characters'; return; }
@@ -381,22 +357,14 @@ window.handleSignup = async function() {
         if (userSnap.exists()) { msgEl.textContent = 'Username already exists'; return; }
         await setDoc(userRef, { username: username, password: password, createdAt: serverTimestamp() });
         currentUser = username;
-        if (rememberMe) {
-            localStorage.setItem('whisper_user', username);
-            sessionStorage.removeItem('whisper_user');
-        } else {
-            sessionStorage.setItem('whisper_user', username);
-            localStorage.removeItem('whisper_user');
-        }
+        localStorage.setItem('whisper_user', username);
         showChat();
     } catch (e) { msgEl.textContent = 'Error: ' + e.message; }
 };
 
 window.logout = function() {
     currentUser = null;
-    // إزالة من كلا المخزنين لضمان تسجيل الخروج الكامل
     localStorage.removeItem('whisper_user');
-    sessionStorage.removeItem('whisper_user');
     if (postsListener) postsListener();
     if (groupsListener) groupsListener();
     if (inboxListener) inboxListener();
@@ -414,7 +382,6 @@ window.logout = function() {
     document.getElementById('auth-screen').classList.remove('hidden');
     document.getElementById('username').value = '';
     document.getElementById('password').value = '';
-    document.getElementById('remember-me').checked = false; // إعادة تعيين التذكر
 };
 
 window.showChat = function() {
@@ -1438,7 +1405,7 @@ function formatTime(date) {
     return date.toLocaleDateString('en-US');
 }
 
-window.addEventListener('beforeunload', () => { sessionStorage.removeItem('whisper_user'); });
+window.addEventListener('beforeunload', () => { localStorage.removeItem('whisper_user'); });
 </script>
 </body>
 </html>
