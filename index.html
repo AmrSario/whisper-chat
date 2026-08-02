@@ -1,1582 +1,1444 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Whisper Chat</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
-import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, query, where, orderBy, onSnapshot, addDoc, serverTimestamp, Timestamp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAKCPsY3gE0ii-m86rY00K9VebVhN5csNs",
-  authDomain: "whisper-chat-webapp.firebaseapp.com",
-  projectId: "whisper-chat-webapp",
-  storageBucket: "whisper-chat-webapp.firebasestorage.app",
-  messagingSenderId: "481553440761",
-  appId: "1:481553440761:web:93d47d2e12da2bee6ae728"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const storage = getStorage(app);
-
-window._fb = { auth, db, storage, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, collection, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, query, where, orderBy, onSnapshot, addDoc, serverTimestamp, Timestamp, ref, uploadBytes, getDownloadURL };
-</script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Tajawal',sans-serif;background:#e9ecef;min-height:100vh;color:#1c1e21}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+:root{--bg:#f0f2f5;--text:#050505;--card:#ffffff;--border:#dddfe2;--primary:#1877f2;--danger:#e41e3f;--success:#42b72a;--owner:#ff6b00;--admin:#9b59b6;--ban:#dc3545;--group:#17a2b8;--shadow:0 1px 2px rgba(0,0,0,0.1);--radius:8px}
+.dark{--bg:#18191a;--text:#e4e6eb;--card:#242526;--border:#3a3b3c;--primary:#4dabf7;--danger:#ff6b6b;--success:#51cf66;--owner:#ff9500;--admin:#bb8fce;--ban:#ff4444;--group:#5bc0de;--shadow:0 1px 2px rgba(0,0,0,0.3)}
+body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s}
 .hidden{display:none!important}
+#auth-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.auth-box{background:var(--card);padding:40px;border-radius:var(--radius);width:100%;max-width:400px;box-shadow:var(--shadow);border:1px solid var(--border)}
+.auth-box h1{text-align:center;margin-bottom:25px;font-size:32px;font-weight:700}
+.auth-box input{width:100%;padding:14px;margin:8px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:15px;outline:none}
+.auth-box input:focus{border-color:var(--primary)}
+.auth-box button{width:100%;padding:14px;margin:8px 0;border:none;border-radius:var(--radius);font-size:16px;cursor:pointer;font-weight:600;transition:0.2s}
+.auth-box button:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-success{background:var(--success);color:#fff}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-owner{background:var(--owner);color:#fff}
+.btn-admin{background:var(--admin);color:#fff}
+.btn-ban{background:var(--ban);color:#fff}
+.btn-group{background:var(--group);color:#fff}
+.btn-secondary{background:var(--card);color:var(--text);border:1px solid var(--border)!important}
+.auth-toggle{text-align:center;margin-top:15px;cursor:pointer;color:var(--primary);font-weight:500}
+#chat-screen{max-width:680px;margin:0 auto;padding-bottom:20px}
+.header{position:sticky;top:0;background:var(--card);padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:var(--shadow)}
+.header h2{font-size:20px;font-weight:700}
+.header-btns{display:flex;gap:8px}
+.header-btns button{padding:8px 14px;border:none;border-radius:var(--radius);cursor:pointer;font-size:13px;font-weight:600;transition:0.2s}
+.header-btns button:hover{opacity:0.9}
+.nav-tabs{display:flex;gap:4px;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--border);overflow-x:auto}
+.nav-tab{padding:8px 16px;border:none;border-radius:20px;background:transparent;color:var(--text);cursor:pointer;font-size:14px;font-weight:600;white-space:nowrap;transition:0.2s}
+.nav-tab.active{background:var(--primary);color:#fff}
+.nav-tab:hover:not(.active){background:var(--bg)}
+.post-box{padding:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin:12px 16px;box-shadow:var(--shadow)}
+.post-box textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:15px;resize:vertical;min-height:80px;outline:none}
+.post-box textarea:focus{border-color:var(--primary)}
+.post-box .char-count{text-align:left;font-size:12px;color:#888;margin-top:6px}
+.post-btn{margin-top:10px;padding:10px 24px}
+.group-box{padding:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin:12px 16px;box-shadow:var(--shadow)}
+.group-box input{width:100%;padding:12px;margin:8px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:15px;outline:none}
+.group-box input:focus{border-color:var(--primary)}
+.posts-container{padding:0 16px}
+.post{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}
+.post-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.post-author{font-weight:700;font-size:15px;color:var(--primary);display:flex;align-items:center;gap:6px}
+.post-time{font-size:12px;color:#888}
+.post-content{font-size:15px;line-height:1.6;margin-bottom:12px;word-wrap:break-word}
+.post-actions{display:flex;gap:12px;padding-top:10px;border-top:1px solid var(--border);flex-wrap:wrap}
+.post-actions button{background:none;border:none;color:var(--text);cursor:pointer;font-size:13px;display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:var(--radius);transition:0.2s}
+.post-actions button:hover{background:var(--bg);color:var(--primary)}
+.post-staff-actions{display:flex;gap:8px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);flex-wrap:wrap}
+.post-staff-actions button{padding:5px 12px;border:none;border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:600;color:#fff;transition:0.2s}
+.post-staff-actions button:hover{opacity:0.9}
+.comments-section{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.comment{background:var(--bg);padding:10px;border-radius:var(--radius);margin-bottom:8px;border:1px solid var(--border);position:relative}
+.comment-author{font-weight:700;font-size:13px;color:var(--primary);margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.comment-text{font-size:14px;line-height:1.5}
+.comment-time{font-size:11px;color:#888;margin-top:4px}
+.comment-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.comment-actions button{padding:4px 10px;border:none;border-radius:var(--radius);cursor:pointer;font-size:11px;font-weight:600;color:#fff;transition:0.2s}
+.comment-actions button:hover{opacity:0.9}
+.comment-input{display:flex;gap:10px;margin-top:10px}
+.comment-input input{flex:1;padding:10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:14px;outline:none}
+.comment-input input:focus{border-color:var(--primary)}
+.comment-input button{padding:10px 16px}
+.tag{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;color:#fff;text-transform:uppercase}
+.tag-owner{background:var(--owner)}
+.tag-admin{background:var(--admin)}
+.tag-banned{background:var(--ban)}
+.tag-group{background:var(--group)}
+.loading{text-align:center;padding:40px;color:#888}
+.empty{text-align:center;padding:60px 20px;color:#888;font-size:16px}
+.error-msg{color:var(--danger);text-align:center;margin:10px 0;font-size:14px}
+.inbox-container{padding:0 16px}
+.inbox-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.inbox-item-info{flex:1}
+.inbox-item-title{font-weight:700;font-size:14px;margin-bottom:4px}
+.inbox-item-desc{font-size:13px;color:#888}
+.inbox-actions{display:flex;gap:8px}
+.inbox-actions button{padding:6px 14px;border:none;border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:600;color:#fff;transition:0.2s}
+.inbox-actions button:hover{opacity:0.9}
+.group-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow)}
+.group-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.group-card-name{font-weight:700;font-size:16px;color:var(--primary)}
+.group-card-owner{font-size:12px;color:#888}
+.group-card-actions{display:flex;gap:8px;margin-top:10px}
+.group-card-actions button{padding:6px 12px;border:none;border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:600;color:#fff;transition:0.2s}
+.group-card-actions button:hover{opacity:0.9}
+.group-members{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.group-member{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
+.group-member-name{font-size:13px}
+.group-invite-box{background:var(--bg);padding:12px;border-radius:var(--radius);margin-top:10px;border:1px solid var(--border)}
+.group-invite-box input{width:100%;padding:10px;margin-bottom:8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);color:var(--text);font-size:14px;outline:none}
+.group-invite-box input:focus{border-color:var(--primary)}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.modal-content{background:var(--card);padding:24px;border-radius:var(--radius);width:100%;max-width:420px;border:1px solid var(--border);box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+.modal-content h3{margin-bottom:16px;font-size:18px}
+.modal-content textarea,.modal-content input{width:100%;padding:12px;margin-bottom:12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:14px;outline:none;resize:vertical}
+.modal-content textarea:focus,.modal-content input:focus{border-color:var(--primary)}
+.modal-btns{display:flex;gap:10px;margin-top:16px}
+.modal-btns button{flex:1;padding:12px;border:none;border-radius:var(--radius);cursor:pointer;font-size:14px;font-weight:600;transition:0.2s}
+.modal-btns button:hover{opacity:0.9}
+.banned-notice{background:var(--ban);color:#fff;padding:16px;text-align:center;border-radius:var(--radius);margin:12px 16px;font-weight:600}
+.edited-tag{font-size:11px;color:#888;margin-left:8px}
 
-/* Auth */
-.auth-page{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-.auth-container{display:flex;gap:40px;max-width:1000px;width:100%;align-items:flex-start}
-.auth-left{flex:1;padding-top:40px}
-.auth-left h1{font-size:48px;color:#1877f2;font-weight:800;margin-bottom:10px}
-.auth-left p{font-size:22px;color:#1c1e21;line-height:1.4}
-.auth-right{width:400px}
-.auth-box{background:#fff;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1),0 8px 16px rgba(0,0,0,0.1);padding:20px}
-.auth-box input{width:100%;padding:14px 16px;margin-bottom:12px;border:1px solid #dddfe2;border-radius:6px;font-size:15px;font-family:inherit;outline:none}
-.auth-box input:focus{border-color:#1877f2;box-shadow:0 0 0 2px #e7f3ff}
-.auth-box button{width:100%;padding:14px;border:none;border-radius:6px;font-size:17px;font-weight:700;font-family:inherit;cursor:pointer;transition:opacity .2s}
-.auth-box button:hover{opacity:.9}
-.btn-login{background:#1877f2;color:#fff}
-.btn-register{background:#42b72a;color:#fff;margin-top:10px}
-.divider{border-top:1px solid #dadde1;margin:16px 0}
-.remember-box{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:14px;color:#606770}
-.remember-box input{width:auto;margin:0}
-.forgot-link{text-align:center;color:#1877f2;font-size:14px;cursor:pointer;margin-top:8px}
-.forgot-link:hover{text-decoration:underline}
+/* Private Chat Styles */
+.chat-list-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:0.2s}
+.chat-list-item:hover{background:var(--bg)}
+.chat-list-item-info{flex:1}
+.chat-list-item-name{font-weight:700;font-size:15px;margin-bottom:4px}
+.chat-list-item-last{font-size:13px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:250px}
+.chat-list-item-time{font-size:11px;color:#888}
+.chat-window{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin:12px 16px;box-shadow:var(--shadow);display:flex;flex-direction:column;height:calc(100vh - 200px);max-height:600px}
+.chat-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--bg);border-radius:var(--radius) var(--radius) 0 0}
+.chat-header-info{font-weight:700;font-size:15px}
+.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.chat-message{max-width:70%;padding:10px 14px;border-radius:var(--radius);font-size:14px;line-height:1.5;word-wrap:break-word}
+.chat-message.sent{align-self:flex-start;background:var(--primary);color:#fff;border-bottom-left-radius:2px}
+.chat-message.received{align-self:flex-end;background:var(--bg);border:1px solid var(--border);border-bottom-right-radius:2px}
+.chat-message-time{font-size:10px;opacity:0.7;margin-top:4px;text-align:left}
+.chat-input-area{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:flex-end}
+.chat-input-area input{flex:1;padding:10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:14px;outline:none}
+.chat-input-area input:focus{border-color:var(--primary)}
+.chat-input-area button{padding:10px 16px}
+.chat-blocked-notice{background:var(--ban);color:#fff;padding:10px;text-align:center;font-size:13px;font-weight:600}
 
-/* Navbar */
-.navbar{background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.1);padding:8px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.nav-logo{font-size:28px;font-weight:800;color:#1877f2;cursor:pointer}
-.nav-search{flex:1;max-width:400px;margin:0 20px}
-.nav-search input{width:100%;padding:10px 16px;border:none;background:#f0f2f5;border-radius:50px;font-size:15px;font-family:inherit;outline:none}
-.nav-right{display:flex;align-items:center;gap:12px}
-.nav-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;cursor:pointer;border:2px solid #e4e6eb}
-.nav-btn{padding:8px 16px;border:none;background:#f0f2f5;border-radius:6px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:600;color:#050505;transition:background .2s}
-.nav-btn:hover{background:#e4e6eb}
-.nav-btn.active{background:#1877f2;color:#fff}
+/* Group Chat Styles */
+.group-chat-section{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.group-chat-messages{max-height:300px;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.group-chat-message{padding:8px 12px;border-radius:var(--radius);font-size:13px;line-height:1.4;word-wrap:break-word}
+.group-chat-message.sent{align-self:flex-start;background:var(--primary);color:#fff;border-bottom-left-radius:2px}
+.group-chat-message.received{align-self:flex-end;background:var(--bg);border:1px solid var(--border);border-bottom-right-radius:2px}
+.group-chat-message-author{font-size:11px;font-weight:700;margin-bottom:2px;opacity:0.8}
+.group-chat-message-time{font-size:10px;opacity:0.7;margin-top:2px;text-align:left}
+.group-chat-input{display:flex;gap:8px;margin-top:8px}
+.group-chat-input input{flex:1;padding:8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:13px;outline:none}
+.group-chat-input input:focus{border-color:var(--primary)}
+.group-chat-input button{padding:8px 14px;font-size:13px}
 
-/* Main */
-.main-layout{display:flex;max-width:1200px;margin:0 auto;padding:20px;gap:20px}
-.sidebar{width:280px;flex-shrink:0}
-.sidebar-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;cursor:pointer;font-size:15px;font-weight:600;color:#050505;transition:background .2s;margin-bottom:4px}
-.sidebar-item:hover{background:#e4e6eb}
-.sidebar-item.active{background:#e7f3ff;color:#1877f2}
-.sidebar-icon{width:36px;height:36px;border-radius:50%;background:#e4e6eb;display:flex;align-items:center;justify-content:center;font-size:18px}
-.sidebar-item.active .sidebar-icon{background:#1877f2;color:#fff}
-.content-area{flex:1;min-width:0}
+/* Remember Me checkbox */
+.remember-row{display:flex;align-items:center;gap:8px;margin:12px 0}
+.remember-row input[type="checkbox"]{width:auto;margin:0;accent-color:var(--primary);transform:scale(1.1);cursor:pointer}
+.remember-row label{font-size:14px;color:var(--text);cursor:pointer;user-select:none}
 
-/* Create Post */
-.create-post{background:#fff;border-radius:8px;padding:16px;margin-bottom:16px;box-shadow:0 1px 2px rgba(0,0,0,0.1)}
-.create-post-top{display:flex;gap:12px;align-items:center}
-.create-post-top img{width:40px;height:40px;border-radius:50%;object-fit:cover}
-.create-post-top input{flex:1;padding:12px 16px;border:none;background:#f0f2f5;border-radius:50px;font-size:15px;font-family:inherit;outline:none;cursor:pointer}
-.create-post-top input:hover{background:#e4e6eb}
-.create-post-actions{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #e4e6eb}
-.create-post-actions button{flex:1;padding:8px;border:none;background:#f0f2f5;border-radius:6px;font-family:inherit;font-size:14px;font-weight:600;color:#65676b;cursor:pointer;transition:background .2s}
-.create-post-actions button:hover{background:#e4e6eb}
-
-/* Post Card */
-.post-card{background:#fff;border-radius:8px;padding:16px;margin-bottom:16px;box-shadow:0 1px 2px rgba(0,0,0,0.1)}
-.post-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.post-header img{width:40px;height:40px;border-radius:50%;object-fit:cover;cursor:pointer}
-.post-header-info h4{font-size:15px;font-weight:600;color:#050505;cursor:pointer}
-.post-header-info h4:hover{text-decoration:underline}
-.post-header-info span{font-size:13px;color:#65676b}
-.post-content{font-size:15px;color:#050505;line-height:1.5;margin-bottom:12px}
-.post-image{width:100%;border-radius:8px;margin-bottom:12px;max-height:500px;object-fit:cover}
-.post-actions{display:flex;gap:4px;padding-top:8px;border-top:1px solid #e4e6eb}
-.post-actions button{flex:1;padding:8px;border:none;background:transparent;border-radius:6px;font-family:inherit;font-size:14px;font-weight:600;color:#65676b;cursor:pointer;transition:background .2s}
-.post-actions button:hover{background:#f0f2f5}
-
-/* Profile */
-.profile-cover{background:linear-gradient(135deg,#1877f2,#42b72a);height:200px;border-radius:0 0 8px 8px;position:relative}
-.profile-info{background:#fff;border-radius:0 0 8px 8px;padding:0 20px 20px;position:relative;margin-bottom:16px;box-shadow:0 1px 2px rgba(0,0,0,0.1)}
-.profile-avatar-large{width:168px;height:168px;border-radius:50%;border:4px solid #fff;object-fit:cover;position:absolute;top:-84px;right:20px;background:#e4e6eb;cursor:pointer}
-.profile-name-section{padding-top:90px}
-.profile-name-section h1{font-size:32px;font-weight:700;color:#050505}
-.profile-username{font-size:15px;color:#65676b;margin-top:4px}
-.profile-details{display:flex;gap:20px;margin-top:12px;flex-wrap:wrap}
-.profile-details span{font-size:15px;color:#65676b;display:flex;align-items:center;gap:6px}
-.profile-actions{display:flex;gap:10px;margin-top:16px}
-.profile-actions button{padding:10px 24px;border:none;border-radius:6px;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer}
-.btn-primary{background:#1877f2;color:#fff}
-.btn-secondary{background:#e4e6eb;color:#050505}
-.btn-success{background:#42b72a;color:#fff}
-.btn-danger{background:#f02849;color:#fff}
-.profile-tabs{display:flex;gap:4px;margin-top:16px;padding-top:16px;border-top:1px solid #e4e6eb}
-.profile-tabs button{padding:10px 20px;border:none;background:transparent;border-radius:6px;font-family:inherit;font-size:15px;font-weight:600;color:#65676b;cursor:pointer;transition:background .2s}
-.profile-tabs button:hover{background:#f0f2f5}
-.profile-tabs button.active{color:#1877f2;border-bottom:3px solid #1877f2;border-radius:6px 6px 0 0}
-
-/* Chat */
-.chat-container{background:#fff;border-radius:8px;height:calc(100vh - 100px);display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(0,0,0,0.1)}
-.chat-header{padding:16px 20px;border-bottom:1px solid #e4e6eb;display:flex;align-items:center;gap:10px}
-.chat-header img{width:40px;height:40px;border-radius:50%;object-fit:cover}
-.chat-header h3{font-size:16px;font-weight:600}
-.chat-header span{font-size:13px;color:#42b72a}
-.chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px}
-.chat-message{max-width:70%;padding:12px 16px;border-radius:18px;font-size:15px;line-height:1.4;word-break:break-word}
-.chat-message.sent{align-self:flex-end;background:#1877f2;color:#fff;border-bottom-right-radius:4px}
-.chat-message.received{align-self:flex-start;background:#f0f2f5;color:#050505;border-bottom-left-radius:4px}
-.chat-message-info{font-size:12px;color:#65676b;margin-top:4px}
-.chat-message.sent .chat-message-info{color:#cce0ff}
-.chat-input-area{padding:12px 20px;border-top:1px solid #e4e6eb;display:flex;gap:10px}
-.chat-input-area input{flex:1;padding:12px 16px;border:none;background:#f0f2f5;border-radius:50px;font-size:15px;font-family:inherit;outline:none}
-.chat-input-area button{padding:10px 20px;border:none;background:#1877f2;color:#fff;border-radius:50px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer}
-
-/* Settings */
-.settings-container{background:#fff;border-radius:8px;padding:24px;box-shadow:0 1px 2px rgba(0,0,0,0.1)}
-.settings-container h2{font-size:22px;margin-bottom:20px;color:#050505}
-.settings-section{margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid #e4e6eb}
-.settings-section:last-child{border-bottom:none}
-.settings-section h3{font-size:17px;margin-bottom:12px;color:#050505}
-.settings-field{margin-bottom:16px}
-.settings-field label{display:block;font-size:14px;font-weight:600;color:#65676b;margin-bottom:6px}
-.settings-field input,.settings-field textarea,.settings-field select{width:100%;padding:12px;border:1px solid #dddfe2;border-radius:6px;font-size:15px;font-family:inherit;outline:none}
-.settings-field input:focus,.settings-field textarea:focus{border-color:#1877f2;box-shadow:0 0 0 2px #e7f3ff}
-.settings-field textarea{min-height:100px;resize:vertical}
-.settings-field .hint{font-size:13px;color:#65676b;margin-top:4px}
-.settings-field .hint.warning{color:#f02849}
-.settings-field .hint.success{color:#42b72a}
-.settings-btn{padding:10px 24px;border:none;background:#1877f2;color:#fff;border-radius:6px;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer}
-.settings-btn:disabled{background:#e4e6eb;color:#bcc0c4;cursor:not-allowed}
-.settings-btn.danger{background:#f02849}
-
-/* Modal */
-.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:200}
-.modal{background:#fff;border-radius:8px;padding:20px;width:500px;max-width:90%;max-height:90vh;overflow-y:auto}
-.modal h3{font-size:20px;margin-bottom:16px}
-.modal textarea{width:100%;min-height:120px;padding:12px;border:1px solid #dddfe2;border-radius:6px;font-size:15px;font-family:inherit;resize:vertical;outline:none}
-.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
-.modal-actions button{padding:10px 20px;border:none;border-radius:6px;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer}
-.modal-actions .btn-cancel{background:#e4e6eb;color:#050505}
-.modal-actions .btn-publish{background:#1877f2;color:#fff}
-
-/* Register Modal */
-.register-modal .modal{width:430px}
-.register-modal h2{font-size:26px;margin-bottom:4px}
-.register-modal .subtitle{color:#606770;font-size:15px;margin-bottom:16px}
-.register-modal .divider{margin:12px 0}
-.register-modal input{width:100%;padding:12px;margin-bottom:10px;border:1px solid #ccd0d5;border-radius:5px;font-size:15px;font-family:inherit;outline:none}
-.register-modal input:focus{border-color:#1877f2}
-.register-modal .terms{font-size:11px;color:#777;margin:10px 0;line-height:1.4}
-.register-modal .terms a{color:#1877f2;text-decoration:none}
-.btn-register-submit{width:100%;padding:14px;background:#42b72a;color:#fff;border:none;border-radius:6px;font-size:17px;font-weight:700;font-family:inherit;cursor:pointer}
-
-/* Search Results */
-.search-results{background:#fff;border-radius:8px;padding:16px;box-shadow:0 1px 2px rgba(0,0,0,0.1)}
-.search-result-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;cursor:pointer;transition:background .2s}
-.search-result-item:hover{background:#f0f2f5}
-.search-result-item img{width:50px;height:50px;border-radius:50%;object-fit:cover}
-.search-result-item h4{font-size:15px;font-weight:600}
-.search-result-item span{font-size:13px;color:#65676b}
-
-/* Friends Grid */
-.friends-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
-.friend-card{background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,0.1);cursor:pointer;transition:transform .2s}
-.friend-card:hover{transform:translateY(-2px)}
-.friend-card img{width:100%;height:200px;object-fit:cover}
-.friend-card-info{padding:12px}
-.friend-card-info h4{font-size:15px;font-weight:600}
-.friend-card-info span{font-size:13px;color:#65676b}
-
-/* Friend Request */
-.friend-request-item{display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border-radius:8px;margin-bottom:10px;box-shadow:0 1px 2px rgba(0,0,0,0.1)}
-.friend-request-item img{width:50px;height:50px;border-radius:50%;object-fit:cover}
-.friend-request-item .req-actions{display:flex;gap:8px;margin-top:8px}
-.friend-request-item .req-actions button{padding:6px 16px;border:none;border-radius:6px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
-
-/* Notifications */
-.notification-badge{position:absolute;top:-5px;right:-5px;background:#f02849;color:#fff;font-size:11px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.nav-btn{position:relative}
-
-/* Upload */
-.upload-area{border:2px dashed #dddfe2;border-radius:8px;padding:30px;text-align:center;cursor:pointer;transition:border-color .2s;background:#f0f2f5}
-.upload-area:hover{border-color:#1877f2}
-.upload-area.dragover{border-color:#1877f2;background:#e7f3ff}
-.upload-area p{color:#65676b;font-size:14px;margin-top:8px}
-
-/* Loading */
-.loading{text-align:center;padding:40px;color:#65676b}
-.loading-spinner{width:40px;height:40px;border:3px solid #e4e6eb;border-top-color:#1877f2;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 10px}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* Responsive */
-@media(max-width:900px){.auth-container{flex-direction:column;align-items:center}.auth-left{text-align:center;padding-top:0}.auth-left h1{font-size:36px}.auth-left p{font-size:18px}.sidebar{display:none}.profile-avatar-large{width:120px;height:120px;top:-60px;right:50%;transform:translateX(50%)}.profile-name-section{padding-top:70px;text-align:center}.profile-details{justify-content:center}}
-@media(max-width:600px){.auth-right{width:100%}.navbar{padding:8px 10px}.nav-search{display:none}.main-layout{padding:10px}}
+@media(max-width:600px){.header h2{font-size:16px}.post-content{font-size:14px}.nav-tab{padding:6px 12px;font-size:13px}.chat-list-item-last{max-width:180px}.chat-message{max-width:85%}}
 </style>
 </head>
 <body>
-
-<!-- ==================== LOGIN PAGE ==================== -->
-<div id="authPage" class="auth-page">
-  <div class="auth-container">
-    <div class="auth-left">
-      <h1>Whisper Chat</h1>
-      <p>تواصل مع أصدقائك وشارك لحظاتك مع العالم.</p>
-    </div>
-    <div class="auth-right">
-      <div class="auth-box">
-        <input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
-        <input type="password" id="loginPassword" placeholder="كلمة المرور">
-        <div class="remember-box">
-          <input type="checkbox" id="rememberMe">
-          <label for="rememberMe">تذكرني</label>
-        </div>
-        <button class="btn-login" onclick="login()">تسجيل الدخول</button>
-        <div class="forgot-link">هل نسيت كلمة المرور؟</div>
-        <div class="divider"></div>
-        <button class="btn-register" onclick="showRegister()">إنشاء حساب جديد</button>
-      </div>
-    </div>
-  </div>
+<div id="auth-screen">
+<div class="auth-box">
+<h1>Whisper Chat</h1>
+<div id="auth-form">
+<input type="text" id="username" placeholder="Username" maxlength="30">
+<input type="password" id="password" placeholder="Password" maxlength="50">
+<div class="remember-row">
+  <input type="checkbox" id="remember-me">
+  <label for="remember-me">Remember Me</label>
 </div>
-
-<!-- ==================== REGISTER MODAL ==================== -->
-<div id="registerModal" class="modal-overlay hidden" onclick="if(event.target===this)hideRegister()">
-  <div class="modal register-modal">
-    <h2>إنشاء حساب جديد</h2>
-    <p class="subtitle">سريع وسهل.</p>
-    <div class="divider"></div>
-    <input type="text" id="regName" placeholder="الاسم الكامل">
-    <input type="email" id="regEmail" placeholder="البريد الإلكتروني">
-    <input type="number" id="regAge" placeholder="العمر" min="13" max="120">
-    <input type="password" id="regPassword" placeholder="كلمة المرور (6 أحرف على الأقل)">
-    <input type="password" id="regPasswordConfirm" placeholder="تأكيد كلمة المرور">
-    <p class="terms">بالنقر على "إنشاء حساب"، فإنك توافق على <a href="#">شروطنا</a> و <a href="#">سياسة البيانات</a>.</p>
-    <button class="btn-register-submit" onclick="register()">إنشاء حساب</button>
-  </div>
+<div id="auth-msg" class="error-msg"></div>
+<button class="btn-primary" id="auth-btn" onclick="handleAuth()">Login</button>
+<button class="btn-success hidden" id="signup-btn" onclick="handleSignup()">Sign Up</button>
 </div>
-
-<!-- ==================== MAIN APP ==================== -->
-<div id="mainApp" class="hidden">
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="nav-logo" onclick="showPage('feed')">Whisper Chat</div>
-    <div class="nav-search">
-      <input type="text" id="searchInput" placeholder="البحث في Whisper Chat..." oninput="searchUsers(this.value)">
-    </div>
-    <div class="nav-right">
-      <button class="nav-btn" id="navFeed" onclick="showPage('feed')">الرئيسية</button>
-      <button class="nav-btn" id="navChat" onclick="showPage('chat')">الدردشة</button>
-      <button class="nav-btn" id="navFriends" onclick="showPage('friends')">الأصدقاء <span id="friendReqBadge" class="notification-badge hidden">0</span></button>
-      <img id="navAvatar" src="https://ui-avatars.com/api/?name=User&background=1877f2&color=fff" class="nav-avatar" onclick="showPage('profile')">
-      <button class="nav-btn" onclick="showPage('settings')">الإعدادات</button>
-      <button class="nav-btn danger" onclick="logout()">خروج</button>
-    </div>
-  </nav>
-
-  <!-- Main Layout -->
-  <div class="main-layout">
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-item active" id="sbFeed" onclick="showPage('feed')">
-        <div class="sidebar-icon">🏠</div>
-        <span>الصفحة الرئيسية</span>
-      </div>
-      <div class="sidebar-item" id="sbChat" onclick="showPage('chat')">
-        <div class="sidebar-icon">💬</div>
-        <span>الدردشة العامة</span>
-      </div>
-      <div class="sidebar-item" id="sbFriends" onclick="showPage('friends')">
-        <div class="sidebar-icon">👥</div>
-        <span>الأصدقاء</span>
-      </div>
-      <div class="sidebar-item" id="sbProfile" onclick="showPage('profile')">
-        <div class="sidebar-icon">👤</div>
-        <span id="sbProfileName">ملفي الشخصي</span>
-      </div>
-      <div class="sidebar-item" id="sbSettings" onclick="showPage('settings')">
-        <div class="sidebar-icon">⚙️</div>
-        <span>الإعدادات</span>
-      </div>
-    </aside>
-
-    <!-- Content Area -->
-    <div class="content-area" id="contentArea">
-
-      <!-- ====== FEED PAGE ====== -->
-      <div id="pageFeed">
-        <div class="create-post">
-          <div class="create-post-top">
-            <img id="createPostAvatar" src="">
-            <input type="text" placeholder="بماذا تفكر؟" readonly onclick="showCreatePostModal()">
-          </div>
-          <div class="create-post-actions">
-            <button onclick="showCreatePostModal()">📝 منشور نصي</button>
-            <button onclick="showCreatePostModal()">📷 صورة</button>
-            <button onclick="showCreatePostModal()">😊 شعور/نشاط</button>
-          </div>
-        </div>
-        <div id="postsContainer">
-          <div class="loading"><div class="loading-spinner"></div>جاري التحميل...</div>
-        </div>
-      </div>
-
-      <!-- ====== CHAT PAGE ====== -->
-      <div id="pageChat" class="hidden">
-        <div class="chat-container">
-          <div class="chat-header">
-            <img src="https://ui-avatars.com/api/?name=Global+Chat&background=42b72a&color=fff">
-            <div>
-              <h3>الدردشة العامة</h3>
-              <span>● متصل الآن</span>
-            </div>
-          </div>
-          <div class="chat-messages" id="chatMessages">
-            <div class="loading"><div class="loading-spinner"></div>جاري التحميل...</div>
-          </div>
-          <div class="chat-input-area">
-            <input type="text" id="chatInput" placeholder="اكتب رسالتك هنا..." onkeypress="if(event.key==='Enter')sendChatMessage()">
-            <button onclick="sendChatMessage()">إرسال</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ====== FRIENDS PAGE ====== -->
-      <div id="pageFriends" class="hidden">
-        <div class="settings-container">
-          <h2>👥 الأصدقاء</h2>
-          <div class="profile-tabs" style="margin-bottom:20px;">
-            <button class="active" onclick="showFriendsTab('all',this)">كل الأصدقاء</button>
-            <button onclick="showFriendsTab('requests',this)">طلبات الصداقة <span id="reqCountBadge">(0)</span></button>
-            <button onclick="showFriendsTab('sent',this)">طلبات مرسلة</button>
-            <button onclick="showFriendsTab('suggested',this)">اقتراحات</button>
-          </div>
-          <div id="friendsTabContent">
-            <div class="loading"><div class="loading-spinner"></div>جاري التحميل...</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ====== PROFILE PAGE ====== -->
-      <div id="pageProfile" class="hidden">
-        <div class="profile-cover"></div>
-        <div class="profile-info">
-          <img id="profileAvatar" src="" class="profile-avatar-large" onclick="if(viewingProfile===currentUserUid)document.getElementById('avatarUpload').click()">
-          <input type="file" id="avatarUpload" class="hidden" accept="image/*" onchange="uploadAvatar(this)">
-          <div class="profile-name-section">
-            <h1 id="profileName">الاسم</h1>
-            <div class="profile-username" id="profileUsername">@username</div>
-            <div class="profile-details">
-              <span>🎂 <span id="profileAge">--</span> سنة</span>
-              <span>📍 <span id="profileLocation">غير محدد</span></span>
-              <span>📅 انضم <span id="profileJoined">--</span></span>
-            </div>
-            <div class="profile-actions" id="profileActions"></div>
-            <div class="profile-tabs">
-              <button class="active" onclick="showProfileTab('posts',this)">المنشورات</button>
-              <button onclick="showProfileTab('about',this)">عن</button>
-              <button onclick="showProfileTab('friends',this)">الأصدقاء</button>
-            </div>
-          </div>
-        </div>
-        <div id="profileTabContent">
-          <div class="loading"><div class="loading-spinner"></div>جاري التحميل...</div>
-        </div>
-      </div>
-
-      <!-- ====== SETTINGS PAGE ====== -->
-      <div id="pageSettings" class="hidden">
-        <div class="settings-container">
-          <h2>⚙️ الإعدادات</h2>
-
-          <div class="settings-section">
-            <h3>📷 الصورة الشخصية</h3>
-            <div class="settings-field">
-              <div class="upload-area" onclick="document.getElementById('settingsAvatarFile').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handleAvatarDrop(event)">
-                <div style="font-size:40px;">📤</div>
-                <p>اضغط هنا أو اسحب صورة لرفعها</p>
-                <p style="font-size:12px;color:#999;">JPG, PNG, GIF - الحد الأقصى 5 ميجا</p>
-              </div>
-              <input type="file" id="settingsAvatarFile" class="hidden" accept="image/*" onchange="uploadSettingsAvatar(this)">
-              <div id="avatarPreview" style="margin-top:10px;text-align:center;"></div>
-            </div>
-          </div>
-
-          <div class="settings-section">
-            <h3>👤 معلومات الحساب</h3>
-            <div class="settings-field">
-              <label>الاسم الكامل</label>
-              <input type="text" id="settingsName">
-              <p class="hint" id="nameHint">يمكنك تغيير الاسم <span id="nameChangesLeft">2</span> مرة كل 7 أيام</p>
-            </div>
-            <div class="settings-field">
-              <label>اسم المستخدم</label>
-              <input type="text" id="settingsUsername">
-              <p class="hint" id="usernameHint">يمكنك تغيير اسم المستخدم <span id="usernameChangesLeft">1</span> مرة كل 30 يوم</p>
-            </div>
-            <div class="settings-field">
-              <label>العمر</label>
-              <input type="number" id="settingsAge" min="13" max="120">
-            </div>
-            <div class="settings-field">
-              <label>مكان الإقامة</label>
-              <input type="text" id="settingsLocation" placeholder="المدينة، الدولة">
-            </div>
-          </div>
-
-          <div class="settings-section">
-            <h3>📝 نبذة عني</h3>
-            <div class="settings-field">
-              <textarea id="settingsBio" placeholder="اكتب نبذة عنك..."></textarea>
-            </div>
-          </div>
-
-          <div class="settings-section">
-            <h3>🎵 المفضلات</h3>
-            <div class="settings-field">
-              <label>الموسيقى المفضلة</label>
-              <input type="text" id="settingsMusic" placeholder="أغاني، فرق...">
-            </div>
-            <div class="settings-field">
-              <label>الأفلام المفضلة</label>
-              <input type="text" id="settingsMovies" placeholder="أفلام...">
-            </div>
-            <div class="settings-field">
-              <label>الكتب المفضلة</label>
-              <input type="text" id="settingsBooks" placeholder="كتب...">
-            </div>
-          </div>
-
-          <div class="settings-section">
-            <h3>🔒 كلمة المرور</h3>
-            <div class="settings-field">
-              <label>كلمة المرور الجديدة</label>
-              <input type="password" id="settingsNewPassword" placeholder="اتركها فارغة إذا لم ترغب في التغيير">
-            </div>
-            <div class="settings-field">
-              <label>تأكيد كلمة المرور</label>
-              <input type="password" id="settingsConfirmPassword">
-            </div>
-          </div>
-
-          <button class="settings-btn" id="saveSettingsBtn" onclick="saveSettings()">💾 حفظ التغييرات</button>
-        </div>
-      </div>
-
-      <!-- ====== SEARCH RESULTS PAGE ====== -->
-      <div id="pageSearch" class="hidden">
-        <div class="search-results">
-          <h2 style="margin-bottom:16px;font-size:20px;">🔍 نتائج البحث</h2>
-          <div id="searchResultsContainer"></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
+<div class="auth-toggle" id="auth-toggle" onclick="toggleAuthMode()">Don't have an account? Sign up now</div>
 </div>
-
-<!-- ==================== CREATE POST MODAL ==================== -->
-<div id="createPostModal" class="modal-overlay hidden" onclick="if(event.target===this)hideCreatePostModal()">
-  <div class="modal">
-    <h3>إنشاء منشور</h3>
-    <textarea id="postContent" placeholder="بماذا تفكر؟"></textarea>
-    <div class="settings-field" style="margin-top:10px;">
-      <div class="upload-area" onclick="document.getElementById('postImageFile').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handlePostImageDrop(event)">
-        <div style="font-size:30px;">📷</div>
-        <p>اضغط هنا أو اسحب صورة للمنشور</p>
-      </div>
-      <input type="file" id="postImageFile" class="hidden" accept="image/*" onchange="handlePostImage(this)">
-      <div id="postImagePreview" style="margin-top:10px;text-align:center;"></div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="hideCreatePostModal()">إلغاء</button>
-      <button class="btn-publish" id="publishBtn" onclick="createPost()">نشر</button>
-    </div>
-  </div>
 </div>
+<div id="chat-screen" class="hidden">
+<div class="header">
+<h2>Whisper Chat</h2>
+<div class="header-btns">
+<button class="btn-secondary" onclick="toggleTheme()">Toggle Theme</button>
+<button class="btn-danger hidden" id="ban-list-btn" onclick="showBanList()">Banned Users</button>
+<button class="btn-danger" onclick="logout()">Logout</button>
+</div>
+</div>
+<div class="nav-tabs" id="nav-tabs">
+<button class="nav-tab active" onclick="switchTab('home')" id="tab-home">Home</button>
+<button class="nav-tab" onclick="switchTab('groups')" id="tab-groups">Groups</button>
+<button class="nav-tab" onclick="switchTab('private')" id="tab-private">Private Chats</button>
+<button class="nav-tab" onclick="switchTab('inbox')" id="tab-inbox">Inbox <span id="inbox-badge" class="hidden" style="background:var(--danger);color:#fff;padding:2px 6px;border-radius:10px;font-size:10px;margin-left:4px">0</span></button>
+</div>
+<div id="banned-notice" class="banned-notice hidden">
+You are banned from the platform. You cannot post or comment.
+</div>
+<div id="tab-content-home">
+<div class="post-box" id="post-box-area">
+<textarea id="post-content" placeholder="Write your post here..." maxlength="1000" oninput="updateCharCount('post-content','post-count')"></textarea>
+<div class="char-count" id="post-count">1000 / 1000</div>
+<button class="btn-primary post-btn" onclick="createPost()">Post</button>
+</div>
+<div class="posts-container" id="posts-container">
+<div class="loading">Loading...</div>
+</div>
+</div>
+<div id="tab-content-groups" class="hidden">
+<div class="group-box" id="create-group-box">
+<h3 style="margin-bottom:10px">Create New Group</h3>
+<input type="text" id="group-name" placeholder="Group Name" maxlength="50">
+<button class="btn-group post-btn" onclick="createGroup()">Create Group</button>
+<div id="group-msg" class="error-msg" style="margin-top:8px"></div>
+</div>
+<div class="posts-container" id="groups-container">
+<div class="loading">Loading...</div>
+</div>
+</div>
+<div id="tab-content-private" class="hidden">
+<div class="group-box" id="add-chat-box">
+<h3 style="margin-bottom:10px">Add New Chat</h3>
+<input type="text" id="private-chat-username" placeholder="Username">
+<button class="btn-primary post-btn" onclick="startPrivateChat()">Add Chat</button>
+<div id="private-chat-msg" class="error-msg" style="margin-top:8px"></div>
+</div>
+<div class="posts-container" id="private-chats-container">
+<div class="empty">No private chats</div>
+</div>
+</div>
+<div id="tab-content-chat" class="hidden">
+<div class="chat-window">
+<div class="chat-header">
+<div class="chat-header-info" id="chat-header-name"></div>
+<div class="header-btns">
+<button class="btn-ban" onclick="blockChatUser()" id="chat-block-btn">Block</button>
+<button class="btn-secondary" onclick="backToPrivateList()">Back</button>
+</div>
+</div>
+<div id="chat-blocked-notice" class="chat-blocked-notice hidden">This user is blocked. You cannot send messages to them.</div>
+<div class="chat-messages" id="chat-messages"></div>
+<div class="chat-input-area" id="chat-input-area">
+<input type="text" id="chat-message-input" placeholder="Type your message..." maxlength="1000" onkeypress="if(event.key==='Enter')sendChatMessage()">
+<button class="btn-primary" onclick="sendChatMessage()">Send</button>
+</div>
+</div>
+</div>
+<div id="tab-content-inbox" class="hidden">
+<div class="inbox-container" id="inbox-container">
+<div class="empty">No messages in Inbox</div>
+</div>
+</div>
+</div>
+<div id="edit-modal" class="hidden modal">
+<div class="modal-content">
+<h3>Edit</h3>
+<textarea id="edit-text" maxlength="1000"></textarea>
+<div class="modal-btns">
+<button class="btn-success" onclick="saveEdit()">Save</button>
+<button class="btn-secondary" onclick="closeEditModal()">Cancel</button>
+</div>
+</div>
+</div>
+<div id="ban-modal" class="hidden modal">
+<div class="modal-content">
+<h3>Banned Users List</h3>
+<div id="ban-list-container" style="max-height:300px;overflow-y:auto"></div>
+<div class="modal-btns">
+<button class="btn-danger" onclick="closeBanModal()">Close</button>
+</div>
+</div>
+</div>
+<div id="invite-modal" class="hidden modal">
+<div class="modal-content">
+<h3>Group Invite</h3>
+<div id="invite-info" style="margin-bottom:12px;font-size:14px"></div>
+<input type="text" id="invite-username" placeholder="Username">
+<div class="modal-btns">
+<button class="btn-success" onclick="sendInvite()">Send Invite</button>
+<button class="btn-secondary" onclick="closeInviteModal()">Cancel</button>
+</div>
+</div>
+</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import { getFirestore, collection, addDoc, query, orderBy, doc, getDoc, setDoc, deleteDoc, updateDoc, onSnapshot, serverTimestamp, where, getDocs } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-<script>
-// ==================== GLOBALS ====================
-let fb = null;
+const firebaseConfig = {
+    apiKey: "AIzaSyCg__gUC0NBNGH_bpOtNByCibo6u_aS9gg",
+    authDomain: "whisper-chat-online.firebaseapp.com",
+    projectId: "whisper-chat-online",
+    storageBucket: "whisper-chat-online.firebasestorage.app",
+    messagingSenderId: "698457236568",
+    appId: "1:698457236568:web:f38241c742a3ca5173162d"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ===== CONFIG =====
+const OWNER_USERNAME = "The Owner 3000";
+const ADMIN_USERNAMES = ["Admin1", "Admin2", "Moderator"];
+// ==================
+
 let currentUser = null;
-let currentUserUid = null;
-let currentUserData = null;
-let currentPage = 'feed';
-let viewingProfile = null;
-let friendsList = [];
-let friendRequests = [];
-let sentRequests = [];
-let postsUnsub = null;
-let chatUnsub = null;
-let reqUnsub = null;
+let isLoginMode = true;
+let postsListener = null;
+let commentsListeners = {};
+let groupsListener = null;
+let inboxListener = null;
+let banListener = null;
+let privateChatsListener = null;
+let chatMessagesListener = null;
+let groupChatListeners = {};
+let editingId = null;
+let editingType = null;
+let bannedUsers = [];
+let currentTab = 'home';
+let inviteGroupId = null;
+let currentChatUser = null;
+let currentGroupId = null;
+let inboxReadStatus = {};
+let privateUnreadCounts = {};
+let totalPrivateUnread = 0;
 
-// Wait for Firebase to load
-function waitForFirebase() {
-  return new Promise((resolve) => {
-    const check = () => {
-      if (window._fb) {
-        fb = window._fb;
-        resolve();
-      } else {
-        setTimeout(check, 100);
-      }
-    };
-    check();
-  });
+function isOwner() { return currentUser === OWNER_USERNAME; }
+function isAdmin() { return ADMIN_USERNAMES.includes(currentUser); }
+function isStaff() { return isOwner() || isAdmin(); }
+function isBanned(username) { return bannedUsers.includes(username); }
+
+function getTag(username) {
+    if (username === OWNER_USERNAME) return '<span class="tag tag-owner">Owner</span>';
+    if (ADMIN_USERNAMES.includes(username)) return '<span class="tag tag-admin">Admin</span>';
+    if (isBanned(username)) return '<span class="tag tag-banned">Banned</span>';
+    return '';
 }
 
-waitForFirebase().then(() => {
-  fb.onAuthStateChanged(fb.auth, async (user) => {
-    if (user) {
-      currentUser = user;
-      currentUserUid = user.uid;
-      await loadUserData();
-      document.getElementById('authPage').classList.add('hidden');
-      document.getElementById('mainApp').classList.remove('hidden');
-      updateUI();
-      showPage('feed');
-      listenFriendRequests();
-    } else {
-      currentUser = null;
-      currentUserUid = null;
-      currentUserData = null;
-      if (postsUnsub) { postsUnsub(); postsUnsub = null; }
-      if (chatUnsub) { chatUnsub(); chatUnsub = null; }
-      if (reqUnsub) { reqUnsub(); reqUnsub = null; }
-      document.getElementById('mainApp').classList.add('hidden');
-      document.getElementById('authPage').classList.remove('hidden');
-    }
-  });
-});
-
-// ==================== USER DATA ====================
-async function loadUserData() {
-  const docRef = fb.doc(fb.db, 'users', currentUserUid);
-  const docSnap = await fb.getDoc(docRef);
-  if (docSnap.exists()) {
-    currentUserData = docSnap.data();
-  } else {
-    // Create initial user data
-    currentUserData = {
-      uid: currentUserUid,
-      email: currentUser.email,
-      name: currentUser.displayName || currentUser.email.split('@')[0],
-      username: currentUser.email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '_'),
-      age: 18,
-      avatar: currentUser.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.displayName || 'User')}&background=1877f2&color=fff`,
-      location: '',
-      bio: '',
-      music: '',
-      movies: '',
-      books: '',
-      joined: new Date().toISOString().split('T')[0],
-      nameLastChanged: null,
-      usernameLastChanged: null,
-      nameChangesCount: 0,
-      usernameChangesCount: 0
-    };
-    await fb.setDoc(docRef, currentUserData);
-  }
+// استعادة الجلسة - يفحص localStorage ثم sessionStorage
+const savedUserLocal = localStorage.getItem('whisper_user');
+const savedUserSession = sessionStorage.getItem('whisper_user');
+if (savedUserLocal) {
+    currentUser = savedUserLocal;
+    showChat();
+} else if (savedUserSession) {
+    currentUser = savedUserSession;
+    showChat();
 }
 
-async function refreshUserData() {
-  if (!currentUserUid) return;
-  const docRef = fb.doc(fb.db, 'users', currentUserUid);
-  const docSnap = await fb.getDoc(docRef);
-  if (docSnap.exists()) {
-    currentUserData = docSnap.data();
-    updateUI();
-  }
-}
+window.toggleAuthMode = function() {
+    isLoginMode = !isLoginMode;
+    document.getElementById('auth-btn').classList.toggle('hidden');
+    document.getElementById('signup-btn').classList.toggle('hidden');
+    document.getElementById('auth-toggle').textContent = isLoginMode ? 'Dont Have Account ?' : 'Login ?';
+    document.getElementById('auth-msg').textContent = '';
+};
 
-// ==================== AUTH ====================
-function showRegister() {
-  document.getElementById('registerModal').classList.remove('hidden');
-}
-function hideRegister() {
-  document.getElementById('registerModal').classList.add('hidden');
-  document.getElementById('regName').value = '';
-  document.getElementById('regEmail').value = '';
-  document.getElementById('regAge').value = '';
-  document.getElementById('regPassword').value = '';
-  document.getElementById('regPasswordConfirm').value = '';
-}
-
-async function register() {
-  const name = document.getElementById('regName').value.trim();
-  const email = document.getElementById('regEmail').value.trim();
-  const age = parseInt(document.getElementById('regAge').value);
-  const password = document.getElementById('regPassword').value;
-  const passwordConfirm = document.getElementById('regPasswordConfirm').value;
-
-  if (!name || !email || !age || !password) { alert('يرجى ملء جميع الحقول'); return; }
-  if (password !== passwordConfirm) { alert('كلمتا المرور غير متطابقتين'); return; }
-  if (password.length < 6) { alert('يجب أن تكون كلمة المرور 6 أحرف على الأقل'); return; }
-  if (age < 13) { alert('يجب أن يكون العمر 13 سنة على الأقل'); return; }
-
-  try {
-    const cred = await fb.createUserWithEmailAndPassword(fb.auth, email, password);
-    await fb.updateProfile(cred.user, { displayName: name });
-    const userData = {
-      uid: cred.user.uid,
-      email: email,
-      name: name,
-      username: email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '_'),
-      age: age,
-      avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=1877f2&color=fff`,
-      location: '',
-      bio: '',
-      music: '',
-      movies: '',
-      books: '',
-      joined: new Date().toISOString().split('T')[0],
-      nameLastChanged: null,
-      usernameLastChanged: null,
-      nameChangesCount: 0,
-      usernameChangesCount: 0
-    };
-    await fb.setDoc(fb.doc(fb.db, 'users', cred.user.uid), userData);
-    hideRegister();
-    alert('تم إنشاء الحساب بنجاح!');
-  } catch (e) {
-    alert('خطأ: ' + (e.message || e));
-  }
-}
-
-async function login() {
-  const email = document.getElementById('loginEmail').value.trim();
-  const password = document.getElementById('loginPassword').value;
-  if (!email || !password) { alert('يرجى إدخال البريد وكلمة المرور'); return; }
-  try {
-    await fb.signInWithEmailAndPassword(fb.auth, email, password);
-  } catch (e) {
-    alert('خطأ في تسجيل الدخول: ' + (e.message || e));
-  }
-}
-
-async function logout() {
-  try {
-    await fb.signOut(fb.auth);
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-// ==================== UI UPDATE ====================
-function updateUI() {
-  if (!currentUserData) return;
-  document.getElementById('navAvatar').src = currentUserData.avatar;
-  document.getElementById('createPostAvatar').src = currentUserData.avatar;
-  document.getElementById('sbProfileName').textContent = currentUserData.name;
-}
-
-// ==================== NAVIGATION ====================
-function showPage(page, username) {
-  document.getElementById('pageFeed').classList.add('hidden');
-  document.getElementById('pageChat').classList.add('hidden');
-  document.getElementById('pageFriends').classList.add('hidden');
-  document.getElementById('pageProfile').classList.add('hidden');
-  document.getElementById('pageSettings').classList.add('hidden');
-  document.getElementById('pageSearch').classList.add('hidden');
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
-
-  if (page === 'feed') {
-    document.getElementById('pageFeed').classList.remove('hidden');
-    document.getElementById('navFeed').classList.add('active');
-    document.getElementById('sbFeed').classList.add('active');
-    listenPosts();
-  } else if (page === 'chat') {
-    document.getElementById('pageChat').classList.remove('hidden');
-    document.getElementById('navChat').classList.add('active');
-    document.getElementById('sbChat').classList.add('active');
-    listenChat();
-  } else if (page === 'friends') {
-    document.getElementById('pageFriends').classList.remove('hidden');
-    document.getElementById('navFriends').classList.add('active');
-    document.getElementById('sbFriends').classList.add('active');
-    showFriendsTab('all');
-  } else if (page === 'profile') {
-    document.getElementById('pageProfile').classList.remove('hidden');
-    document.getElementById('sbProfile').classList.add('active');
-    viewingProfile = username || currentUserUid;
-    renderProfile(viewingProfile);
-  } else if (page === 'settings') {
-    document.getElementById('pageSettings').classList.remove('hidden');
-    document.getElementById('sbSettings').classList.add('active');
-    loadSettings();
-  } else if (page === 'search') {
-    document.getElementById('pageSearch').classList.remove('hidden');
-  }
-  currentPage = page;
-}
-
-// ==================== POSTS ====================
-function listenPosts() {
-  if (postsUnsub) { postsUnsub(); postsUnsub = null; }
-  const q = fb.query(fb.collection(fb.db, 'posts'), fb.orderBy('timestamp', 'desc'));
-  postsUnsub = fb.onSnapshot(q, (snapshot) => {
-    const postsData = [];
-    snapshot.forEach(doc => postsData.push({ id: doc.id, ...doc.data() }));
-    renderPosts(postsData);
-  }, (err) => {
-    console.error('Posts error:', err);
-    document.getElementById('postsContainer').innerHTML = '<div class="loading">خطأ في تحميل المنشورات</div>';
-  });
-}
-
-async function renderPosts(postsData) {
-  const container = document.getElementById('postsContainer');
-  if (postsData.length === 0) {
-    container.innerHTML = '<div class="post-card" style="text-align:center;color:#65676b;padding:40px;">لا توجد منشورات بعد. كن أول من ينشر!</div>';
-    return;
-  }
-
-  let html = '';
-  for (const post of postsData) {
-    let author = usersCache[post.author];
-    if (!author) {
-      try {
-        const ds = await fb.getDoc(fb.doc(fb.db, 'users', post.author));
-        if (ds.exists()) { author = ds.data(); usersCache[post.author] = author; }
-      } catch(e) {}
-    }
-    if (!author) author = { name: 'مستخدم', avatar: 'https://ui-avatars.com/api/?name=User&background=ccc&color=fff', username: 'user' };
-    const timeAgo = post.timestamp ? getTimeAgo(post.timestamp.toMillis ? post.timestamp.toMillis() : post.timestamp) : '';
-    html += `
-      <div class="post-card">
-        <div class="post-header">
-          <img src="${author.avatar}" onclick="showPage('profile','${post.author}')">
-          <div class="post-header-info">
-            <h4 onclick="showPage('profile','${post.author}')">${author.name}</h4>
-            <span>${timeAgo}</span>
-          </div>
-        </div>
-        <div class="post-content">${escapeHtml(post.content || '')}</div>
-        ${post.image ? `<img src="${post.image}" class="post-image">` : ''}
-        <div class="post-actions">
-          <button onclick="likePost('${post.id}')">👍 إعجاب (${post.likes || 0})</button>
-          <button>💬 تعليق</button>
-          <button>🔗 مشاركة</button>
-        </div>
-      </div>
-    `;
-  }
-  container.innerHTML = html;
-}
-
-let usersCache = {};
-
-function showCreatePostModal() {
-  document.getElementById('createPostModal').classList.remove('hidden');
-  document.getElementById('postContent').focus();
-}
-function hideCreatePostModal() {
-  document.getElementById('createPostModal').classList.add('hidden');
-  document.getElementById('postContent').value = '';
-  document.getElementById('postImageFile').value = '';
-  document.getElementById('postImagePreview').innerHTML = '';
-  pendingPostImage = null;
-}
-
-let pendingPostImage = null;
-
-function handlePostImage(input) {
-  const file = input.files[0];
-  if (!file) return;
-  if (file.size > 5 * 1024 * 1024) { alert('حجم الصورة كبير جداً. الحد الأقصى 5 ميجا'); return; }
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    pendingPostImage = file;
-    document.getElementById('postImagePreview').innerHTML = `<img src="${e.target.result}" style="max-width:200px;max-height:200px;border-radius:8px;">`;
-  };
-  reader.readAsDataURL(file);
-}
-
-function handlePostImageDrop(e) {
-  e.preventDefault();
-  e.currentTarget.classList.remove('dragover');
-  const file = e.dataTransfer.files[0];
-  if (file && file.type.startsWith('image/')) {
-    if (file.size > 5 * 1024 * 1024) { alert('حجم الصورة كبير جداً. الحد الأقصى 5 ميجا'); return; }
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      pendingPostImage = file;
-      document.getElementById('postImagePreview').innerHTML = `<img src="${ev.target.result}" style="max-width:200px;max-height:200px;border-radius:8px;">`;
-    };
-    reader.readAsDataURL(file);
-  }
-}
-
-async function createPost() {
-  const content = document.getElementById('postContent').value.trim();
-  if (!content && !pendingPostImage) { alert('يرجى كتابة شيء أو إضافة صورة'); return; }
-
-  document.getElementById('publishBtn').disabled = true;
-  document.getElementById('publishBtn').textContent = 'جاري النشر...';
-
-  let imageUrl = '';
-  if (pendingPostImage) {
+window.handleAuth = async function() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const msgEl = document.getElementById('auth-msg');
+    const rememberMe = document.getElementById('remember-me').checked;
+    if (!username || !password) { msgEl.textContent = 'Please fill in all fields'; return; }
     try {
-      const storageRef = fb.ref(fb.storage, `posts/${currentUserUid}/${Date.now()}_${pendingPostImage.name}`);
-      await fb.uploadBytes(storageRef, pendingPostImage);
-      imageUrl = await fb.getDownloadURL(storageRef);
-    } catch (e) {
-      alert('خطأ في رفع الصورة: ' + e.message);
-      document.getElementById('publishBtn').disabled = false;
-      document.getElementById('publishBtn').textContent = 'نشر';
-      return;
-    }
-  }
+        const userRef = doc(db, 'users', username);
+        const userSnap = await getDoc(userRef);
+        if (!userSnap.exists()) { msgEl.textContent = 'Username not found'; return; }
+        if (userSnap.data().password !== password) { msgEl.textContent = 'Incorrect password'; return; }
+        currentUser = username;
+        if (rememberMe) {
+            localStorage.setItem('whisper_user', username);
+            sessionStorage.removeItem('whisper_user');
+        } else {
+            sessionStorage.setItem('whisper_user', username);
+            localStorage.removeItem('whisper_user');
+        }
+        showChat();
+    } catch (e) { msgEl.textContent = 'Error: ' + e.message; }
+};
 
-  try {
-    await fb.addDoc(fb.collection(fb.db, 'posts'), {
-      author: currentUserUid,
-      content: content,
-      image: imageUrl,
-      timestamp: fb.serverTimestamp(),
-      likes: 0,
-      likedBy: []
-    });
-    hideCreatePostModal();
-  } catch (e) {
-    alert('خطأ في النشر: ' + e.message);
-  }
-  document.getElementById('publishBtn').disabled = false;
-  document.getElementById('publishBtn').textContent = 'نشر';
-}
-
-async function likePost(postId) {
-  try {
-    const postRef = fb.doc(fb.db, 'posts', postId);
-    const postSnap = await fb.getDoc(postRef);
-    if (!postSnap.exists()) return;
-    const data = postSnap.data();
-    const likedBy = data.likedBy || [];
-    if (likedBy.includes(currentUserUid)) {
-      await fb.updateDoc(postRef, { likes: Math.max(0, (data.likes || 0) - 1), likedBy: likedBy.filter(u => u !== currentUserUid) });
-    } else {
-      await fb.updateDoc(postRef, { likes: (data.likes || 0) + 1, likedBy: [...likedBy, currentUserUid] });
-    }
-  } catch (e) { console.error(e); }
-}
-
-// ==================== CHAT ====================
-function listenChat() {
-  if (chatUnsub) { chatUnsub(); chatUnsub = null; }
-  const q = fb.query(fb.collection(fb.db, 'globalChat'), fb.orderBy('timestamp', 'asc'));
-  chatUnsub = fb.onSnapshot(q, (snapshot) => {
-    const msgs = [];
-    snapshot.forEach(doc => msgs.push({ id: doc.id, ...doc.data() }));
-    renderChat(msgs);
-  }, (err) => {
-    console.error('Chat error:', err);
-    document.getElementById('chatMessages').innerHTML = '<div class="loading">خطأ في تحميل الدردشة</div>';
-  });
-}
-
-async function renderChat(msgs) {
-  const container = document.getElementById('chatMessages');
-  if (msgs.length === 0) {
-    container.innerHTML = '<div style="text-align:center;color:#65676b;padding:40px;">لا توجد رسائل بعد. ابدأ المحادثة!</div>';
-    return;
-  }
-
-  let html = '';
-  for (const msg of msgs) {
-    let sender = usersCache[msg.sender];
-    if (!sender && msg.sender) {
-      try {
-        const ds = await fb.getDoc(fb.doc(fb.db, 'users', msg.sender));
-        if (ds.exists()) { sender = ds.data(); usersCache[msg.sender] = sender; }
-      } catch(e) {}
-    }
-    if (!sender) sender = { name: 'مستخدم', avatar: 'https://ui-avatars.com/api/?name=User&background=ccc&color=fff' };
-    const isMe = msg.sender === currentUserUid;
-    const time = msg.timestamp ? getTimeAgo(msg.timestamp.toMillis ? msg.timestamp.toMillis() : msg.timestamp) : '';
-    html += `
-      <div class="chat-message ${isMe ? 'sent' : 'received'}">
-        ${!isMe ? `<strong style="font-size:13px;display:block;margin-bottom:4px;">${sender.name}</strong>` : ''}
-        ${escapeHtml(msg.text || '')}
-        <div class="chat-message-info">${time}</div>
-      </div>
-    `;
-  }
-  container.innerHTML = html;
-  container.scrollTop = container.scrollHeight;
-}
-
-async function sendChatMessage() {
-  const input = document.getElementById('chatInput');
-  const text = input.value.trim();
-  if (!text) return;
-  input.value = '';
-  try {
-    await fb.addDoc(fb.collection(fb.db, 'globalChat'), {
-      sender: currentUserUid,
-      text: text,
-      timestamp: fb.serverTimestamp()
-    });
-  } catch (e) {
-    alert('خطأ في إرسال الرسالة: ' + e.message);
-  }
-}
-
-// ==================== FRIENDS SYSTEM ====================
-async function listenFriendRequests() {
-  if (reqUnsub) { reqUnsub(); reqUnsub = null; }
-  // Listen for incoming requests
-  const q1 = fb.query(fb.collection(fb.db, 'friendRequests'), fb.where('to', '==', currentUserUid), fb.where('status', '==', 'pending'));
-  reqUnsub = fb.onSnapshot(q1, async (snapshot) => {
-    friendRequests = [];
-    snapshot.forEach(doc => friendRequests.push({ id: doc.id, ...doc.data() }));
-    updateFriendBadge();
-    if (currentPage === 'friends') showFriendsTab('all');
-  });
-
-  // Also listen for sent requests
-  const q2 = fb.query(fb.collection(fb.db, 'friendRequests'), fb.where('from', '==', currentUserUid), fb.where('status', '==', 'pending'));
-  fb.onSnapshot(q2, (snapshot) => {
-    sentRequests = [];
-    snapshot.forEach(doc => sentRequests.push({ id: doc.id, ...doc.data() }));
-    if (currentPage === 'friends') showFriendsTab('all');
-  });
-
-  // Load accepted friends
-  const q3 = fb.query(fb.collection(fb.db, 'friendRequests'), fb.where('status', '==', 'accepted'),
-    fb.where('from', '==', currentUserUid));
-  const q4 = fb.query(fb.collection(fb.db, 'friendRequests'), fb.where('status', '==', 'accepted'),
-    fb.where('to', '==', currentUserUid));
-
-  const [snap3, snap4] = await Promise.all([fb.getDocs(q3), fb.getDocs(q4)]);
-  friendsList = [];
-  snap3.forEach(d => friendsList.push(d.data().to));
-  snap4.forEach(d => friendsList.push(d.data().from));
-}
-
-function updateFriendBadge() {
-  const badge = document.getElementById('friendReqBadge');
-  const count = friendRequests.length;
-  if (count > 0) {
-    badge.textContent = count;
-    badge.classList.remove('hidden');
-  } else {
-    badge.classList.add('hidden');
-  }
-  document.getElementById('reqCountBadge').textContent = '(' + count + ')';
-}
-
-async function showFriendsTab(tab, btn) {
-  if (btn) {
-    document.querySelectorAll('.profile-tabs button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
-
-  const container = document.getElementById('friendsTabContent');
-
-  if (tab === 'all') {
-    if (friendsList.length === 0) {
-      container.innerHTML = '<div style="text-align:center;color:#65676b;padding:40px;">ليس لديك أصدقاء بعد. ابحث عن أشخاص وأرسل لهم طلب صداقة!</div>';
-      return;
-    }
-    let html = '<div class="friends-grid">';
-    for (const uid of friendsList) {
-      let u = usersCache[uid];
-      if (!u) {
-        try { const ds = await fb.getDoc(fb.doc(fb.db, 'users', uid)); if (ds.exists()) { u = ds.data(); usersCache[uid] = u; } } catch(e) {}
-      }
-      if (!u) continue;
-      html += `
-        <div class="friend-card" onclick="showPage('profile','${uid}')">
-          <img src="${u.avatar}">
-          <div class="friend-card-info">
-            <h4>${u.name}</h4>
-            <span>@${u.username || 'user'}</span>
-          </div>
-        </div>
-      `;
-    }
-    html += '</div>';
-    container.innerHTML = html;
-
-  } else if (tab === 'requests') {
-    if (friendRequests.length === 0) {
-      container.innerHTML = '<div style="text-align:center;color:#65676b;padding:40px;">لا توجد طلبات صداقة واردة</div>';
-      return;
-    }
-    let html = '';
-    for (const req of friendRequests) {
-      let u = usersCache[req.from];
-      if (!u) {
-        try { const ds = await fb.getDoc(fb.doc(fb.db, 'users', req.from)); if (ds.exists()) { u = ds.data(); usersCache[req.from] = u; } } catch(e) {}
-      }
-      if (!u) u = { name: 'مستخدم', avatar: 'https://ui-avatars.com/api/?name=User&background=ccc&color=fff' };
-      html += `
-        <div class="friend-request-item">
-          <img src="${u.avatar}" onclick="showPage('profile','${req.from}')" style="cursor:pointer;">
-          <div style="flex:1;">
-            <h4 style="cursor:pointer;" onclick="showPage('profile','${req.from}')">${u.name}</h4>
-            <span style="font-size:13px;color:#65676b;">أرسل لك طلب صداقة</span>
-            <div class="req-actions">
-              <button class="btn-success" style="background:#1877f2;color:#fff;" onclick="acceptFriendRequest('${req.id}')">قبول</button>
-              <button class="btn-secondary" onclick="rejectFriendRequest('${req.id}')">رفض</button>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-    container.innerHTML = html;
-
-  } else if (tab === 'sent') {
-    if (sentRequests.length === 0) {
-      container.innerHTML = '<div style="text-align:center;color:#65676b;padding:40px;">لم ترسل أي طلبات صداقة</div>';
-      return;
-    }
-    let html = '';
-    for (const req of sentRequests) {
-      let u = usersCache[req.to];
-      if (!u) {
-        try { const ds = await fb.getDoc(fb.doc(fb.db, 'users', req.to)); if (ds.exists()) { u = ds.data(); usersCache[req.to] = u; } } catch(e) {}
-      }
-      if (!u) u = { name: 'مستخدم', avatar: 'https://ui-avatars.com/api/?name=User&background=ccc&color=fff' };
-      html += `
-        <div class="friend-request-item">
-          <img src="${u.avatar}" onclick="showPage('profile','${req.to}')" style="cursor:pointer;">
-          <div style="flex:1;">
-            <h4 style="cursor:pointer;" onclick="showPage('profile','${req.to}')">${u.name}</h4>
-            <span style="font-size:13px;color:#65676b;">طلب مرسل - بانتظار الرد</span>
-            <div class="req-actions">
-              <button class="btn-danger" onclick="cancelFriendRequest('${req.id}')">إلغاء الطلب</button>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-    container.innerHTML = html;
-
-  } else if (tab === 'suggested') {
-    container.innerHTML = '<div class="loading"><div class="loading-spinner"></div>جاري التحميل...</div>';
+window.handleSignup = async function() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const msgEl = document.getElementById('auth-msg');
+    const rememberMe = document.getElementById('remember-me').checked;
+    if (!username || !password) { msgEl.textContent = 'Please fill in all fields'; return; }
+    if (username.length < 3) { msgEl.textContent = 'Username must be at least 3 characters'; return; }
+    if (password.length < 4) { msgEl.textContent = 'Password must be at least 4 characters'; return; }
     try {
-      const allSnap = await fb.getDocs(fb.collection(fb.db, 'users'));
-      const allUsers = [];
-      allSnap.forEach(d => { if (d.id !== currentUserUid) allUsers.push({ uid: d.id, ...d.data() }); });
-      // Filter out friends and pending requests
-      const excluded = new Set([...friendsList, ...sentRequests.map(r => r.to), ...friendRequests.map(r => r.from), currentUserUid]);
-      const suggested = allUsers.filter(u => !excluded.has(u.uid));
+        const userRef = doc(db, 'users', username);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) { msgEl.textContent = 'Username already exists'; return; }
+        await setDoc(userRef, { username: username, password: password, createdAt: serverTimestamp() });
+        currentUser = username;
+        if (rememberMe) {
+            localStorage.setItem('whisper_user', username);
+            sessionStorage.removeItem('whisper_user');
+        } else {
+            sessionStorage.setItem('whisper_user', username);
+            localStorage.removeItem('whisper_user');
+        }
+        showChat();
+    } catch (e) { msgEl.textContent = 'Error: ' + e.message; }
+};
 
-      if (suggested.length === 0) {
-        container.innerHTML = '<div style="text-align:center;color:#65676b;padding:40px;">لا توجد اقتراحات حالياً</div>';
+window.logout = function() {
+    currentUser = null;
+    // إزالة من كلا المخزنين لضمان تسجيل الخروج الكامل
+    localStorage.removeItem('whisper_user');
+    sessionStorage.removeItem('whisper_user');
+    if (postsListener) postsListener();
+    if (groupsListener) groupsListener();
+    if (inboxListener) inboxListener();
+    if (banListener) banListener();
+    if (privateChatsListener) privateChatsListener();
+    if (chatMessagesListener) chatMessagesListener();
+    Object.values(commentsListeners).forEach(l => l());
+    Object.values(groupChatListeners).forEach(l => l());
+    commentsListeners = {};
+    groupChatListeners = {};
+    bannedUsers = [];
+    currentChatUser = null;
+    currentGroupId = null;
+    document.getElementById('chat-screen').classList.add('hidden');
+    document.getElementById('auth-screen').classList.remove('hidden');
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('remember-me').checked = false; // إعادة تعيين التذكر
+};
+
+window.showChat = function() {
+    document.getElementById('auth-screen').classList.add('hidden');
+    document.getElementById('chat-screen').classList.remove('hidden');
+    if (isStaff()) {
+        document.getElementById('ban-list-btn').classList.remove('hidden');
+    } else {
+        document.getElementById('ban-list-btn').classList.add('hidden');
+    }
+    loadBannedUsers();
+    loadPosts();
+    loadGroups();
+    loadInbox();
+    loadPrivateChats();
+};
+
+window.switchTab = function(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.getElementById('tab-content-home').classList.add('hidden');
+    document.getElementById('tab-content-groups').classList.add('hidden');
+    document.getElementById('tab-content-private').classList.add('hidden');
+    document.getElementById('tab-content-chat').classList.add('hidden');
+    document.getElementById('tab-content-inbox').classList.add('hidden');
+    document.getElementById('tab-content-' + tab).classList.remove('hidden');
+    if (tab === 'groups') loadGroups();
+    if (tab === 'inbox') { markInboxAsRead(); loadInbox(); }
+    if (tab === 'private') loadPrivateChats();
+};
+
+window.updateCharCount = function(inputId, countId) {
+    const input = document.getElementById(inputId);
+    const count = document.getElementById(countId);
+    const remaining = 1000 - input.value.length;
+    count.textContent = remaining + ' / 1000';
+    count.style.color = remaining < 50 ? 'var(--danger)' : '#888';
+};
+
+function checkBanned() {
+    if (isBanned(currentUser)) {
+        document.getElementById('banned-notice').classList.remove('hidden');
+        document.getElementById('post-box-area').classList.add('hidden');
+    } else {
+        document.getElementById('banned-notice').classList.add('hidden');
+        document.getElementById('post-box-area').classList.remove('hidden');
+    }
+}
+
+// ===== BAN SYSTEM =====
+window.markInboxAsRead = async function() {
+    try {
+        const invitesQ = query(collection(db, 'invites'), where('to', '==', currentUser), where('status', '==', 'pending'));
+        const invitesSnap = await getDocs(invitesQ);
+        invitesSnap.forEach(async (docSnap) => {
+            const data = docSnap.data();
+            const readBy = data.readBy || [];
+            if (!readBy.includes(currentUser)) {
+                readBy.push(currentUser);
+                await updateDoc(doc(db, 'invites', docSnap.id), { readBy: readBy });
+            }
+        });
+        const chatReqQ = query(collection(db, 'chatRequests'), where('to', '==', currentUser), where('status', '==', 'pending'));
+        const chatReqSnap = await getDocs(chatReqQ);
+        chatReqSnap.forEach(async (docSnap) => {
+            const data = docSnap.data();
+            const readBy = data.readBy || [];
+            if (!readBy.includes(currentUser)) {
+                readBy.push(currentUser);
+                await updateDoc(doc(db, 'chatRequests', docSnap.id), { readBy: readBy });
+            }
+        });
+        const badge = document.getElementById('inbox-badge');
+        if (badge) { badge.textContent = '0'; badge.classList.add('hidden'); }
+    } catch (e) { console.error('markInboxAsRead error:', e); }
+};
+
+window.loadBannedUsers = function() {
+    const q = query(collection(db, 'banned'));
+    banListener = onSnapshot(q, (snapshot) => {
+        bannedUsers = [];
+        snapshot.forEach((docSnap) => { bannedUsers.push(docSnap.id); });
+        checkBanned();
+    });
+};
+
+window.banUser = async function(username) {
+    if (!isStaff()) { alert('Unauthorized'); return; }
+    if (username === OWNER_USERNAME) { alert('Cannot ban the Owner'); return; }
+    if (!confirm('Are you sure you want to ban ' + username + '؟')) return;
+    try {
+        await setDoc(doc(db, 'banned', username), { bannedBy: currentUser, bannedAt: serverTimestamp() });
+    } catch (e) { alert('Error banning: ' + e.message); }
+};
+
+window.unbanUser = async function(username) {
+    if (!isStaff()) { alert('Unauthorized'); return; }
+    try {
+        await deleteDoc(doc(db, 'banned', username));
+    } catch (e) { alert('Error unbanning: ' + e.message); }
+};
+
+window.showBanList = function() {
+    if (!isStaff()) return;
+    const container = document.getElementById('ban-list-container');
+    let html = '';
+    if (bannedUsers.length === 0) {
+        html = '<div style="text-align:center;color:#888;padding:20px">No banned users</div>';
+    } else {
+        bannedUsers.forEach((username) => {
+            html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid var(--border)">
+                <span style="font-weight:700">@${username}</span>
+                <button class="btn-success" onclick="unbanUser('${username}'); closeBanModal();" style="padding:6px 12px;border:none;border-radius:6px;cursor:pointer;font-size:12px">Unban</button>
+            </div>`;
+        });
+    }
+    container.innerHTML = html;
+    document.getElementById('ban-modal').classList.remove('hidden');
+};
+
+window.closeBanModal = function() {
+    document.getElementById('ban-modal').classList.add('hidden');
+};
+
+// ===== POSTS =====
+window.createPost = async function() {
+    if (isBanned(currentUser)) { alert('You are banned'); return; }
+    const content = document.getElementById('post-content').value.trim();
+    if (!content) return;
+    if (content.length > 1000) { alert('Post must not exceed 1000 characters'); return; }
+    try {
+        await addDoc(collection(db, 'posts'), {
+            username: currentUser, content: content, createdAt: serverTimestamp(),
+            likes: 0, dislikes: 0, edited: false
+        });
+        document.getElementById('post-content').value = '';
+        updateCharCount('post-content', 'post-count');
+    } catch (e) { alert('Error posting: ' + e.message); }
+};
+
+window.loadPosts = function() {
+    const container = document.getElementById('posts-container');
+    container.innerHTML = '<div class="loading">Loading...</div>';
+    const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
+    postsListener = onSnapshot(q, (snapshot) => {
+        if (snapshot.empty) { container.innerHTML = '<div class="empty">No posts yet. Be the first to post!</div>'; return; }
+        let html = '';
+        snapshot.forEach((docSnap) => {
+            const post = docSnap.data();
+            const postId = docSnap.id;
+            const time = post.createdAt ? formatTime(post.createdAt.toDate()) : 'Now';
+            const editedTag = post.edited ? '<span class="edited-tag">(edited)</span>' : '';
+            let staffActions = '';
+            if (isStaff()) {
+                staffActions = `<div class="post-staff-actions">
+                    <button class="btn-owner" onclick="editPost('${postId}', '${escapeHtml(post.content)}')">Edit</button>
+                    <button class="btn-danger" onclick="deletePost('${postId}')">Delete</button>
+                    <button class="btn-ban" onclick="banUser('${post.username}')">Ban Post Owner</button>
+                </div>`;
+            } else if (post.username === currentUser) {
+                staffActions = `<div class="post-staff-actions">
+                    <button class="btn-owner" onclick="editPost('${postId}', '${escapeHtml(post.content)}')">Edit</button>
+                    <button class="btn-danger" onclick="deletePost('${postId}')">Delete</button>
+                </div>`;
+            }
+            html += `<div class="post" id="post-${postId}">
+                <div class="post-header">
+                    <span class="post-author">@${post.username} ${getTag(post.username)}</span>
+                    <span class="post-time">${time}${editedTag}</span>
+                </div>
+                <div class="post-content">${escapeHtml(post.content)}</div>
+                <div class="post-actions">
+                    <button onclick="likePost('${postId}')">❤️ <span id="likes-${postId}">${post.likes || 0}</span></button>
+                    <button onclick="dislikePost('${postId}')">👎 <span id="dislikes-${postId}">${post.dislikes || 0}</span></button>
+                    <button onclick="toggleComments('${postId}')">💬 Comment</button>
+                </div>
+                ${staffActions}
+                <div class="comments-section hidden" id="comments-${postId}">
+                    <div id="comments-list-${postId}"><div class="loading">Loading comments...</div></div>
+                    <div class="comment-input">
+                        <input type="text" id="comment-input-${postId}" placeholder="Write a comment..." maxlength="1000">
+                        <button class="btn-primary" onclick="addComment('${postId}')">Send</button>
+                    </div>
+                </div>
+            </div>`;
+        });
+        container.innerHTML = html;
+        snapshot.forEach((docSnap) => { loadComments(docSnap.id); });
+    }, (error) => { container.innerHTML = '<div class="error-msg">خطأ: ' + error.message + '</div>'; });
+};
+
+window.editPost = function(postId, content) {
+    editingId = postId;
+    editingType = 'post';
+    document.getElementById('edit-text').value = content;
+    document.getElementById('edit-modal').classList.remove('hidden');
+};
+
+window.deletePost = async function(postId) {
+    if (!confirm('Are you sure you want to delete this post?')) return;
+    try {
+        await deleteDoc(doc(db, 'posts', postId));
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+window.likePost = async function(postId) {
+    if (isBanned(currentUser)) { alert('You are banned'); return; }
+    try {
+        const likeRef = doc(db, 'likes', postId + '_' + currentUser);
+        const likeSnap = await getDoc(likeRef);
+        const postRef = doc(db, 'posts', postId);
+        const postSnap = await getDoc(postRef);
+        const currentLikes = postSnap.data().likes || 0;
+        const currentDislikes = postSnap.data().dislikes || 0;
+        if (likeSnap.exists() && likeSnap.data().type === 'like') {
+            await deleteDoc(likeRef);
+            await updateDoc(postRef, { likes: currentLikes - 1 });
+        } else if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
+            await updateDoc(likeRef, { type: 'like' });
+            await updateDoc(postRef, { likes: currentLikes + 1, dislikes: currentDislikes - 1 });
+        } else {
+            await setDoc(likeRef, { postId, username: currentUser, type: 'like' });
+            await updateDoc(postRef, { likes: currentLikes + 1 });
+        }
+    } catch (e) { console.error(e); }
+};
+
+window.dislikePost = async function(postId) {
+    if (isBanned(currentUser)) { alert('You are banned'); return; }
+    try {
+        const likeRef = doc(db, 'likes', postId + '_' + currentUser);
+        const likeSnap = await getDoc(likeRef);
+        const postRef = doc(db, 'posts', postId);
+        const postSnap = await getDoc(postRef);
+        const currentLikes = postSnap.data().likes || 0;
+        const currentDislikes = postSnap.data().dislikes || 0;
+        if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
+            await deleteDoc(likeRef);
+            await updateDoc(postRef, { dislikes: currentDislikes - 1 });
+        } else if (likeSnap.exists() && likeSnap.data().type === 'like') {
+            await updateDoc(likeRef, { type: 'dislike' });
+            await updateDoc(postRef, { dislikes: currentDislikes + 1, likes: currentLikes - 1 });
+        } else {
+            await setDoc(likeRef, { postId, username: currentUser, type: 'dislike' });
+            await updateDoc(postRef, { dislikes: currentDislikes + 1 });
+        }
+    } catch (e) { console.error(e); }
+};
+
+// ===== COMMENTS =====
+window.toggleComments = function(postId) {
+    const section = document.getElementById('comments-' + postId);
+    section.classList.toggle('hidden');
+    if (!section.classList.contains('hidden')) loadComments(postId);
+};
+
+window.loadComments = function(postId) {
+    if (commentsListeners[postId]) { commentsListeners[postId](); }
+    const container = document.getElementById('comments-list-' + postId);
+    if (!container) return;
+    container.innerHTML = '<div class="loading">Loading comments...</div>';
+    const q = query(collection(db, 'comments'), orderBy('createdAt', 'desc'));
+    commentsListeners[postId] = onSnapshot(q, (snapshot) => {
+        if (!container) return;
+        let html = '';
+        let hasComments = false;
+        snapshot.forEach((docSnap) => {
+            const c = docSnap.data();
+            if (c.postId !== postId) return;
+            hasComments = true;
+            const commentId = docSnap.id;
+            const time = c.createdAt ? formatTime(c.createdAt.toDate()) : 'Now';
+            const editedTag = c.edited ? '<span class="edited-tag">(edited)</span>' : '';
+            let actions = '';
+            if (isStaff()) {
+                actions = `<div class="comment-actions">
+                    <button class="btn-owner" onclick="editComment('${commentId}', '${escapeHtml(c.content)}')">Edit</button>
+                    <button class="btn-danger" onclick="deleteComment('${commentId}')">Delete</button>
+                    <button class="btn-ban" onclick="banUser('${c.username}')">Block</button>
+                </div>`;
+            } else if (c.username === currentUser) {
+                actions = `<div class="comment-actions">
+                    <button class="btn-owner" onclick="editComment('${commentId}', '${escapeHtml(c.content)}')">Edit</button>
+                    <button class="btn-danger" onclick="deleteComment('${commentId}')">Delete</button>
+                </div>`;
+            }
+            html += `<div class="comment" id="comment-${commentId}">
+                <div class="comment-author">@${c.username} ${getTag(c.username)}</div>
+                <div class="comment-text">${escapeHtml(c.content)}${editedTag}</div>
+                <div class="comment-time">${time}</div>
+                ${actions}
+            </div>`;
+        });
+        if (!hasComments) html = '<div style="color:#888;font-size:14px;text-align:center;padding:10px">No comments</div>';
+        container.innerHTML = html;
+    }, (error) => {
+        console.error('Comments error:', error);
+        if (container) container.innerHTML = '<div style="color:#888;font-size:14px;text-align:center;padding:10px">Error loading comments</div>';
+    });
+};
+
+window.addComment = async function(postId) {
+    if (isBanned(currentUser)) { alert('You are banned'); return; }
+    const input = document.getElementById('comment-input-' + postId);
+    const content = input.value.trim();
+    if (!content) return;
+    if (content.length > 1000) { alert('Comment must not exceed 1000 characters'); return; }
+    try {
+        await addDoc(collection(db, 'comments'), { postId: postId, username: currentUser, content: content, createdAt: serverTimestamp(), edited: false });
+        input.value = '';
+    } catch (e) { alert('Error: ' + e.message); console.error(e); }
+};
+
+window.editComment = function(commentId, content) {
+    editingId = commentId;
+    editingType = 'comment';
+    document.getElementById('edit-text').value = content;
+    document.getElementById('edit-modal').classList.remove('hidden');
+};
+
+window.deleteComment = async function(commentId) {
+    if (!confirm('Are you sure you want to delete this comment?')) return;
+    try { await deleteDoc(doc(db, 'comments', commentId)); }
+    catch (e) { alert('Error: ' + e.message); }
+};
+
+window.saveEdit = async function() {
+    const newContent = document.getElementById('edit-text').value.trim();
+    if (!newContent) { alert('Cannot be empty'); return; }
+    if (newContent.length > 1000) { alert('Must not exceed 1000 characters'); return; }
+    try {
+        const ref = doc(db, editingType === 'post' ? 'posts' : 'comments', editingId);
+        const snap = await getDoc(ref);
+        if (snap.exists()) {
+            if (editingType === 'post' && snap.data().edited) { alert('Can only edit once'); closeEditModal(); return; }
+            await updateDoc(ref, { content: newContent, edited: true });
+        }
+        closeEditModal();
+    } catch (e) { alert('Error: ' + e.message); console.error(e); }
+};
+
+window.closeEditModal = function() {
+    document.getElementById('edit-modal').classList.add('hidden');
+    editingId = null;
+    editingType = null;
+};
+
+// ===== GROUPS =====
+window.createGroup = async function() {
+    const name = document.getElementById('group-name').value.trim();
+    const msgEl = document.getElementById('group-msg');
+    if (!name) { msgEl.textContent = 'Please enter a group name'; return; }
+    if (name.length > 50) { msgEl.textContent = 'Name must not exceed 50 characters'; return; }
+
+    try {
+        if (!isStaff()) {
+            const userGroups = await getDocs(query(collection(db, 'groups')));
+            let hasGroup = false;
+            userGroups.forEach((docSnap) => {
+                if (docSnap.data().owner === currentUser) hasGroup = true;
+            });
+            if (hasGroup) { msgEl.textContent = 'You can only create one group'; return; }
+        }
+
+        await addDoc(collection(db, 'groups'), {
+            name: name, owner: currentUser, members: [currentUser],
+            createdAt: serverTimestamp()
+        });
+        document.getElementById('group-name').value = '';
+        msgEl.textContent = '';
+        msgEl.className = 'success-msg';
+        msgEl.textContent = 'Group created successfully!';
+        setTimeout(() => { msgEl.textContent = ''; msgEl.className = 'error-msg'; }, 3000);
+    } catch (e) { msgEl.textContent = 'Error: ' + e.message; }
+};
+
+window.loadGroups = function() {
+    const container = document.getElementById('groups-container');
+    if (!container) return;
+    container.innerHTML = '<div class="loading">Loading...</div>';
+    const q = query(collection(db, 'groups'), orderBy('createdAt', 'desc'));
+    groupsListener = onSnapshot(q, (snapshot) => {
+        if (snapshot.empty) { container.innerHTML = '<div class="empty">No groups</div>'; return; }
+        let html = '';
+        snapshot.forEach((docSnap) => {
+            const g = docSnap.data();
+            const groupId = docSnap.id;
+            const isMember = g.members && g.members.includes(currentUser);
+            const isOwner = g.owner === currentUser;
+            let actions = '';
+            if (isOwner) {
+                actions = `<div class="group-card-actions">
+                    <button class="btn-group" onclick="showInviteModal('${groupId}')">Invite</button>
+                    <button class="btn-danger" onclick="deleteGroup('${groupId}')">Delete</button>
+                </div>`;
+            } else if (!isMember) {
+                actions = `<div class="group-card-actions">
+                    <button class="btn-primary" onclick="joinGroup('${groupId}')">Join</button>
+                </div>`;
+            } else {
+                actions = `<div class="group-card-actions">
+                    <button class="btn-secondary" onclick="leaveGroup('${groupId}')">Leave</button>
+                </div>`;
+            }
+            let membersHtml = '';
+            if (g.members && g.members.length > 0) {
+                membersHtml = `<div class="group-members"><strong>Members:</strong> ${g.members.map(m => '@' + m).join(', ')}</div>`;
+            }
+
+            // Group chat section (only for members)
+            let groupChatHtml = '';
+            if (isMember) {
+                groupChatHtml = `<div class="group-chat-section">
+                    <h4 style="margin-bottom:8px;font-size:14px">Group Chat</h4>
+                    <div class="group-chat-messages" id="group-chat-messages-${groupId}">
+                        <div class="loading">Loading...</div>
+                    </div>
+                    <div class="group-chat-input">
+                        <input type="text" id="group-chat-input-${groupId}" placeholder="Type a message..." maxlength="1000" onkeypress="if(event.key==='Enter')sendGroupMessage('${groupId}')">
+                        <button class="btn-primary" onclick="sendGroupMessage('${groupId}')">Send</button>
+                    </div>
+                </div>`;
+            }
+
+            html += `<div class="group-card">
+                <div class="group-card-header">
+                    <span class="group-card-name">${g.name}</span>
+                    <span class="group-card-owner">From @${g.owner}</span>
+                </div>
+                ${actions}
+                ${membersHtml}
+                ${groupChatHtml}
+            </div>`;
+        });
+        container.innerHTML = html;
+        // Load group chat messages for each group
+        snapshot.forEach((docSnap) => {
+            const g = docSnap.data();
+            if (g.members && g.members.includes(currentUser)) {
+                loadGroupChat(docSnap.id);
+            }
+        });
+    }, (error) => { container.innerHTML = '<div class="error-msg">خطأ: ' + error.message + '</div>'; });
+};
+
+// ===== GROUP CHAT =====
+window.loadGroupChat = function(groupId) {
+    if (groupChatListeners[groupId]) { groupChatListeners[groupId](); }
+    const container = document.getElementById('group-chat-messages-' + groupId);
+    if (!container) return;
+    const q = query(collection(db, 'groupMessages'), orderBy('createdAt', 'asc'));
+    groupChatListeners[groupId] = onSnapshot(q, (snapshot) => {
+        if (!container) return;
+        let html = '';
+        let hasMessages = false;
+        snapshot.forEach((docSnap) => {
+            const msg = docSnap.data();
+            if (msg.groupId !== groupId) return;
+            hasMessages = true;
+            const time = msg.createdAt ? formatTime(msg.createdAt.toDate()) : 'Now';
+            const isSent = msg.username === currentUser;
+            html += `<div class="group-chat-message ${isSent ? 'sent' : 'received'}">
+                <div class="group-chat-message-author">@${msg.username} ${getTag(msg.username)}</div>
+                <div>${escapeHtml(msg.content)}</div>
+                <div class="group-chat-message-time">${time}</div>
+            </div>`;
+        });
+        if (!hasMessages) html = '<div style="color:#888;font-size:13px;text-align:center;padding:10px">No messages yet.</div>';
+        container.innerHTML = html;
+        container.scrollTop = container.scrollHeight;
+    });
+};
+
+window.sendGroupMessage = async function(groupId) {
+    const input = document.getElementById('group-chat-input-' + groupId);
+    const content = input.value.trim();
+    if (!content) return;
+    if (content.length > 1000) { alert('The message must not exceed 1,000 word.'); return; }
+    try {
+        await addDoc(collection(db, 'groupMessages'), {
+            groupId: groupId,
+            username: currentUser,
+            content: content,
+            createdAt: serverTimestamp()
+        });
+        input.value = '';
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+window.joinGroup = async function(groupId) {
+    try {
+        const groupRef = doc(db, 'groups', groupId);
+        const groupSnap = await getDoc(groupRef);
+        if (groupSnap.exists()) {
+            const members = groupSnap.data().members || [];
+            if (!members.includes(currentUser)) {
+                members.push(currentUser);
+                await updateDoc(groupRef, { members: members });
+            }
+        }
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+window.leaveGroup = async function(groupId) {
+    try {
+        const groupRef = doc(db, 'groups', groupId);
+        const groupSnap = await getDoc(groupRef);
+        if (groupSnap.exists()) {
+            let members = groupSnap.data().members || [];
+            members = members.filter(m => m !== currentUser);
+            await updateDoc(groupRef, { members: members });
+        }
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+window.deleteGroup = async function(groupId) {
+    if (!confirm('Are you sure you want to delete this group?')) return;
+    try { 
+        await deleteDoc(doc(db, 'groups', groupId));
+        // Also delete group messages
+        const msgsQuery = query(collection(db, 'groupMessages'), where('groupId', '==', groupId));
+        const msgsSnap = await getDocs(msgsQuery);
+        msgsSnap.forEach(async (m) => { await deleteDoc(doc(db, 'groupMessages', m.id)); });
+    }
+    catch (e) { alert('Error: ' + e.message); }
+};
+
+// ===== INVITE SYSTEM =====
+window.showInviteModal = function(groupId) {
+    inviteGroupId = groupId;
+    const groupRef = doc(db, 'groups', groupId);
+    getDoc(groupRef).then((snap) => {
+        if (snap.exists()) {
+            document.getElementById('invite-info').innerHTML = 'invite: <strong>' + snap.data().name + '</strong>';
+            document.getElementById('invite-modal').classList.remove('hidden');
+        }
+    });
+};
+
+window.closeInviteModal = function() {
+    document.getElementById('invite-modal').classList.add('hidden');
+    inviteGroupId = null;
+    document.getElementById('invite-username').value = '';
+};
+
+window.sendInvite = async function() {
+    const username = document.getElementById('invite-username').value.trim();
+    if (!username) { alert('Please enter a username'); return; }
+    if (username === currentUser) { alert('You cannot invite yourself'); return; }
+    try {
+        const userRef = doc(db, 'users', username);
+        const userSnap = await getDoc(userRef);
+        if (!userSnap.exists()) { alert('User not found'); return; }
+
+        const groupRef = doc(db, 'groups', inviteGroupId);
+        const groupSnap = await getDoc(groupRef);
+        if (groupSnap.exists()) {
+            const members = groupSnap.data().members || [];
+            if (members.includes(username)) { alert('User is already a member'); return; }
+        }
+
+        await addDoc(collection(db, 'invites'), {
+            groupId: inviteGroupId,
+            groupName: groupSnap.data().name,
+            from: currentUser,
+            to: username,
+            status: 'pending',
+            createdAt: serverTimestamp()
+        });
+        alert('Invite sent successfully!');
+        closeInviteModal();
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+// ===== PRIVATE CHATS =====
+window.loadPrivateChats = function() {
+    const container = document.getElementById('private-chats-container');
+    if (!container) return;
+
+    if (privateChatsListener) privateChatsListener();
+
+    // Listen to all private messages to build chat list
+    const q = query(collection(db, 'privateMessages'), orderBy('createdAt', 'desc'));
+    privateChatsListener = onSnapshot(q, (snapshot) => {
+        if (!container) return;
+
+        const chatUsers = new Map();
+
+        snapshot.forEach((docSnap) => {
+            const msg = docSnap.data();
+            // Only include messages where current user is sender or receiver
+            if (msg.sender !== currentUser && msg.receiver !== currentUser) return;
+
+            const otherUser = msg.sender === currentUser ? msg.receiver : msg.sender;
+
+            if (!chatUsers.has(otherUser)) {
+                chatUsers.set(otherUser, {
+                    lastMessage: msg.content,
+                    lastTime: msg.createdAt,
+                    lastMsgId: docSnap.id
+                });
+            }
+        });
+
+        if (chatUsers.size === 0) {
+            container.innerHTML = '<div class="empty">No private chats</div>';
+            return;
+        }
+
+        let html = '';
+        chatUsers.forEach((data, otherUser) => {
+            const time = data.lastTime ? formatTime(data.lastTime.toDate()) : '';
+            html += '<div class="chat-list-item" onclick="openPrivateChat(' + "'" + otherUser + "'" + ')">' +
+                '<div class="chat-list-item-info">' +
+                    '<div class="chat-list-item-name">@' + otherUser + '</div>' +
+                    '<div class="chat-list-item-last">' + escapeHtml(data.lastMessage) + '</div>' +
+                '</div>' +
+                '<div class="chat-list-item-time">' + time + '</div>' +
+            '</div>';
+        });
+
+        container.innerHTML = html;
+    });
+};
+
+window.startPrivateChat = async function() {
+    const username = document.getElementById('private-chat-username').value.trim();
+    const msgEl = document.getElementById('private-chat-msg');
+
+    if (!username) { msgEl.textContent = 'Please enter a username'; return; }
+    if (username === currentUser) { msgEl.textContent = 'You cannot start a chat with yourself'; return; }
+
+    try {
+        const userRef = doc(db, 'users', username);
+        const userSnap = await getDoc(userRef);
+        if (!userSnap.exists()) { msgEl.textContent = 'User not found'; return; }
+
+        // Send a chat request
+        await addDoc(collection(db, 'chatRequests'), {
+            from: currentUser,
+            to: username,
+            status: 'pending',
+            createdAt: serverTimestamp()
+        });
+
+        document.getElementById('private-chat-username').value = '';
+        msgEl.textContent = '';
+        msgEl.className = 'success-msg';
+        msgEl.textContent = 'Chat request sent!';
+        setTimeout(() => { msgEl.textContent = ''; msgEl.className = 'error-msg'; }, 3000);
+    } catch (e) { msgEl.textContent = 'Error: ' + e.message; }
+};
+
+window.openPrivateChat = function(username) {
+    currentChatUser = username;
+    document.getElementById('chat-header-name').textContent = '@' + username;
+    checkChatBlocked();
+    document.getElementById('tab-content-private').classList.add('hidden');
+    document.getElementById('tab-content-chat').classList.remove('hidden');
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    markPrivateChatAsRead(username);
+    loadChatMessages();
+};
+
+window.backToPrivateList = function() {
+    currentChatUser = null;
+    if (chatMessagesListener) chatMessagesListener();
+    document.getElementById('tab-content-chat').classList.add('hidden');
+    document.getElementById('tab-content-private').classList.remove('hidden');
+    document.getElementById('tab-private').classList.add('active');
+    loadPrivateChats();
+};
+
+window.loadChatMessages = function() {
+    const container = document.getElementById('chat-messages');
+    if (!container) return;
+
+    if (chatMessagesListener) chatMessagesListener();
+
+    container.innerHTML = '<div class="loading">Loading...</div>';
+
+    const q = query(collection(db, 'privateMessages'), orderBy('createdAt', 'asc'));
+    chatMessagesListener = onSnapshot(q, (snapshot) => {
+        if (!container) return;
+        let html = '';
+        let hasMessages = false;
+
+        snapshot.forEach((docSnap) => {
+            const msg = docSnap.data();
+            if ((msg.sender !== currentUser || msg.receiver !== currentChatUser) && 
+                (msg.sender !== currentChatUser || msg.receiver !== currentUser)) return;
+
+            hasMessages = true;
+            const time = msg.createdAt ? formatTime(msg.createdAt.toDate()) : 'Now';
+            const isSent = msg.sender === currentChatUser;
+
+            html += '<div class="chat-message ' + (isSent ? 'sent' : 'received') + '">' +
+                '<div>' + escapeHtml(msg.content) + '</div>' +
+                '<div class="chat-message-time">' + time + '</div>' +
+            '</div>';
+        });
+
+        if (!hasMessages) html = '<div class="empty" style="padding:40px 20px">No messages yet. Start the conversation!</div>';
+        container.innerHTML = html;
+        container.scrollTop = container.scrollHeight;
+    });
+};
+
+window.sendChatMessage = async function() {
+    if (!currentChatUser) return;
+
+    // Check if blocked
+    const isBlocked = await isChatBlocked(currentChatUser);
+    if (isBlocked) { alert('You cannot send messages to this user'); return; }
+
+    const input = document.getElementById('chat-message-input');
+    const content = input.value.trim();
+    if (!content) return;
+    if (content.length > 1000) { alert('الرسالة يجب أن لا تتجاوز 1000 حرف'); return; }
+
+    try {
+        await addDoc(collection(db, 'privateMessages'), {
+            sender: currentUser,
+            receiver: currentChatUser,
+            content: content,
+            readBy: [currentUser],
+            createdAt: serverTimestamp()
+        });
+        input.value = '';
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+window.blockChatUser = async function() {
+    if (!currentChatUser) return;
+    if (!confirm('Are you sure you want to ban ' + currentChatUser + ' from private chats?')) return;
+
+    try {
+        await setDoc(doc(db, 'chatBlocks', currentUser + '_' + currentChatUser), {
+            blocker: currentUser,
+            blocked: currentChatUser,
+            createdAt: serverTimestamp()
+        });
+        checkChatBlocked();
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+window.unblockChatUser = async function() {
+    if (!currentChatUser) return;
+    try {
+        await deleteDoc(doc(db, 'chatBlocks', currentUser + '_' + currentChatUser));
+        checkChatBlocked();
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+async function isChatBlocked(otherUser) {
+    try {
+        const blockRef = doc(db, 'chatBlocks', currentUser + '_' + otherUser);
+        const blockSnap = await getDoc(blockRef);
+        return blockSnap.exists();
+    } catch (e) { return false; }
+}
+
+async function checkChatBlocked() {
+    if (!currentChatUser) return;
+    const isBlocked = await isChatBlocked(currentChatUser);
+    const notice = document.getElementById('chat-blocked-notice');
+    const blockBtn = document.getElementById('chat-block-btn');
+    const inputArea = document.getElementById('chat-input-area');
+
+    if (isBlocked) {
+        notice.classList.remove('hidden');
+        blockBtn.textContent = 'Un Block';
+        blockBtn.onclick = unblockChatUser;
+        blockBtn.className = 'btn-success';
+        inputArea.classList.add('hidden');
+    } else {
+        notice.classList.add('hidden');
+        blockBtn.textContent = 'Block';
+        blockBtn.onclick = blockChatUser;
+        blockBtn.className = 'btn-ban';
+        inputArea.classList.remove('hidden');
+    }
+}
+
+// ===== INBOX =====
+window.loadInbox = function() {
+    const container = document.getElementById('inbox-container');
+    if (!container) return;
+
+    if (inboxListener) inboxListener();
+
+    // Listen to invites
+    const invitesQ = query(collection(db, 'invites'), orderBy('createdAt', 'desc'));
+
+    inboxListener = onSnapshot(invitesQ, (invitesSnap) => {
+        // Also get chat requests
+        const chatReqQ = query(collection(db, 'chatRequests'), orderBy('createdAt', 'desc'));
+        onSnapshot(chatReqQ, (chatReqSnap) => {
+            let html = '';
+            let unreadCount = 0;
+
+            // Process invites
+            invitesSnap.forEach((docSnap) => {
+                const inv = docSnap.data();
+                if (inv.to !== currentUser && inv.from !== currentUser) return;
+                const isUnread = inv.to === currentUser && inv.status === 'pending' && (!inv.readBy || !inv.readBy.includes(currentUser));
+                if (isUnread) unreadCount++;
+                const time = inv.createdAt ? formatTime(inv.createdAt.toDate()) : 'Now';
+
+                if (inv.to === currentUser && inv.status === 'pending') {
+                    html += '<div class="inbox-item">' +
+                        '<div class="inbox-item-info">' +
+                            '<div class="inbox-item-title">Invite to join group "' + inv.groupName + '"</div>' +
+                            '<div class="inbox-item-desc">from @' + inv.from + ' · ' + time + '</div>' +
+                        '</div>' +
+                        '<div class="inbox-actions">' +
+                            '<button class="btn-success" onclick="acceptInvite(' + "'" + docSnap.id + "'" + ')">Accept</button>' +
+                            '<button class="btn-danger" onclick="rejectInvite(' + "'" + docSnap.id + "'" + ')">Reject</button>' +
+                        '</div>' +
+                    '</div>';
+                } else if (inv.from === currentUser && inv.status === 'pending') {
+                    html += '<div class="inbox-item">' +
+                        '<div class="inbox-item-info">' +
+                            '<div class="inbox-item-title">Invite sent to @' + inv.to + '</div>' +
+                            '<div class="inbox-item-desc">for group "' + inv.groupName + '" · ' + time + '</div>' +
+                        '</div>' +
+                        '<div class="inbox-actions">' +
+                            '<button class="btn-secondary" disabled>Pending</button>' +
+                        '</div>' +
+                    '</div>';
+                } else if (inv.from === currentUser && inv.status === 'accepted') {
+                    html += '<div class="inbox-item">' +
+                        '<div class="inbox-item-info">' +
+                            '<div class="inbox-item-title">@' + inv.to + ' قبل الدعوة</div>' +
+                            '<div class="inbox-item-desc">for group "' + inv.groupName + '" · ' + time + '</div>' +
+                        '</div>' +
+                        '<div class="inbox-actions">' +
+                            '<button class="btn-success" onclick="approveMember(' + "'" + docSnap.id + "'" + ',' + "'" + inv.to + "'" + ',' + "'" + inv.groupId + "'" + ')">Approve</button>' +
+                            '<button class="btn-danger" onclick="rejectMember(' + "'" + docSnap.id + "'" + ')">Reject</button>' +
+                        '</div>' +
+                    '</div>';
+                } else if (inv.to === currentUser && inv.status === 'rejected') {
+                    html += '<div class="inbox-item">' +
+                        '<div class="inbox-item-info">' +
+                            '<div class="inbox-item-title">Your invite was rejected</div>' +
+                            '<div class="inbox-item-desc">for group "' + inv.groupName + '" · ' + time + '</div>' +
+                        '</div>' +
+                    '</div>';
+                }
+            });
+
+            // Process chat requests
+            chatReqSnap.forEach((docSnap) => {
+                const req = docSnap.data();
+                if (req.to !== currentUser && req.from !== currentUser) return;
+                const isUnread = req.to === currentUser && req.status === 'pending' && (!req.readBy || !req.readBy.includes(currentUser));
+                if (isUnread) unreadCount++;
+                const time = req.createdAt ? formatTime(req.createdAt.toDate()) : 'Now';
+
+                if (req.to === currentUser && req.status === 'pending') {
+                    html += '<div class="inbox-item">' +
+                        '<div class="inbox-item-info">' +
+                            '<div class="inbox-item-title">Private chat request from @' + req.from + '</div>' +
+                            '<div class="inbox-item-desc">' + time + '</div>' +
+                        '</div>' +
+                        '<div class="inbox-actions">' +
+                            '<button class="btn-success" onclick="acceptChatRequest(' + "'" + docSnap.id + "'" + ',' + "'" + req.from + "'" + ')">Accept</button>' +
+                            '<button class="btn-danger" onclick="rejectChatRequest(' + "'" + docSnap.id + "'" + ')">Reject</button>' +
+                        '</div>' +
+                    '</div>';
+                } else if (req.from === currentUser && req.status === 'pending') {
+                    html += '<div class="inbox-item">' +
+                        '<div class="inbox-item-info">' +
+                            '<div class="inbox-item-title">Chat request sent to @' + req.to + '</div>' +
+                            '<div class="inbox-item-desc">' + time + '</div>' +
+                        '</div>' +
+                        '<div class="inbox-actions">' +
+                            '<button class="btn-secondary" disabled>Pending</button>' +
+                        '</div>' +
+                    '</div>';
+                } else if (req.to === currentUser && req.status === 'accepted') {
+                    html += '<div class="inbox-item">' +
+                        '<div class="inbox-item-info">' +
+                            '<div class="inbox-item-title">@' + req.from + ' قبل طلب المحادثة</div>' +
+                            '<div class="inbox-item-desc">' + time + '</div>' +
+                        '</div>' +
+                    '</div>';
+                } else if (req.from === currentUser && req.status === 'accepted') {
+                    html += '<div class="inbox-item">' +
+                        '<div class="inbox-item-info">' +
+                            '<div class="inbox-item-title">@' + req.to + ' قبل طلب المحادثة</div>' +
+                            '<div class="inbox-item-desc">' + time + '</div>' +
+                        '</div>' +
+                    '</div>';
+                } else if (req.to === currentUser && req.status === 'rejected') {
+                    html += '<div class="inbox-item">' +
+                        '<div class="inbox-item-info">' +
+                            '<div class="inbox-item-title">Chat request was rejected</div>' +
+                            '<div class="inbox-item-desc">from @' + req.from + ' · ' + time + '</div>' +
+                        '</div>' +
+                    '</div>';
+                }
+            });
+
+            if (count === 0) html = '<div class="empty">No messages in Inbox</div>';
+            container.innerHTML = html;
+
+            const badge = document.getElementById('inbox-badge');
+            if (unreadCount > 0) { badge.textContent = unreadCount; badge.classList.remove('hidden'); }
+            else { badge.classList.add('hidden'); }
+        });
+    });
+};
+
+// ===== PRIVATE CHAT NOTIFICATIONS =====
+window.markPrivateChatAsRead = async function(chatUser) {
+    if (!chatUser) return;
+    privateUnreadCounts[chatUser] = 0;
+    totalPrivateUnread = Object.values(privateUnreadCounts).reduce((a,b)=>a+b,0);
+    updatePrivateBadge();
+    try {
+        const q = query(collection(db, 'privateMessages'), where('receiver', '==', currentUser), where('sender', '==', chatUser));
+        const snap = await getDocs(q);
+        snap.forEach(async (docSnap) => {
+            const data = docSnap.data();
+            const readBy = data.readBy || [];
+            if (!readBy.includes(currentUser)) {
+                readBy.push(currentUser);
+                await updateDoc(doc(db, 'privateMessages', docSnap.id), { readBy: readBy });
+            }
+        });
+    } catch (e) { console.error(e); }
+};
+
+function updatePrivateBadge() {
+    const badge = document.getElementById('private-badge');
+    if (!badge) {
+        const tab = document.getElementById('tab-private');
+        if (tab && totalPrivateUnread > 0) {
+            tab.innerHTML = 'Private Chats <span id="private-badge" style="background:var(--danger);color:#fff;padding:2px 6px;border-radius:10px;font-size:10px;margin-left:4px">' + totalPrivateUnread + '</span>';
+        } else if (tab) { tab.innerHTML = 'Private Chats'; }
         return;
-      }
-      let html = '<div class="friends-grid">';
-      for (const u of suggested) {
-        html += `
-          <div class="friend-card">
-            <img src="${u.avatar}" onclick="showPage('profile','${u.uid}')" style="cursor:pointer;">
-            <div class="friend-card-info">
-              <h4 style="cursor:pointer;" onclick="showPage('profile','${u.uid}')">${u.name}</h4>
-              <span>@${u.username || 'user'}</span>
-              <button class="btn-primary" style="width:100%;margin-top:8px;padding:8px;" onclick="sendFriendRequest('${u.uid}')">➕ إضافة صديق</button>
-            </div>
-          </div>
-        `;
-      }
-      html += '</div>';
-      container.innerHTML = html;
-    } catch (e) {
-      container.innerHTML = '<div style="text-align:center;color:#65676b;padding:40px;">خطأ في التحميل</div>';
     }
-  }
+    if (totalPrivateUnread > 0) { badge.textContent = totalPrivateUnread; badge.classList.remove('hidden'); }
+    else { badge.classList.add('hidden'); }
 }
 
-async function sendFriendRequest(toUid) {
-  try {
-    // Check if already friends or pending
-    const q1 = fb.query(fb.collection(fb.db, 'friendRequests'),
-      fb.where('from', '==', currentUserUid), fb.where('to', '==', toUid));
-    const snap1 = await fb.getDocs(q1);
-    if (!snap1.empty) { alert('لقد أرسلت طلب صداقة مسبقاً لهذا المستخدم'); return; }
-
-    const q2 = fb.query(fb.collection(fb.db, 'friendRequests'),
-      fb.where('from', '==', toUid), fb.where('to', '==', currentUserUid));
-    const snap2 = await fb.getDocs(q2);
-    if (!snap2.empty) { alert('هذا المستخدم أرسل لك طلب صداقة بالفعل. تحقق من طلباتك الواردة!'); return; }
-
-    await fb.addDoc(fb.collection(fb.db, 'friendRequests'), {
-      from: currentUserUid,
-      to: toUid,
-      status: 'pending',
-      timestamp: fb.serverTimestamp()
-    });
-    alert('تم إرسال طلب الصداقة بنجاح!');
-    if (currentPage === 'friends') showFriendsTab('suggested');
-  } catch (e) {
-    alert('خطأ: ' + e.message);
-  }
-}
-
-async function acceptFriendRequest(reqId) {
-  try {
-    await fb.updateDoc(fb.doc(fb.db, 'friendRequests', reqId), { status: 'accepted' });
-    await refreshUserData();
-    await listenFriendRequests();
-    if (currentPage === 'friends') showFriendsTab('requests');
-  } catch (e) { alert('خطأ: ' + e.message); }
-}
-
-async function rejectFriendRequest(reqId) {
-  try {
-    await fb.deleteDoc(fb.doc(fb.db, 'friendRequests', reqId));
-    await listenFriendRequests();
-    if (currentPage === 'friends') showFriendsTab('requests');
-  } catch (e) { alert('خطأ: ' + e.message); }
-}
-
-async function cancelFriendRequest(reqId) {
-  try {
-    await fb.deleteDoc(fb.doc(fb.db, 'friendRequests', reqId));
-    await listenFriendRequests();
-    if (currentPage === 'friends') showFriendsTab('sent');
-  } catch (e) { alert('خطأ: ' + e.message); }
-}
-
-// ==================== PROFILE ====================
-async function renderProfile(uid) {
-  const userDoc = await fb.getDoc(fb.doc(fb.db, 'users', uid));
-  if (!userDoc.exists()) return;
-  const user = userDoc.data();
-
-  document.getElementById('profileAvatar').src = user.avatar || 'https://ui-avatars.com/api/?name=User&background=ccc&color=fff';
-  document.getElementById('profileName').textContent = user.name || 'مستخدم';
-  document.getElementById('profileUsername').textContent = '@' + (user.username || 'user');
-  document.getElementById('profileAge').textContent = user.age || '--';
-  document.getElementById('profileLocation').textContent = user.location || 'غير محدد';
-  document.getElementById('profileJoined').textContent = user.joined || '--';
-
-  // Profile actions
-  const actionsDiv = document.getElementById('profileActions');
-  if (uid === currentUserUid) {
-    actionsDiv.innerHTML = `<button class="btn-secondary" onclick="showPage('settings')">✏️ تعديل الملف الشخصي</button>`;
-  } else {
-    // Check friendship status
-    const q1 = fb.query(fb.collection(fb.db, 'friendRequests'),
-      fb.where('from', '==', currentUserUid), fb.where('to', '==', uid), fb.where('status', '==', 'pending'));
-    const q2 = fb.query(fb.collection(fb.db, 'friendRequests'),
-      fb.where('from', '==', uid), fb.where('to', '==', currentUserUid), fb.where('status', '==', 'pending'));
-    const q3 = fb.query(fb.collection(fb.db, 'friendRequests'),
-      fb.where('status', '==', 'accepted'),
-      fb.where('from', '==', currentUserUid));
-    const q4 = fb.query(fb.collection(fb.db, 'friendRequests'),
-      fb.where('status', '==', 'accepted'),
-      fb.where('to', '==', currentUserUid));
-
-    const [snap1, snap2, snap3, snap4] = await Promise.all([fb.getDocs(q1), fb.getDocs(q2), fb.getDocs(q3), fb.getDocs(q4)]);
-
-    let isFriend = false;
-    snap3.forEach(d => { if (d.data().to === uid) isFriend = true; });
-    snap4.forEach(d => { if (d.data().from === uid) isFriend = true; });
-
-    let sentPending = !snap1.empty;
-    let receivedPending = !snap2.empty;
-
-    if (isFriend) {
-      actionsDiv.innerHTML = `<button class="btn-secondary" onclick="showPage('chat')">💬 إرسال رسالة</button>`;
-    } else if (sentPending) {
-      actionsDiv.innerHTML = `<button class="btn-secondary" disabled>⏳ طلب مرسل</button>`;
-    } else if (receivedPending) {
-      const reqId = snap2.docs[0].id;
-      actionsDiv.innerHTML = `
-        <button class="btn-primary" onclick="acceptFriendRequest('${reqId}');renderProfile('${uid}')">✓ قبول الطلب</button>
-        <button class="btn-danger" onclick="rejectFriendRequest('${reqId}');renderProfile('${uid}')">✕ رفض</button>
-      `;
-    } else {
-      actionsDiv.innerHTML = `<button class="btn-primary" onclick="sendFriendRequest('${uid}');renderProfile('${uid}')">➕ إضافة صديق</button>`;
-    }
-  }
-
-  // Default to posts tab
-  showProfileTab('posts');
-}
-
-async function showProfileTab(tab, btn) {
-  if (btn) {
-    document.querySelectorAll('.profile-tabs button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
-
-  const container = document.getElementById('profileTabContent');
-  const uid = viewingProfile;
-
-  if (tab === 'posts') {
-    const q = fb.query(fb.collection(fb.db, 'posts'), fb.where('author', '==', uid), fb.orderBy('timestamp', 'desc'));
-    const snap = await fb.getDocs(q);
-    const userPosts = [];
-    snap.forEach(d => userPosts.push({ id: d.id, ...d.data() }));
-
-    if (userPosts.length === 0) {
-      container.innerHTML = '<div class="post-card" style="text-align:center;color:#65676b;padding:40px;">لا توجد منشورات</div>';
-      return;
-    }
-    let html = '';
-    for (const post of userPosts) {
-      const timeAgo = post.timestamp ? getTimeAgo(post.timestamp.toMillis ? post.timestamp.toMillis() : post.timestamp) : '';
-      html += `
-        <div class="post-card">
-          <div class="post-header">
-            <img src="${document.getElementById('profileAvatar').src}">
-            <div class="post-header-info">
-              <h4>${document.getElementById('profileName').textContent}</h4>
-              <span>${timeAgo}</span>
-            </div>
-          </div>
-          <div class="post-content">${escapeHtml(post.content || '')}</div>
-          ${post.image ? `<img src="${post.image}" class="post-image">` : ''}
-          <div class="post-actions">
-            <button onclick="likePost('${post.id}')">👍 إعجاب (${post.likes || 0})</button>
-            <button>💬 تعليق</button>
-            <button>🔗 مشاركة</button>
-          </div>
-        </div>
-      `;
-    }
-    container.innerHTML = html;
-
-  } else if (tab === 'about') {
-    const userDoc = await fb.getDoc(fb.doc(fb.db, 'users', uid));
-    const u = userDoc.exists() ? userDoc.data() : {};
-    container.innerHTML = `
-      <div class="settings-container" style="margin-top:0;">
-        <div class="settings-section">
-          <h3>📝 نبذة عني</h3>
-          <p style="color:#050505;font-size:15px;line-height:1.6;">${u.bio || 'لم يتم إضافة نبذة بعد.'}</p>
-        </div>
-        <div class="settings-section">
-          <h3>📍 معلومات</h3>
-          <p style="color:#65676b;font-size:15px;margin-bottom:8px;"><strong>العمر:</strong> ${u.age || '--'} سنة</p>
-          <p style="color:#65676b;font-size:15px;margin-bottom:8px;"><strong>الموقع:</strong> ${u.location || 'غير محدد'}</p>
-          <p style="color:#65676b;font-size:15px;margin-bottom:8px;"><strong>تاريخ الانضمام:</strong> ${u.joined || '--'}</p>
-        </div>
-        <div class="settings-section">
-          <h3>🎵 المفضلات</h3>
-          <p style="color:#65676b;font-size:15px;margin-bottom:8px;"><strong>الموسيقى:</strong> ${u.music || 'غير محدد'}</p>
-          <p style="color:#65676b;font-size:15px;margin-bottom:8px;"><strong>الأفلام:</strong> ${u.movies || 'غير محدد'}</p>
-          <p style="color:#65676b;font-size:15px;"><strong>الكتب:</strong> ${u.books || 'غير محدد'}</p>
-        </div>
-      </div>
-    `;
-
-  } else if (tab === 'friends') {
-    const q1 = fb.query(fb.collection(fb.db, 'friendRequests'), fb.where('status', '==', 'accepted'), fb.where('from', '==', uid));
-    const q2 = fb.query(fb.collection(fb.db, 'friendRequests'), fb.where('status', '==', 'accepted'), fb.where('to', '==', uid));
-    const [snap1, snap2] = await Promise.all([fb.getDocs(q1), fb.getDocs(q2)]);
-    const friendUids = [];
-    snap1.forEach(d => friendUids.push(d.data().to));
-    snap2.forEach(d => friendUids.push(d.data().from));
-
-    if (friendUids.length === 0) {
-      container.innerHTML = '<div class="post-card" style="text-align:center;color:#65676b;padding:40px;">لا يوجد أصدقاء لعرضهم</div>';
-      return;
-    }
-    let html = '<div class="friends-grid">';
-    for (const fuid of friendUids) {
-      let fu = usersCache[fuid];
-      if (!fu) {
-        try { const ds = await fb.getDoc(fb.doc(fb.db, 'users', fuid)); if (ds.exists()) { fu = ds.data(); usersCache[fuid] = fu; } } catch(e) {}
-      }
-      if (!fu) continue;
-      html += `
-        <div class="friend-card" onclick="showPage('profile','${fuid}')">
-          <img src="${fu.avatar}">
-          <div class="friend-card-info">
-            <h4>${fu.name}</h4>
-            <span>@${fu.username || 'user'}</span>
-          </div>
-        </div>
-      `;
-    }
-    html += '</div>';
-    container.innerHTML = html;
-  }
-}
-
-// ==================== AVATAR UPLOAD ====================
-async function uploadAvatar(input) {
-  const file = input.files[0];
-  if (!file) return;
-  if (file.size > 5 * 1024 * 1024) { alert('حجم الصورة كبير جداً. الحد الأقصى 5 ميجا'); return; }
-
-  try {
-    const storageRef = fb.ref(fb.storage, `avatars/${currentUserUid}/${Date.now()}_${file.name}`);
-    await fb.uploadBytes(storageRef, file);
-    const url = await fb.getDownloadURL(storageRef);
-    await fb.updateDoc(fb.doc(fb.db, 'users', currentUserUid), { avatar: url });
-    await fb.updateProfile(currentUser, { photoURL: url });
-    await refreshUserData();
-    document.getElementById('profileAvatar').src = url;
-    alert('تم تحديث الصورة بنجاح!');
-  } catch (e) {
-    alert('خطأ في رفع الصورة: ' + e.message);
-  }
-}
-
-let pendingSettingsAvatar = null;
-
-function uploadSettingsAvatar(input) {
-  const file = input.files[0];
-  if (!file) return;
-  if (file.size > 5 * 1024 * 1024) { alert('حجم الصورة كبير جداً. الحد الأقصى 5 ميجا'); return; }
-  pendingSettingsAvatar = file;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    document.getElementById('avatarPreview').innerHTML = `<img src="${e.target.result}" style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid #1877f2;">`;
-  };
-  reader.readAsDataURL(file);
-}
-
-function handleAvatarDrop(e) {
-  e.preventDefault();
-  e.currentTarget.classList.remove('dragover');
-  const file = e.dataTransfer.files[0];
-  if (file && file.type.startsWith('image/')) {
-    if (file.size > 5 * 1024 * 1024) { alert('حجم الصورة كبير جداً. الحد الأقصى 5 ميجا'); return; }
-    pendingSettingsAvatar = file;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      document.getElementById('avatarPreview').innerHTML = `<img src="${ev.target.result}" style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid #1877f2;">`;
-    };
-    reader.readAsDataURL(file);
-  }
-}
-
-// ==================== SETTINGS ====================
-async function loadSettings() {
-  if (!currentUserData) await refreshUserData();
-  const u = currentUserData;
-  if (!u) return;
-
-  document.getElementById('settingsName').value = u.name || '';
-  document.getElementById('settingsUsername').value = u.username || '';
-  document.getElementById('settingsAge').value = u.age || '';
-  document.getElementById('settingsLocation').value = u.location || '';
-  document.getElementById('settingsBio').value = u.bio || '';
-  document.getElementById('settingsMusic').value = u.music || '';
-  document.getElementById('settingsMovies').value = u.movies || '';
-  document.getElementById('settingsBooks').value = u.books || '';
-  document.getElementById('settingsNewPassword').value = '';
-  document.getElementById('settingsConfirmPassword').value = '';
-  document.getElementById('avatarPreview').innerHTML = u.avatar ? `<img src="${u.avatar}" style="width:100px;height:100px;border-radius:50%;object-fit:cover;">` : '';
-  pendingSettingsAvatar = null;
-
-  updateChangeLimits(u);
-}
-
-function updateChangeLimits(u) {
-  const now = Date.now();
-  const day7 = 7 * 24 * 60 * 60 * 1000;
-  const day30 = 30 * 24 * 60 * 60 * 1000;
-
-  let nameChangesLeft = 2;
-  if (u.nameLastChanged) {
-    const last = u.nameLastChanged.toMillis ? u.nameLastChanged.toMillis() : u.nameLastChanged;
-    if ((now - last) < day7) {
-      nameChangesLeft = Math.max(0, 2 - (u.nameChangesCount || 0));
-    } else {
-      nameChangesLeft = 2;
-    }
-  }
-  document.getElementById('nameChangesLeft').textContent = nameChangesLeft;
-  const nameHint = document.getElementById('nameHint');
-  if (nameChangesLeft === 0) {
-    nameHint.className = 'hint warning';
-    nameHint.innerHTML = 'لقد استنفدت تغييرات الاسم المتاحة. انتظر 7 أيام.';
-    document.getElementById('settingsName').disabled = true;
-  } else {
-    nameHint.className = 'hint';
-    nameHint.innerHTML = `يمكنك تغيير الاسم <span id="nameChangesLeft">${nameChangesLeft}</span> مرة كل 7 أيام`;
-    document.getElementById('settingsName').disabled = false;
-  }
-
-  let usernameChangesLeft = 1;
-  if (u.usernameLastChanged) {
-    const last = u.usernameLastChanged.toMillis ? u.usernameLastChanged.toMillis() : u.usernameLastChanged;
-    if ((now - last) < day30) {
-      usernameChangesLeft = Math.max(0, 1 - (u.usernameChangesCount || 0));
-    } else {
-      usernameChangesLeft = 1;
-    }
-  }
-  document.getElementById('usernameChangesLeft').textContent = usernameChangesLeft;
-  const usernameHint = document.getElementById('usernameHint');
-  if (usernameChangesLeft === 0) {
-    usernameHint.className = 'hint warning';
-    usernameHint.innerHTML = 'لقد استنفدت تغيير اسم المستخدم. انتظر 30 يوم.';
-    document.getElementById('settingsUsername').disabled = true;
-  } else {
-    usernameHint.className = 'hint';
-    usernameHint.innerHTML = `يمكنك تغيير اسم المستخدم <span id="usernameChangesLeft">${usernameChangesLeft}</span> مرة كل 30 يوم`;
-    document.getElementById('settingsUsername').disabled = false;
-  }
-}
-
-async function saveSettings() {
-  if (!currentUserData) return;
-  const btn = document.getElementById('saveSettingsBtn');
-  btn.disabled = true;
-  btn.textContent = 'جاري الحفظ...';
-
-  const newName = document.getElementById('settingsName').value.trim();
-  const newUsername = document.getElementById('settingsUsername').value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '_');
-  const newAge = parseInt(document.getElementById('settingsAge').value);
-  const newLocation = document.getElementById('settingsLocation').value.trim();
-  const newBio = document.getElementById('settingsBio').value.trim();
-  const newMusic = document.getElementById('settingsMusic').value.trim();
-  const newMovies = document.getElementById('settingsMovies').value.trim();
-  const newBooks = document.getElementById('settingsBooks').value.trim();
-  const newPassword = document.getElementById('settingsNewPassword').value;
-  const confirmPassword = document.getElementById('settingsConfirmPassword').value;
-
-  const updates = {};
-  const now = Date.now();
-  const day7 = 7 * 24 * 60 * 60 * 1000;
-  const day30 = 30 * 24 * 60 * 60 * 1000;
-
-  // Name
-  if (newName && newName !== currentUserData.name) {
-    const nameLast = currentUserData.nameLastChanged ? (currentUserData.nameLastChanged.toMillis ? currentUserData.nameLastChanged.toMillis() : currentUserData.nameLastChanged) : 0;
-    const nameChangesLeft = (!currentUserData.nameLastChanged || (now - nameLast) >= day7) ? 2 : Math.max(0, 2 - (currentUserData.nameChangesCount || 0));
-    if (nameChangesLeft <= 0) { alert('لا يمكنك تغيير الاسم الآن. انتظر 7 أيام.'); btn.disabled = false; btn.textContent = '💾 حفظ التغييرات'; return; }
-    updates.name = newName;
-    updates.nameLastChanged = fb.serverTimestamp ? fb.serverTimestamp() : now;
-    updates.nameChangesCount = (currentUserData.nameChangesCount || 0) + 1;
-  }
-
-  // Username
-  if (newUsername && newUsername !== currentUserData.username) {
-    const userLast = currentUserData.usernameLastChanged ? (currentUserData.usernameLastChanged.toMillis ? currentUserData.usernameLastChanged.toMillis() : currentUserData.usernameLastChanged) : 0;
-    const usernameChangesLeft = (!currentUserData.usernameLastChanged || (now - userLast) >= day30) ? 1 : Math.max(0, 1 - (currentUserData.usernameChangesCount || 0));
-    if (usernameChangesLeft <= 0) { alert('لا يمكنك تغيير اسم المستخدم الآن. انتظر 30 يوم.'); btn.disabled = false; btn.textContent = '💾 حفظ التغييرات'; return; }
-    // Check uniqueness
-    const q = fb.query(fb.collection(fb.db, 'users'), fb.where('username', '==', newUsername));
-    const snap = await fb.getDocs(q);
-    let taken = false;
-    snap.forEach(d => { if (d.id !== currentUserUid) taken = true; });
-    if (taken) { alert('اسم المستخدم مستخدم بالفعل'); btn.disabled = false; btn.textContent = '💾 حفظ التغييرات'; return; }
-    updates.username = newUsername;
-    updates.usernameLastChanged = fb.serverTimestamp ? fb.serverTimestamp() : now;
-    updates.usernameChangesCount = (currentUserData.usernameChangesCount || 0) + 1;
-  }
-
-  if (newAge) updates.age = newAge;
-  updates.location = newLocation;
-  updates.bio = newBio;
-  updates.music = newMusic;
-  updates.movies = newMovies;
-  updates.books = newBooks;
-
-  // Avatar upload
-  if (pendingSettingsAvatar) {
+window.acceptInvite = async function(inviteId) {
     try {
-      const storageRef = fb.ref(fb.storage, `avatars/${currentUserUid}/${Date.now()}_${pendingSettingsAvatar.name}`);
-      await fb.uploadBytes(storageRef, pendingSettingsAvatar);
-      const url = await fb.getDownloadURL(storageRef);
-      updates.avatar = url;
-      await fb.updateProfile(currentUser, { photoURL: url });
-    } catch (e) {
-      alert('خطأ في رفع الصورة: ' + e.message);
-      btn.disabled = false; btn.textContent = '💾 حفظ التغييرات'; return;
-    }
-  }
+        await updateDoc(doc(db, 'invites', inviteId), { status: 'accepted' });
+    } catch (e) { alert('Error: ' + e.message); }
+};
 
-  // Password
-  if (newPassword) {
-    if (newPassword !== confirmPassword) { alert('كلمتا المرور غير متطابقتين'); btn.disabled = false; btn.textContent = '💾 حفظ التغييرات'; return; }
-    if (newPassword.length < 6) { alert('يجب أن تكون كلمة المرور 6 أحرف على الأقل'); btn.disabled = false; btn.textContent = '💾 حفظ التغييرات'; return; }
+window.rejectInvite = async function(inviteId) {
     try {
-      const { updatePassword } = await import("https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js");
-      await updatePassword(currentUser, newPassword);
-    } catch (e) {
-      alert('خطأ في تغيير كلمة المرور: ' + e.message);
-      btn.disabled = false; btn.textContent = '💾 حفظ التغييرات'; return;
-    }
-  }
+        await updateDoc(doc(db, 'invites', inviteId), { status: 'rejected' });
+    } catch (e) { alert('Error: ' + e.message); }
+};
 
-  try {
-    await fb.updateDoc(fb.doc(fb.db, 'users', currentUserUid), updates);
-    await refreshUserData();
-    alert('تم حفظ التغييرات بنجاح!');
-    showPage('profile');
-  } catch (e) {
-    alert('خطأ في الحفظ: ' + e.message);
-  }
-  btn.disabled = false;
-  btn.textContent = '💾 حفظ التغييرات';
+window.approveMember = async function(inviteId, username, groupId) {
+    try {
+        const groupRef = doc(db, 'groups', groupId);
+        const groupSnap = await getDoc(groupRef);
+        if (groupSnap.exists()) {
+            const members = groupSnap.data().members || [];
+            if (!members.includes(username)) members.push(username);
+            await updateDoc(groupRef, { members: members });
+        }
+        await deleteDoc(doc(db, 'invites', inviteId));
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+window.rejectMember = async function(inviteId) {
+    try {
+        await deleteDoc(doc(db, 'invites', inviteId));
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+// Chat request handlers
+window.acceptChatRequest = async function(requestId, fromUser) {
+    try {
+        await updateDoc(doc(db, 'chatRequests', requestId), { status: 'accepted' });
+        // Send a welcome message
+        await addDoc(collection(db, 'privateMessages'), {
+            sender: fromUser,
+            receiver: currentUser,
+            content: 'Chat started',
+            createdAt: serverTimestamp()
+        });
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+window.rejectChatRequest = async function(requestId) {
+    try {
+        await updateDoc(doc(db, 'chatRequests', requestId), { status: 'rejected' });
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+// ===== UTILS =====
+window.toggleTheme = function() {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('whisper_theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+};
+
+if (localStorage.getItem('whisper_theme') === 'dark') document.body.classList.add('dark');
+
+function escapeHtml(text) { 
+    const div = document.createElement('div'); 
+    div.textContent = text; 
+    return div.innerHTML; 
 }
 
-// ==================== SEARCH ====================
-async function searchUsers(query) {
-  if (!query.trim()) {
-    if (currentPage === 'search') showPage('feed');
-    return;
-  }
-
-  const q = query.toLowerCase();
-  showPage('search');
-  const container = document.getElementById('searchResultsContainer');
-  container.innerHTML = '<div class="loading"><div class="loading-spinner"></div>جاري البحث...</div>';
-
-  try {
-    const snap = await fb.getDocs(fb.collection(fb.db, 'users'));
-    const results = [];
-    snap.forEach(d => {
-      const u = d.data();
-      if (d.id === currentUserUid) return;
-      if ((u.name && u.name.toLowerCase().includes(q)) ||
-          (u.username && u.username.toLowerCase().includes(q)) ||
-          (u.location && u.location.toLowerCase().includes(q))) {
-        results.push({ uid: d.id, ...u });
-      }
-    });
-
-    if (results.length === 0) {
-      container.innerHTML = '<p style="text-align:center;color:#65676b;padding:20px;">لا توجد نتائج</p>';
-      return;
-    }
-    container.innerHTML = results.map(u => `
-      <div class="search-result-item" onclick="showPage('profile','${u.uid}')">
-        <img src="${u.avatar || 'https://ui-avatars.com/api/?name=User&background=ccc&color=fff'}">
-        <div>
-          <h4>${u.name || 'مستخدم'}</h4>
-          <span>@${u.username || 'user'} · ${u.location || 'غير محدد'}</span>
-        </div>
-      </div>
-    `).join('');
-  } catch (e) {
-    container.innerHTML = '<p style="text-align:center;color:#65676b;padding:20px;">خطأ في البحث</p>';
-  }
+function formatTime(date) {
+    const now = new Date();
+    const diff = Math.floor((now - date) / 1000);
+    if (diff < 60) return 'Just now';
+    if (diff < 3600) return 'Since ' + Math.floor(diff / 60) + ' minute' + (Math.floor(diff/60) > 1 ? 's' : '');
+    if (diff < 86400) return 'Since ' + Math.floor(diff / 3600) + ' hour' + (Math.floor(diff/3600) > 1 ? 's' : '');
+    if (diff < 604800) return 'Since ' + Math.floor(diff / 86400) + ' day' + (Math.floor(diff/86400) > 1 ? 's' : '');
+    return date.toLocaleDateString('en-US');
 }
 
-// ==================== UTILITIES ====================
-function getTimeAgo(timestamp) {
-  if (!timestamp) return '';
-  const ms = typeof timestamp === 'object' && timestamp.toMillis ? timestamp.toMillis() : timestamp;
-  const seconds = Math.floor((Date.now() - ms) / 1000);
-  if (seconds < 60) return 'الآن';
-  const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `منذ ${minutes} دقيقة`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `منذ ${hours} ساعة`;
-  const days = Math.floor(hours / 24);
-  if (days < 30) return `منذ ${days} يوم`;
-  const months = Math.floor(days / 30);
-  return `منذ ${months} شهر`;
-}
-
-function escapeHtml(text) {
-  if (!text) return '';
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}
+window.addEventListener('beforeunload', () => { sessionStorage.removeItem('whisper_user'); });
 </script>
 </body>
 </html>
