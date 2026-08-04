@@ -41,6 +41,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s;dis
 .nav-tab-vertical.active{background:var(--primary);color:#fff}
 .nav-tab-vertical .badge{background:var(--danger);color:#fff;padding:2px 6px;border-radius:10px;font-size:10px;margin-left:8px}
 .sidebar-footer{margin-top:auto;padding-top:16px;border-top:1px solid var(--border)}
+/* مستطيل معلومات المستخدم في الشريط الجانبي */
 .sidebar-user-info {
     display: flex;
     align-items: center;
@@ -53,12 +54,50 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s;dis
     transition: background 0.2s;
     border: 1px solid var(--border);
 }
-.sidebar-user-info:hover { background: var(--border); }
-.sidebar-user-info .user-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex-shrink: 0; background: var(--border); }
-.sidebar-user-info .user-avatar-placeholder { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; background: var(--border); color: var(--text); flex-shrink: 0; }
-.sidebar-user-info .user-details { flex: 1; min-width: 0; }
-.sidebar-user-info .user-displayname { font-size: 15px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sidebar-user-info .user-username { font-size: 12px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sidebar-user-info:hover {
+    background: var(--border);
+}
+.sidebar-user-info .user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: var(--border);
+}
+.sidebar-user-info .user-avatar-placeholder {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    background: var(--border);
+    color: var(--text);
+    flex-shrink: 0;
+}
+.sidebar-user-info .user-details {
+    flex: 1;
+    min-width: 0;
+}
+.sidebar-user-info .user-displayname {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sidebar-user-info .user-username {
+    font-size: 12px;
+    color: #888;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* نهاية الإضافة */
 .theme-toggle-btn{width:100%;padding:10px 14px;border:none;border-radius:var(--radius);background:transparent;color:var(--text);cursor:pointer;font-size:15px;font-weight:600;text-align:left;transition:0.2s;display:flex;align-items:center;gap:8px}
 .theme-toggle-btn:hover{background:var(--bg);color:var(--primary)}
 .content-area{flex:1;padding:20px 24px;overflow-y:auto;min-height:100vh}
@@ -81,12 +120,24 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s;dis
 .post-author-info{flex:1;display:flex;flex-direction:column;gap:2px}
 .post-author-name{font-weight:700;font-size:16px;color:var(--primary)}
 .post-author-time{font-size:12px;color:#888}
+.post-author-username{font-size:12px;color:#888;font-weight:400}
 .post-content{font-size:15px;line-height:1.6;margin-bottom:12px;word-wrap:break-word}
 .post-actions{display:flex;gap:1.8rem;padding-top:10px;border-top:1px solid var(--border);flex-wrap:wrap;justify-content:flex-start;align-items:center}
 .post-actions button{background:none;border:none;color:var(--text);cursor:pointer;font-size:13px;display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:var(--radius);transition:0.2s}
 .post-actions button:hover{background:var(--bg);color:var(--primary)}
-.post-actions button.active-reaction.like-active { color: var(--primary); background: rgba(24,119,242,0.1); border-radius: 18px; font-weight: 700; }
-.post-actions button.active-reaction.dislike-active { color: var(--danger); background: rgba(228,30,63,0.1); border-radius: 18px; font-weight: 700; }
+/* تأثير الإعجاب النشط */
+.post-actions button.active-reaction.like-active {
+    color: var(--primary);
+    background: rgba(24,119,242,0.1);
+    border-radius: 18px;
+    font-weight: 700;
+}
+.post-actions button.active-reaction.dislike-active {
+    color: var(--danger);
+    background: rgba(228,30,63,0.1);
+    border-radius: 18px;
+    font-weight: 700;
+}
 .comments-section{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
 .comment{background:var(--bg);padding:10px;border-radius:var(--radius);margin-bottom:8px;border:1px solid var(--border);position:relative;display:flex;flex-direction:column}
 .comment-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
@@ -102,14 +153,28 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s;dis
 .comment-actions .like-btn:hover{background:var(--bg);color:var(--primary)}
 .comment-actions .dislike-btn{background:none;border:1px solid var(--border);color:var(--text);font-weight:400}
 .comment-actions .dislike-btn:hover{background:var(--bg);color:var(--danger)}
-.comment-actions .like-btn.active-reaction.like-active { color: var(--primary); background: rgba(24,119,242,0.1); border-color: var(--primary); font-weight: 700; }
-.comment-actions .dislike-btn.active-reaction.dislike-active { color: var(--danger); background: rgba(228,30,63,0.1); border-color: var(--danger); font-weight: 700; }
+/* تأثير الإعجاب النشط للتعليقات */
+.comment-actions .like-btn.active-reaction.like-active {
+    color: var(--primary);
+    background: rgba(24,119,242,0.1);
+    border-color: var(--primary);
+    font-weight: 700;
+}
+.comment-actions .dislike-btn.active-reaction.dislike-active {
+    color: var(--danger);
+    background: rgba(228,30,63,0.1);
+    border-color: var(--danger);
+    font-weight: 700;
+}
 .comment-input{display:flex;gap:10px;margin-top:10px}
 .comment-input input{flex:1;padding:10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-size:14px;outline:none}
 .comment-input input:focus{border-color:var(--primary)}
 .comment-input button{padding:10px 16px}
 .tag{padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;color:#fff;text-transform:uppercase}
-.tag-owner{background:var(--owner)} .tag-admin{background:var(--admin)} .tag-banned{background:var(--ban)} .tag-group{background:var(--group)}
+.tag-owner{background:var(--owner)}
+.tag-admin{background:var(--admin)}
+.tag-banned{background:var(--ban)}
+.tag-group{background:var(--group)}
 .loading{text-align:center;padding:40px;color:#888}
 .empty{text-align:center;padding:60px 20px;color:#888;font-size:16px}
 .error-msg{color:var(--danger);text-align:center;margin:10px 0;font-size:14px}
@@ -129,6 +194,8 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s;dis
 .group-card-actions button{padding:6px 12px;border:none;border-radius:var(--radius);cursor:pointer;font-size:12px;font-weight:600;color:#fff;transition:0.2s}
 .group-card-actions button:hover{opacity:0.9}
 .group-members{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.group-member{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
+.group-member-name{font-size:13px}
 .group-invite-box{background:var(--bg);padding:12px;border-radius:var(--radius);margin-top:10px;border:1px solid var(--border)}
 .group-invite-box input{width:100%;padding:10px;margin-bottom:8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);color:var(--text);font-size:14px;outline:none}
 .group-invite-box input:focus{border-color:var(--primary)}
@@ -165,8 +232,20 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s;dis
 #group-chat-messages .post-actions{display:flex;gap:1.8rem;padding-top:10px;border-top:1px solid var(--border);flex-wrap:wrap;justify-content:flex-start;align-items:center}
 #group-chat-messages .post-actions button{background:none;border:none;color:var(--text);cursor:pointer;font-size:13px;display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:var(--radius);transition:0.2s}
 #group-chat-messages .post-actions button:hover{background:var(--bg);color:var(--primary)}
-#group-chat-messages .post-actions button.active-reaction.like-active { color: var(--primary); background: rgba(24,119,242,0.1); border-radius: 18px; font-weight: 700; }
-#group-chat-messages .post-actions button.active-reaction.dislike-active { color: var(--danger); background: rgba(228,30,63,0.1); border-radius: 18px; font-weight: 700; }
+/* تأثير الإعجاب النشط لرسائل المجموعة */
+#group-chat-messages .post-actions button.active-reaction.like-active {
+    color: var(--primary);
+    background: rgba(24,119,242,0.1);
+    border-radius: 18px;
+    font-weight: 700;
+}
+#group-chat-messages .post-actions button.active-reaction.dislike-active {
+    color: var(--danger);
+    background: rgba(228,30,63,0.1);
+    border-radius: 18px;
+    font-weight: 700;
+}
+#group-chat-messages{padding:0;overflow-y:auto;flex:1;display:block}
 .chat-message{max-width:70%;padding:10px 14px;border-radius:var(--radius);font-size:14px;line-height:1.5;word-wrap:break-word}
 .chat-message.sent{align-self:flex-start;background:var(--primary);color:#fff;border-bottom-left-radius:2px}
 .chat-message.received{align-self:flex-end;background:var(--bg);border:1px solid var(--border);border-bottom-right-radius:2px}
@@ -192,27 +271,46 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s;dis
 .profile-container{background:var(--card);padding:24px;border-radius:var(--radius);box-shadow:var(--shadow);text-align:center}
 .profile-container .displayname{font-size:24px;font-weight:700;margin-bottom:4px}
 .profile-container .username-text{font-size:16px;color:var(--primary);margin-bottom:16px;cursor:default}
-.profile-bio-wrapper { position: relative; max-width: 400px; margin: 8px auto 16px; padding: 0; }
-.profile-bio-text { font-size: 16px; color: var(--text); line-height: 1.6; word-wrap: break-word; padding: 12px 16px; background: var(--bg); border-radius: var(--radius); border: 1px solid var(--border); min-height: 50px; }
-.bio-edit-btn { position: absolute; top: -8px; left: -8px; width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.2); border: 2px solid var(--card); font-size: 12px; z-index: 2; }
-.bio-edit-btn svg { width: 13px; height: 13px; fill: white; }
+.profile-container .bio-input{width:100%;padding:10px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg);color:var(--text);resize:none;font-size:14px;margin-top:8px}
 .profile-actions{margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.avatar-wrapper { position: relative; display: inline-block; }
-.avatar-edit-btn { position: absolute; top: -4px; left: -4px; width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.2); border: 2px solid var(--card); font-size: 14px; z-index: 2; }
-.avatar-edit-btn svg { width: 14px; height: 14px; fill: white; }
+/* دائرة القلم لتحرير الصورة */
+.avatar-wrapper {
+    position: relative;
+    display: inline-block;
+}
+.avatar-edit-btn {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    border: 2px solid var(--card);
+    font-size: 14px;
+    z-index: 2;
+}
+.avatar-edit-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: white;
+}
 #password-modal{backdrop-filter:blur(2px);background:rgba(0,0,0,0.3)}
 #password-modal .modal-content{background:var(--card)}
 #crop-modal .modal-content{max-width:500px}
 #crop-canvas{display:block;margin:0 auto;border-radius:50%;cursor:move}
 #picture-options-modal{backdrop-filter:blur(2px);background:rgba(0,0,0,0.3)}
 #picture-options-modal .modal-content{max-width:360px}
-#bio-modal{backdrop-filter:blur(2px);background:rgba(0,0,0,0.3)}
-#bio-modal .modal-content{max-width:420px}
 @media(max-width:768px){.sidebar{width:100%;height:auto;position:static;border-right:none;border-bottom:1px solid var(--border);padding:12px 16px}.nav-tabs-vertical{flex-direction:row;flex-wrap:wrap}.content-area{padding:16px}}
 </style>
 </head>
 <body>
-<!-- HTML identical to previous version, no changes needed in body except for modals which are already present -->
 <div id="auth-screen">
 <div class="auth-left">
 <div class="auth-box">
@@ -247,6 +345,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s;dis
 <button class="nav-tab-vertical" onclick="switchTab('settings')" id="tab-settings">Settings</button>
 </div>
 <div class="sidebar-footer">
+    <!-- مستطيل معلومات المستخدم الجديد -->
     <div class="sidebar-user-info" id="sidebar-user-info" onclick="switchToOwnProfile()" style="display:none;">
         <img class="user-avatar" id="sidebar-avatar-img" src="" alt="Avatar" style="display:none;">
         <div class="user-avatar-placeholder" id="sidebar-avatar-placeholder" style="display:none;"></div>
@@ -255,6 +354,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s;dis
             <div class="user-username" id="sidebar-username"></div>
         </div>
     </div>
+    <!-- نهاية الإضافة -->
 <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
 </div>
 </div>
@@ -264,7 +364,9 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s;dis
 <button class="btn-danger hidden" id="ban-list-btn" onclick="showBanList()">Banned Users</button>
 </div>
 </div>
-<div id="banned-notice" class="banned-notice hidden">You are banned from the platform. You cannot post or comment.</div>
+<div id="banned-notice" class="banned-notice hidden">
+You are banned from the platform. You cannot post or comment.
+</div>
 <div id="tab-content-home">
 <div class="post-box" id="post-box-area">
     <textarea id="post-content" placeholder="What's on your mind?" maxlength="1000" oninput="updateCharCount('post-content','post-count')"></textarea>
@@ -273,7 +375,9 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s;dis
         <button class="btn-primary post-btn" style="margin:0;" onclick="createPost()">Post</button>
     </div>
 </div>
-<div class="posts-container" id="posts-container"><div class="loading">Loading...</div></div>
+<div class="posts-container" id="posts-container">
+<div class="loading">Loading...</div>
+</div>
 </div>
 <div id="tab-content-groups" class="hidden">
 <div class="group-box" id="create-group-box">
@@ -290,7 +394,9 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s;dis
 <button class="btn-group post-btn" onclick="createGroup()">Create Group</button>
 <div id="group-msg" class="error-msg" style="margin-top:8px"></div>
 </div>
-<div class="posts-container" id="groups-container"><div class="loading">Loading...</div></div>
+<div class="posts-container" id="groups-container">
+<div class="loading">Loading...</div>
+</div>
 </div>
 <div id="tab-content-groupchat" class="hidden">
 <div class="chat-window">
@@ -317,7 +423,9 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s;dis
 <button class="btn-primary post-btn" onclick="startPrivateChat()">Add Chat</button>
 <div id="private-chat-msg" class="error-msg" style="margin-top:8px"></div>
 </div>
-<div class="posts-container" id="private-chats-container"><div class="empty">No private chats</div></div>
+<div class="posts-container" id="private-chats-container">
+<div class="empty">No private chats</div>
+</div>
 </div>
 <div id="tab-content-chat" class="hidden">
 <div class="chat-window">
@@ -337,13 +445,17 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s;dis
 </div>
 </div>
 <div id="tab-content-inbox" class="hidden">
-<div class="inbox-container" id="inbox-container"><div class="empty">No messages in Inbox</div></div>
+<div class="inbox-container" id="inbox-container">
+<div class="empty">No messages in Inbox</div>
+</div>
 </div>
 <div id="tab-content-profile" class="hidden">
 <div id="profile-content"></div>
 </div>
 <div id="tab-content-settings" class="hidden">
-<div class="group-box"><h3 style="margin-bottom:15px;font-size:18px">Settings</h3></div>
+<div class="group-box">
+<h3 style="margin-bottom:15px;font-size:18px">Settings</h3>
+</div>
 <div class="group-box">
 <h4 style="margin-bottom:10px;font-size:16px">Change Display Name</h4>
 <input type="text" id="settings-displayname" placeholder="New display name" maxlength="50">
@@ -431,6 +543,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s;dis
 </div>
 </div>
 </div>
+<!-- نافذة خيارات الصورة الشخصية الجديدة -->
 <div id="picture-options-modal" class="hidden modal" style="backdrop-filter:blur(2px); background:rgba(0,0,0,0.3);">
 <div class="modal-content" style="max-width:360px">
 <h3>Profile Picture</h3>
@@ -439,18 +552,6 @@ body{background:var(--bg);color:var(--text);min-height:100vh;transition:0.3s;dis
 <button class="btn-secondary" onclick="closePictureOptions()" style="width:100%;">Exit</button>
 </div>
 </div>
-<div id="bio-modal" class="hidden modal" style="backdrop-filter:blur(2px); background:rgba(0,0,0,0.3);">
-<div class="modal-content" style="max-width:420px">
-<h3>Edit Bio</h3>
-<textarea id="bio-modal-textarea" placeholder="Write your bio..." maxlength="90" oninput="updateBioModalCount()"></textarea>
-<div style="text-align:right;font-size:11px;color:#888;margin-top:2px;" id="bio-modal-count">0 / 90</div>
-<div class="modal-btns">
-<button class="btn-success" onclick="saveBioFromModal()">Save</button>
-<button class="btn-secondary" onclick="closeBioModal()">Exit</button>
-</div>
-</div>
-</div>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import { getFirestore, collection, addDoc, query, orderBy, doc, getDoc, setDoc, deleteDoc, updateDoc, onSnapshot, serverTimestamp, where, getDocs, increment, writeBatch } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
@@ -498,13 +599,14 @@ let groupCommentLikeLocks = {};
 
 let cropImage = null;
 let cropX = 0, cropY = 0, cropScale = 1;
+let isDragging = false, dragStartX = 0, dragStartY = 0;
 let cropEventsAttached = false;
 
+// مؤقت تحديث الأوقات
 let timestampUpdateInterval = null;
-let postCreationLock = false;
 
-// تخزين حالة التفاعل محلياً لتجنب الوميض
-const userReactions = {};
+// قفل منع النشر المكرر
+let postCreationLock = false;
 
 function isOwner() { return currentUser === OWNER_USERNAME; }
 function isAdmin() { return ADMIN_USERNAMES.includes(currentUser); }
@@ -528,367 +630,571 @@ async function fetchUserPic(username) {
     if (userPicCache[username] !== undefined) return userPicCache[username];
     try {
         const snap = await getDoc(doc(db, 'users', username));
-        if (snap.exists()) { const pic = snap.data().profilePic || ''; userPicCache[username] = pic; return pic; }
+        if (snap.exists()) {
+            const pic = snap.data().profilePic || '';
+            userPicCache[username] = pic;
+            return pic;
+        }
     } catch(e) {}
-    userPicCache[username] = ''; return '';
+    userPicCache[username] = '';
+    return '';
 }
 
+// تحديث معلومات المستخدم في الشريط الجانبي
 async function updateSidebarUserInfo() {
     const container = document.getElementById('sidebar-user-info');
     if (!container || !currentUser) return;
+    
     try {
         const userRef = doc(db, 'users', currentUser);
         const userSnap = await getDoc(userRef);
         if (!userSnap.exists()) return;
         const data = userSnap.data();
         const displayName = data.displayName || currentUser;
+        const username = currentUser;
         const profilePic = data.profilePic || '';
+        
         document.getElementById('sidebar-displayname').textContent = displayName;
-        document.getElementById('sidebar-username').textContent = '@' + currentUser;
+        document.getElementById('sidebar-username').textContent = '@' + username;
+        
         const avatarImg = document.getElementById('sidebar-avatar-img');
         const avatarPlaceholder = document.getElementById('sidebar-avatar-placeholder');
-        if (profilePic) { avatarImg.src = profilePic; avatarImg.style.display = 'block'; avatarPlaceholder.style.display = 'none'; }
-        else { avatarImg.style.display = 'none'; avatarPlaceholder.textContent = displayName.charAt(0).toUpperCase(); avatarPlaceholder.style.display = 'flex'; }
+        
+        if (profilePic) {
+            avatarImg.src = profilePic;
+            avatarImg.style.display = 'block';
+            avatarPlaceholder.style.display = 'none';
+        } else {
+            avatarImg.style.display = 'none';
+            avatarPlaceholder.textContent = displayName.charAt(0).toUpperCase();
+            avatarPlaceholder.style.display = 'flex';
+        }
         container.style.display = 'flex';
-    } catch (e) { console.error(e); }
+    } catch (e) {
+        console.error('Error updating sidebar user info:', e);
+    }
 }
 
-window.switchToOwnProfile = function() { switchTab('profile'); if (currentUser) loadProfile(currentUser); };
-window.toggleAuthMode = function() { /* unchanged */ };
-window.handleAuth = async function() { /* unchanged */ };
-window.handleSignup = async function() { /* unchanged */ };
+// الانتقال إلى الملف الشخصي الخاص بالمستخدم الحالي
+window.switchToOwnProfile = function() {
+    switchTab('profile');
+    if (currentUser) loadProfile(currentUser);
+};
+
+window.toggleAuthMode = function() {
+    isLoginMode = !isLoginMode;
+    document.getElementById('auth-btn').classList.toggle('hidden');
+    document.getElementById('signup-btn').classList.toggle('hidden');
+    document.getElementById('auth-toggle').textContent = isLoginMode ? 'Create New Account' : 'Already have an account?';
+    document.getElementById('auth-msg').textContent = '';
+};
+
+window.handleAuth = async function() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const msgEl = document.getElementById('auth-msg');
+    if (!username || !password) { msgEl.textContent = 'Please fill in all fields'; return; }
+    try {
+        const userRef = doc(db, 'users', username);
+        const userSnap = await getDoc(userRef);
+        if (!userSnap.exists()) { msgEl.textContent = 'Username not found'; return; }
+        if (userSnap.data().password !== password) { msgEl.textContent = 'Incorrect password'; return; }
+        const banRef = doc(db, 'banned', username);
+        const banSnap = await getDoc(banRef);
+        if (banSnap.exists()) { msgEl.textContent = 'Your account has been banned at this time. You must wait until the ban is lifted.'; return; }
+        currentUser = username;
+        localStorage.setItem('whisper_user', username);
+        showChat();
+    } catch (e) { msgEl.textContent = 'Error: ' + e.message; }
+};
+
+window.handleSignup = async function() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const msgEl = document.getElementById('auth-msg');
+    if (!username || !password) { msgEl.textContent = 'Please fill in all fields'; return; }
+    if (username.length < 3) { msgEl.textContent = 'Username must be at least 3 characters'; return; }
+    if (password.length < 4) { msgEl.textContent = 'Password must be at least 4 characters'; return; }
+    try {
+        const userRef = doc(db, 'users', username);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) { msgEl.textContent = 'Username already exists'; return; }
+        await setDoc(userRef, { username: username, displayName: username, password: password, createdAt: serverTimestamp(), bio: '', profilePic: '' });
+        currentUser = username;
+        localStorage.setItem('whisper_user', username);
+        showChat();
+    } catch (e) { msgEl.textContent = 'Error: ' + e.message; }
+};
+
 window.logout = function() {
-    currentUser = null; localStorage.removeItem('whisper_user');
-    if (postsListener) postsListener(); if (groupsListener) groupsListener(); if (inboxListener) inboxListener(); if (banListener) banListener();
-    if (privateChatsListener) privateChatsListener(); if (chatMessagesListener) chatMessagesListener(); if (groupChatListener) groupChatListener();
-    Object.values(commentsListeners).forEach(l => l()); Object.values(groupCommentsListeners).forEach(l => l()); Object.values(groupChatListeners).forEach(l => l());
-    commentsListeners = {}; groupChatListeners = {}; bannedUsers = []; currentChatUser = null; currentGroupId = null;
-    document.getElementById('chat-screen').classList.add('hidden'); document.getElementById('auth-screen').classList.remove('hidden');
-    document.getElementById('username').value = ''; document.getElementById('password').value = '';
+    currentUser = null;
+    localStorage.removeItem('whisper_user');
+    if (postsListener) postsListener();
+    if (groupsListener) groupsListener();
+    if (inboxListener) inboxListener();
+    if (banListener) banListener();
+    if (privateChatsListener) privateChatsListener();
+    if (chatMessagesListener) chatMessagesListener();
+    if (groupChatListener) groupChatListener();
+    Object.values(commentsListeners).forEach(l => l());
+    Object.values(groupCommentsListeners).forEach(l => l());
+    Object.values(groupChatListeners).forEach(l => l());
+    commentsListeners = {};
+    groupChatListeners = {};
+    bannedUsers = [];
+    currentChatUser = null;
+    currentGroupId = null;
+    document.getElementById('chat-screen').classList.add('hidden');
+    document.getElementById('auth-screen').classList.remove('hidden');
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+    // إخفاء مستطيل معلومات المستخدم عند تسجيل الخروج
     document.getElementById('sidebar-user-info').style.display = 'none';
-    if (timestampUpdateInterval) { clearInterval(timestampUpdateInterval); timestampUpdateInterval = null; }
+    // إيقاف مؤقت تحديث الأوقات
+    if (timestampUpdateInterval) {
+        clearInterval(timestampUpdateInterval);
+        timestampUpdateInterval = null;
+    }
 };
 
 function showChat() {
-    document.getElementById('auth-screen').classList.add('hidden'); document.getElementById('chat-screen').classList.remove('hidden');
-    if (isStaff()) document.getElementById('ban-list-btn').classList.remove('hidden'); else document.getElementById('ban-list-btn').classList.add('hidden');
-    loadBannedUsers(); loadPosts(); loadGroups(); loadInbox(); loadPrivateChats(); updateThemeButtonText(); updateSidebarUserInfo();
+    document.getElementById('auth-screen').classList.add('hidden');
+    document.getElementById('chat-screen').classList.remove('hidden');
+    if (isStaff()) document.getElementById('ban-list-btn').classList.remove('hidden');
+    else document.getElementById('ban-list-btn').classList.add('hidden');
+    loadBannedUsers();
+    loadPosts();
+    loadGroups();
+    loadInbox();
+    loadPrivateChats();
+    updateThemeButtonText();
+    // تحديث معلومات المستخدم في الشريط الجانبي
+    updateSidebarUserInfo();
+    // بدء مؤقت تحديث الأوقات كل 30 ثانية
     if (timestampUpdateInterval) clearInterval(timestampUpdateInterval);
     timestampUpdateInterval = setInterval(updateAllTimestamps, 30000);
 }
 window.showChat = showChat;
 
-window.switchTab = function(tab) { /* unchanged */ };
-window.viewProfile = function(username) { /* unchanged */ };
-window.openPictureOptions = function() { /* unchanged */ };
-window.closePictureOptions = function() { /* unchanged */ };
-window.openBioModal = function() { /* unchanged */ };
-window.closeBioModal = function() { /* unchanged */ };
-window.updateBioModalCount = function() { /* unchanged */ };
-window.saveBioFromModal = async function() { /* unchanged */ };
-let userBioCache = '';
+window.switchTab = function(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.nav-tab-vertical').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tab)?.classList.add('active');
+    document.getElementById('tab-content-home').classList.add('hidden');
+    document.getElementById('tab-content-groups').classList.add('hidden');
+    document.getElementById('tab-content-private').classList.add('hidden');
+    document.getElementById('tab-content-chat').classList.add('hidden');
+    document.getElementById('tab-content-inbox').classList.add('hidden');
+    document.getElementById('tab-content-settings').classList.add('hidden');
+    document.getElementById('tab-content-groupchat').classList.add('hidden');
+    document.getElementById('tab-content-profile').classList.add('hidden');
+    document.getElementById('tab-content-' + tab)?.classList.remove('hidden');
+    if (tab === 'groups') loadGroups();
+    if (tab === 'inbox') { markInboxAsRead(); loadInbox(); }
+    if (tab === 'private') loadPrivateChats();
+    if (tab === 'profile') loadProfile(currentUser);
+    checkBanned();
+};
 
-async function loadProfile(username) { /* unchanged */ }
+window.viewProfile = function(username) {
+    viewingProfileUsername = username;
+    document.querySelectorAll('.nav-tab-vertical').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-profile')?.classList.add('active');
+    document.getElementById('tab-content-home').classList.add('hidden');
+    document.getElementById('tab-content-groups').classList.add('hidden');
+    document.getElementById('tab-content-private').classList.add('hidden');
+    document.getElementById('tab-content-chat').classList.add('hidden');
+    document.getElementById('tab-content-inbox').classList.add('hidden');
+    document.getElementById('tab-content-settings').classList.add('hidden');
+    document.getElementById('tab-content-groupchat').classList.add('hidden');
+    document.getElementById('tab-content-profile').classList.remove('hidden');
+    loadProfile(username);
+};
+
+// دوال إظهار وإخفاء نافذة خيارات الصورة
+window.openPictureOptions = function() {
+    const pic = userPicCache[currentUser] || '';
+    const removeBtn = document.getElementById('btn-remove-pic-modal');
+    if (removeBtn) {
+        removeBtn.style.display = pic ? 'block' : 'none';
+    }
+    document.getElementById('picture-options-modal').classList.remove('hidden');
+};
+
+window.closePictureOptions = function() {
+    document.getElementById('picture-options-modal').classList.add('hidden');
+};
+
+async function loadProfile(username) {
+    viewingProfileUsername = username;
+    const container = document.getElementById('profile-content');
+    container.innerHTML = '<div class="loading">Loading...</div>';
+    try {
+        const userRef = doc(db, 'users', username);
+        const userSnap = await getDoc(userRef);
+        if (!userSnap.exists()) { container.innerHTML = '<div class="empty">User not found</div>'; return; }
+        const data = userSnap.data();
+        const displayName = data.displayName || username;
+        const bio = data.bio || '';
+        const profilePic = data.profilePic || '';
+        const isOwnProfile = username === currentUser;
+        // بناء الصورة مع دائرة التحرير إذا كان الملف الشخصي خاصاً بالمستخدم
+        let avatarHtml = '';
+        if (profilePic) {
+            avatarHtml = `<div class="avatar-wrapper"><img src="${profilePic}" class="avatar-lg" id="profile-avatar-img">`;
+        } else {
+            avatarHtml = `<div class="avatar-wrapper"><div class="avatar-placeholder-lg" id="profile-avatar-img">${displayName.charAt(0).toUpperCase()}</div>`;
+        }
+        if (isOwnProfile) {
+            avatarHtml += `<div class="avatar-edit-btn" onclick="openPictureOptions()" title="Edit picture"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></div>`;
+        }
+        avatarHtml += `</div>`; // نهاية avatar-wrapper
+        
+        let bioSection = '';
+        if (isOwnProfile) {
+            bioSection = `<textarea class="bio-input" id="profile-bio-input" placeholder="Write your bio..." maxlength="90" oninput="updateBioCount()">${escapeHtml(bio)}</textarea>
+            <div style="text-align:right;font-size:11px;color:#888;margin-top:2px;" id="bio-count">${bio.length} / 90</div>`;
+        } else {
+            bioSection = bio ? `<div style="font-size:15px;color:var(--text);margin-top:8px;max-width:400px;margin-left:auto;margin-right:auto;word-wrap:break-word;">${escapeHtml(bio)}</div>` : '';
+        }
+        let actionsHtml = '';
+        if (isOwnProfile) {
+            actionsHtml = `
+                <input type="file" id="profile-pic-input" accept="image/*" style="display:none" onchange="handleProfilePicUpload(event)">
+                <button class="btn-success" onclick="saveBio()">Save Bio</button>
+            `;
+        }
+        container.innerHTML = `
+            <div class="profile-container">
+                ${avatarHtml}
+                <div class="displayname">${escapeHtml(displayName)} ${getTag(username)}</div>
+                <div class="username-text">@${escapeHtml(username)}</div>
+                ${bioSection}
+                <div class="profile-actions">${actionsHtml}</div>
+            </div>`;
+        userPicCache[username] = profilePic;
+    } catch (e) {
+        container.innerHTML = '<div class="error-msg">Error loading profile</div>';
+    }
+}
 window.loadProfile = loadProfile;
 
-window.updateBioCount = function() {};
-window.saveBio = async function() {};
+window.updateBioCount = function() {
+    const input = document.getElementById('profile-bio-input');
+    const count = document.getElementById('bio-count');
+    if (input && count) {
+        count.textContent = input.value.length + ' / 90';
+        count.style.color = input.value.length > 90 ? 'var(--danger)' : '#888';
+    }
+};
 
-window.handleProfilePicUpload = function(event) { /* unchanged */ };
-function drawCropCanvas() { /* unchanged */ }
-function attachCropEvents() { /* unchanged */ }
-window.confirmCrop = function() { /* unchanged */ };
-window.closeCropModal = function() { /* unchanged */ };
-async function updateProfilePic(dataUrl) { /* unchanged */ }
-async function updateUserContentProfilePic(username, newPic) { /* unchanged */ }
-window.removeProfilePic = async function() { /* unchanged */ };
-window.updateCharCount = function(inputId, countId) { /* unchanged */ };
-function checkBanned() { /* unchanged */ }
-window.markInboxAsRead = async function() { /* unchanged */ };
-function loadBannedUsers() { /* unchanged */ }
-window.loadBannedUsers = loadBannedUsers;
-window.banUser = async function(username) { /* unchanged */ };
-window.unbanUser = async function(username) { /* unchanged */ };
-window.showBanList = function() { /* unchanged */ };
-window.closeBanModal = function() { /* unchanged */ };
+window.saveBio = async function() {
+    const bio = document.getElementById('profile-bio-input').value;
+    if (bio.length > 90) { alert('Bio must be 90 characters or less'); return; }
+    try {
+        await updateDoc(doc(db, 'users', currentUser), { bio: bio });
+        alert('Bio saved!');
+    } catch (e) { alert('Error: ' + e.message); }
+};
 
-// دالة مساعدة لضبط حالة التفاعل محلياً وتطبيقها على الزر
-function setReactionState(itemId, type, likeBtnId, dislikeBtnId) {
-    userReactions[itemId] = type;
-    updateReactionButtonUI(likeBtnId, type === 'like' ? 'like' : null);
-    updateReactionButtonUI(dislikeBtnId, type === 'dislike' ? 'dislike' : null);
+// ========== نظام الاقتصاص (Crop) المُصلح بالكامل ==========
+window.handleProfilePicUpload = function(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        cropImage = new Image();
+        cropImage.onload = function() {
+            // توسيط الصورة في دائرة القص
+            const squareSize = Math.min(cropImage.width, cropImage.height);
+            cropX = (cropImage.width - squareSize) / 2;
+            cropY = (cropImage.height - squareSize) / 2;
+            cropScale = 1;
+            document.getElementById('crop-zoom').value = 1;
+            document.getElementById('crop-modal').classList.remove('hidden');
+            drawCropCanvas();
+            if (!cropEventsAttached) {
+                attachCropEvents();
+            }
+        };
+        cropImage.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+};
+
+function drawCropCanvas() {
+    const canvas = document.getElementById('crop-canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (!cropImage) return;
+    const squareSize = Math.min(cropImage.width, cropImage.height);
+    const size = squareSize * cropScale; // الحجم المعروض على الـ canvas
+    const sx = cropX;
+    const sy = cropY;
+    const sw = squareSize;
+    const sh = squareSize;
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(canvas.width/2, canvas.height/2, canvas.width/2, 0, Math.PI*2);
+    ctx.clip();
+    ctx.drawImage(cropImage, sx, sy, sw, sh, canvas.width/2 - size/2, canvas.height/2 - size/2, size, size);
+    ctx.restore();
 }
 
+// ========== الإصلاح النهائي لدالة التحريك ==========
+function attachCropEvents() {
+    cropEventsAttached = true;
+    const canvas = document.getElementById('crop-canvas');
+    const zoomInput = document.getElementById('crop-zoom');
+
+    function getCanvasCoords(e) {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        return {
+            x: (e.clientX - rect.left) * scaleX,
+            y: (e.clientY - rect.top) * scaleY
+        };
+    }
+
+    let isDown = false;
+    let startX = 0, startY = 0;
+    let startCropX = 0, startCropY = 0;
+
+    canvas.addEventListener('mousedown', (e) => {
+        isDown = true;
+        const coords = getCanvasCoords(e);
+        startX = coords.x;
+        startY = coords.y;
+        startCropX = cropX;
+        startCropY = cropY;
+        e.preventDefault();
+        canvas.style.cursor = 'grabbing';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!isDown || !cropImage) return;
+        const coords = getCanvasCoords(e);
+        let dx = coords.x - startX;
+        let dy = coords.y - startY;
+
+        // تطبيق الحركة مع مراعاة التكبير
+        const squareSize = Math.min(cropImage.width, cropImage.height);
+        let newCropX = startCropX - dx / cropScale;
+        let newCropY = startCropY - dy / cropScale;
+
+        // حدود القص (منع الخروج عن الصورة)
+        const maxX = Math.max(0, cropImage.width - squareSize);
+        const maxY = Math.max(0, cropImage.height - squareSize);
+        cropX = Math.max(0, Math.min(newCropX, maxX));
+        cropY = Math.max(0, Math.min(newCropY, maxY));
+
+        drawCropCanvas();
+    });
+
+    window.addEventListener('mouseup', () => {
+        isDown = false;
+        canvas.style.cursor = 'move';
+    });
+
+    zoomInput.addEventListener('input', function() {
+        cropScale = parseFloat(this.value);
+        drawCropCanvas();
+    });
+}
+// ===================================================
+
+window.confirmCrop = function() {
+    const canvas = document.getElementById('crop-canvas');
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+    updateProfilePic(dataUrl);
+};
+
+window.closeCropModal = function() {
+    document.getElementById('crop-modal').classList.add('hidden');
+    cropImage = null;
+    document.getElementById('profile-pic-input').value = '';
+};
+
+async function updateProfilePic(dataUrl) {
+    try {
+        await updateDoc(doc(db, 'users', currentUser), { profilePic: dataUrl });
+        userPicCache[currentUser] = dataUrl;
+        await updateUserContentProfilePic(currentUser, dataUrl);
+        document.getElementById('crop-modal').classList.add('hidden');
+        loadProfile(currentUser);
+        updateSidebarUserInfo(); // تحديث الصورة في الشريط الجانبي
+    } catch (e) { alert('Error: ' + e.message); }
+}
+
+async function updateUserContentProfilePic(username, newPic) {
+    const batch = writeBatch(db);
+    const postsSnap = await getDocs(query(collection(db, 'posts'), where('username', '==', username)));
+    postsSnap.forEach(doc => batch.update(doc.ref, { profilePic: newPic }));
+    const commentsSnap = await getDocs(query(collection(db, 'comments'), where('username', '==', username)));
+    commentsSnap.forEach(doc => batch.update(doc.ref, { profilePic: newPic }));
+    const gmSnap = await getDocs(query(collection(db, 'groupMessages'), where('username', '==', username)));
+    gmSnap.forEach(doc => batch.update(doc.ref, { profilePic: newPic }));
+    const gcSnap = await getDocs(query(collection(db, 'groupComments'), where('username', '==', username)));
+    gcSnap.forEach(doc => batch.update(doc.ref, { profilePic: newPic }));
+    await batch.commit();
+}
+
+window.removeProfilePic = async function() {
+    if (!confirm('Remove profile picture?')) return;
+    try {
+        await updateDoc(doc(db, 'users', currentUser), { profilePic: '' });
+        userPicCache[currentUser] = '';
+        await updateUserContentProfilePic(currentUser, '');
+        loadProfile(currentUser);
+        updateSidebarUserInfo(); // تحديث الشريط بعد الحذف
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+window.updateCharCount = function(inputId, countId) {
+    const input = document.getElementById(inputId);
+    const count = document.getElementById(countId);
+    const remaining = 1000 - input.value.length;
+    count.textContent = remaining + ' / 1000';
+    count.style.color = remaining < 50 ? 'var(--danger)' : '#888';
+};
+
+function checkBanned() {
+    if (isBanned(currentUser)) {
+        document.getElementById('banned-notice').classList.remove('hidden');
+        document.getElementById('post-box-area').classList.add('hidden');
+        document.getElementById('create-group-box')?.classList.add('hidden');
+        document.getElementById('add-chat-box')?.classList.add('hidden');
+        document.getElementById('group-chat-input-area')?.classList.add('hidden');
+        document.getElementById('chat-input-area')?.classList.add('hidden');
+    } else {
+        document.getElementById('banned-notice').classList.add('hidden');
+        document.getElementById('post-box-area').classList.remove('hidden');
+        document.getElementById('create-group-box')?.classList.remove('hidden');
+        document.getElementById('add-chat-box')?.classList.remove('hidden');
+        document.getElementById('group-chat-input-area')?.classList.remove('hidden');
+        document.getElementById('chat-input-area')?.classList.remove('hidden');
+    }
+}
+
+window.markInboxAsRead = async function() {
+    try {
+        const invitesQ = query(collection(db, 'invites'), where('to', '==', currentUser), where('status', '==', 'pending'));
+        const invitesSnap = await getDocs(invitesQ);
+        invitesSnap.forEach(async (docSnap) => {
+            const data = docSnap.data();
+            const readBy = data.readBy || [];
+            if (!readBy.includes(currentUser)) {
+                readBy.push(currentUser);
+                await updateDoc(doc(db, 'invites', docSnap.id), { readBy: readBy });
+            }
+        });
+        const chatReqQ = query(collection(db, 'chatRequests'), where('to', '==', currentUser), where('status', '==', 'pending'));
+        const chatReqSnap = await getDocs(chatReqQ);
+        chatReqSnap.forEach(async (docSnap) => {
+            const data = docSnap.data();
+            const readBy = data.readBy || [];
+            if (!readBy.includes(currentUser)) {
+                readBy.push(currentUser);
+                await updateDoc(doc(db, 'chatRequests', docSnap.id), { readBy: readBy });
+            }
+        });
+        const badge = document.getElementById('inbox-badge');
+        if (badge) { badge.textContent = '0'; badge.classList.add('hidden'); }
+    } catch (e) { console.error(e); }
+};
+
+function loadBannedUsers() {
+    const q = query(collection(db, 'banned'));
+    banListener = onSnapshot(q, (snapshot) => {
+        bannedUsers = [];
+        snapshot.forEach((docSnap) => { bannedUsers.push(docSnap.id); });
+        if (currentUser && bannedUsers.includes(currentUser)) { logout(); return; }
+        checkBanned();
+    });
+}
+window.loadBannedUsers = loadBannedUsers;
+
+window.banUser = async function(username) {
+    if (!isStaff()) { alert('Unauthorized'); return; }
+    if (username === OWNER_USERNAME) { alert('Cannot ban the Owner'); return; }
+    if (!confirm('Are you sure you want to ban ' + username + '؟')) return;
+    try { await setDoc(doc(db, 'banned', username), { bannedBy: currentUser, bannedAt: serverTimestamp() }); }
+    catch (e) { alert('Error banning: ' + e.message); }
+};
+
+window.unbanUser = async function(username) {
+    if (!isStaff()) { alert('Unauthorized'); return; }
+    try { await deleteDoc(doc(db, 'banned', username)); }
+    catch (e) { alert('Error unbanning: ' + e.message); }
+};
+
+window.showBanList = function() {
+    if (!isStaff()) return;
+    const container = document.getElementById('ban-list-container');
+    let html = '';
+    if (bannedUsers.length === 0) {
+        html = '<div style="text-align:center;color:#888;padding:20px">No banned users</div>';
+    } else {
+        bannedUsers.forEach((username) => {
+            html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid var(--border)">
+                <span style="font-weight:700">@${username}</span>
+                <button class="btn-success" onclick="unbanUser('${username}'); closeBanModal();" style="padding:6px 12px;border:none;border-radius:6px;cursor:pointer;font-size:12px">Unban</button>
+            </div>`;
+        });
+    }
+    container.innerHTML = html;
+    document.getElementById('ban-modal').classList.remove('hidden');
+};
+
+window.closeBanModal = function() { document.getElementById('ban-modal').classList.add('hidden'); };
+
+window.createPost = async function() {
+    // منع النشر المكرر
+    if (postCreationLock) return;
+    if (isBanned(currentUser)) { alert('You are banned and cannot post.'); return; }
+    const content = document.getElementById('post-content').value.trim();
+    if (!content) return;
+    if (content.length > 1000) { alert('Post must not exceed 1000 characters'); return; }
+    
+    postCreationLock = true;
+    try {
+        const pic = await fetchUserPic(currentUser);
+        await addDoc(collection(db, 'posts'), {
+            username: currentUser, content: content, createdAt: serverTimestamp(),
+            likes: 0, dislikes: 0, edited: false, profilePic: pic
+        });
+        document.getElementById('post-content').value = '';
+        updateCharCount('post-content', 'post-count');
+    } catch (e) { 
+        alert('Error posting: ' + e.message); 
+    } finally {
+        postCreationLock = false;
+    }
+};
+
+function getDisplayNameWithUsername(displayName, username, pic) {
+    const avatar = getUserAvatar(username, pic);
+    if (username === OWNER_USERNAME) {
+        return `<div style="display:flex;align-items:center;">${avatar}<div><span style="font-size:18px;font-weight:700;color:var(--owner);cursor:pointer" onclick="viewProfile('${username}')">${displayName}</span><span style="font-size:12px;color:#888;font-weight:400;display:block;cursor:pointer" onclick="viewProfile('${username}')">@${username}</span></div></div>`;
+    }
+    return `<div style="display:flex;align-items:center;">${avatar}<div><span style="font-size:16px;font-weight:700;color:var(--primary);cursor:pointer" onclick="viewProfile('${username}')">${displayName}</span></div></div>`;
+}
+
+// دالة لتحديث مظهر زر التفاعل (إضافة أو إزالة التأثير)
 function updateReactionButtonUI(buttonId, reactionType) {
     const btn = document.getElementById(buttonId);
     if (!btn) return;
+    // إزالة جميع كلاسات التفاعل أولاً
     btn.classList.remove('active-reaction', 'like-active', 'dislike-active');
-    if (reactionType === 'like') btn.classList.add('active-reaction', 'like-active');
-    else if (reactionType === 'dislike') btn.classList.add('active-reaction', 'dislike-active');
+    // إضافة الكلاس المناسب إذا كان هناك تفاعل
+    if (reactionType === 'like') {
+        btn.classList.add('active-reaction', 'like-active');
+    } else if (reactionType === 'dislike') {
+        btn.classList.add('active-reaction', 'dislike-active');
+    }
 }
 
-// دوال الإعجاب المعدلة لتحديث الحالة المحلية فوراً
-window.likePost = async function(postId) {
-    if (isBanned(currentUser)) { alert('You are banned and cannot interact.'); return; }
-    if (likeLocks[postId]) return;
-    likeLocks[postId] = true;
-    const likeBtnId = 'like-btn-' + postId;
-    const dislikeBtnId = 'dislike-btn-' + postId;
-    const previousState = userReactions[postId] || null;
-    try {
-        const likeRef = doc(db, 'likes', postId + '_' + currentUser);
-        const likeSnap = await getDoc(likeRef);
-        const postRef = doc(db, 'posts', postId);
-        if (likeSnap.exists() && likeSnap.data().type === 'like') {
-            // إزالة اللايك
-            setReactionState(postId, null, likeBtnId, dislikeBtnId);
-            const currentLikes = (await getDoc(postRef)).data()?.likes || 0;
-            if (currentLikes > 0) await updateDoc(postRef, { likes: increment(-1) });
-            await deleteDoc(likeRef);
-        } else if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
-            // تغيير ديسلايك إلى لايك
-            setReactionState(postId, 'like', likeBtnId, dislikeBtnId);
-            const currentDislikes = (await getDoc(postRef)).data()?.dislikes || 0;
-            if (currentDislikes > 0) await updateDoc(postRef, { dislikes: increment(-1) });
-            await updateDoc(postRef, { likes: increment(1) });
-            await updateDoc(likeRef, { type: 'like' });
-        } else {
-            // إضافة لايك
-            setReactionState(postId, 'like', likeBtnId, dislikeBtnId);
-            await setDoc(likeRef, { postId, username: currentUser, type: 'like' });
-            await updateDoc(postRef, { likes: increment(1) });
-        }
-    } catch (e) {
-        console.error(e);
-        setReactionState(postId, previousState, likeBtnId, dislikeBtnId); // استرجاع الحالة السابقة
-    }
-    likeLocks[postId] = false;
-};
-
-window.dislikePost = async function(postId) {
-    if (isBanned(currentUser)) { alert('You are banned and cannot interact.'); return; }
-    if (likeLocks[postId]) return;
-    likeLocks[postId] = true;
-    const likeBtnId = 'like-btn-' + postId;
-    const dislikeBtnId = 'dislike-btn-' + postId;
-    const previousState = userReactions[postId] || null;
-    try {
-        const likeRef = doc(db, 'likes', postId + '_' + currentUser);
-        const likeSnap = await getDoc(likeRef);
-        const postRef = doc(db, 'posts', postId);
-        if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
-            setReactionState(postId, null, likeBtnId, dislikeBtnId);
-            const currentDislikes = (await getDoc(postRef)).data()?.dislikes || 0;
-            if (currentDislikes > 0) await updateDoc(postRef, { dislikes: increment(-1) });
-            await deleteDoc(likeRef);
-        } else if (likeSnap.exists() && likeSnap.data().type === 'like') {
-            setReactionState(postId, 'dislike', likeBtnId, dislikeBtnId);
-            const currentLikes = (await getDoc(postRef)).data()?.likes || 0;
-            if (currentLikes > 0) await updateDoc(postRef, { likes: increment(-1) });
-            await updateDoc(postRef, { dislikes: increment(1) });
-            await updateDoc(likeRef, { type: 'dislike' });
-        } else {
-            setReactionState(postId, 'dislike', likeBtnId, dislikeBtnId);
-            await setDoc(likeRef, { postId, username: currentUser, type: 'dislike' });
-            await updateDoc(postRef, { dislikes: increment(1) });
-        }
-    } catch (e) {
-        console.error(e);
-        setReactionState(postId, previousState, likeBtnId, dislikeBtnId);
-    }
-    likeLocks[postId] = false;
-};
-
-// تعليقات
-window.likeComment = async function(commentId) {
-    if (isBanned(currentUser)) { alert('You are banned and cannot interact.'); return; }
-    if (commentLikeLocks[commentId]) return;
-    commentLikeLocks[commentId] = true;
-    const likeBtnId = 'clike-btn-' + commentId;
-    const dislikeBtnId = 'cdislike-btn-' + commentId;
-    const previousState = userReactions[commentId] || null;
-    try {
-        const likeRef = doc(db, 'commentLikes', commentId + '_' + currentUser);
-        const likeSnap = await getDoc(likeRef);
-        const commentRef = doc(db, 'comments', commentId);
-        if (likeSnap.exists() && likeSnap.data().type === 'like') {
-            setReactionState(commentId, null, likeBtnId, dislikeBtnId);
-            const currentLikes = (await getDoc(commentRef)).data()?.likes || 0;
-            if (currentLikes > 0) await updateDoc(commentRef, { likes: increment(-1) });
-            await deleteDoc(likeRef);
-        } else if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
-            setReactionState(commentId, 'like', likeBtnId, dislikeBtnId);
-            const currentDislikes = (await getDoc(commentRef)).data()?.dislikes || 0;
-            if (currentDislikes > 0) await updateDoc(commentRef, { dislikes: increment(-1) });
-            await updateDoc(commentRef, { likes: increment(1) });
-            await updateDoc(likeRef, { type: 'like' });
-        } else {
-            setReactionState(commentId, 'like', likeBtnId, dislikeBtnId);
-            await setDoc(likeRef, { commentId, username: currentUser, type: 'like' });
-            await updateDoc(commentRef, { likes: increment(1) });
-        }
-    } catch (e) { console.error(e); setReactionState(commentId, previousState, likeBtnId, dislikeBtnId); }
-    commentLikeLocks[commentId] = false;
-};
-
-window.dislikeComment = async function(commentId) {
-    if (isBanned(currentUser)) { alert('You are banned and cannot interact.'); return; }
-    if (commentLikeLocks[commentId]) return;
-    commentLikeLocks[commentId] = true;
-    const likeBtnId = 'clike-btn-' + commentId;
-    const dislikeBtnId = 'cdislike-btn-' + commentId;
-    const previousState = userReactions[commentId] || null;
-    try {
-        const likeRef = doc(db, 'commentLikes', commentId + '_' + currentUser);
-        const likeSnap = await getDoc(likeRef);
-        const commentRef = doc(db, 'comments', commentId);
-        if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
-            setReactionState(commentId, null, likeBtnId, dislikeBtnId);
-            const currentDislikes = (await getDoc(commentRef)).data()?.dislikes || 0;
-            if (currentDislikes > 0) await updateDoc(commentRef, { dislikes: increment(-1) });
-            await deleteDoc(likeRef);
-        } else if (likeSnap.exists() && likeSnap.data().type === 'like') {
-            setReactionState(commentId, 'dislike', likeBtnId, dislikeBtnId);
-            const currentLikes = (await getDoc(commentRef)).data()?.likes || 0;
-            if (currentLikes > 0) await updateDoc(commentRef, { likes: increment(-1) });
-            await updateDoc(commentRef, { dislikes: increment(1) });
-            await updateDoc(likeRef, { type: 'dislike' });
-        } else {
-            setReactionState(commentId, 'dislike', likeBtnId, dislikeBtnId);
-            await setDoc(likeRef, { commentId, username: currentUser, type: 'dislike' });
-            await updateDoc(commentRef, { dislikes: increment(1) });
-        }
-    } catch (e) { console.error(e); setReactionState(commentId, previousState, likeBtnId, dislikeBtnId); }
-    commentLikeLocks[commentId] = false;
-};
-
-// رسائل المجموعة
-window.likeGroupMessage = async function(msgId) {
-    if (isBanned(currentUser)) { alert('You are banned and cannot interact.'); return; }
-    if (groupMessageLocks[msgId]) return;
-    groupMessageLocks[msgId] = true;
-    const likeBtnId = 'glike-btn-' + msgId;
-    const dislikeBtnId = 'gdislike-btn-' + msgId;
-    const previousState = userReactions[msgId] || null;
-    try {
-        const likeRef = doc(db, 'groupMessageLikes', msgId + '_' + currentUser);
-        const likeSnap = await getDoc(likeRef);
-        const msgRef = doc(db, 'groupMessages', msgId);
-        if (likeSnap.exists() && likeSnap.data().type === 'like') {
-            setReactionState(msgId, null, likeBtnId, dislikeBtnId);
-            const cur = (await getDoc(msgRef)).data()?.likes || 0;
-            if (cur > 0) await updateDoc(msgRef, { likes: increment(-1) });
-            await deleteDoc(likeRef);
-        } else if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
-            setReactionState(msgId, 'like', likeBtnId, dislikeBtnId);
-            const curD = (await getDoc(msgRef)).data()?.dislikes || 0;
-            if (curD > 0) await updateDoc(msgRef, { dislikes: increment(-1) });
-            await updateDoc(msgRef, { likes: increment(1) });
-            await updateDoc(likeRef, { type: 'like' });
-        } else {
-            setReactionState(msgId, 'like', likeBtnId, dislikeBtnId);
-            await setDoc(likeRef, { msgId, username: currentUser, type: 'like' });
-            await updateDoc(msgRef, { likes: increment(1) });
-        }
-    } catch (e) { console.error(e); setReactionState(msgId, previousState, likeBtnId, dislikeBtnId); }
-    groupMessageLocks[msgId] = false;
-};
-
-window.dislikeGroupMessage = async function(msgId) {
-    if (isBanned(currentUser)) { alert('You are banned and cannot interact.'); return; }
-    if (groupMessageLocks[msgId]) return;
-    groupMessageLocks[msgId] = true;
-    const likeBtnId = 'glike-btn-' + msgId;
-    const dislikeBtnId = 'gdislike-btn-' + msgId;
-    const previousState = userReactions[msgId] || null;
-    try {
-        const likeRef = doc(db, 'groupMessageLikes', msgId + '_' + currentUser);
-        const likeSnap = await getDoc(likeRef);
-        const msgRef = doc(db, 'groupMessages', msgId);
-        if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
-            setReactionState(msgId, null, likeBtnId, dislikeBtnId);
-            const cur = (await getDoc(msgRef)).data()?.dislikes || 0;
-            if (cur > 0) await updateDoc(msgRef, { dislikes: increment(-1) });
-            await deleteDoc(likeRef);
-        } else if (likeSnap.exists() && likeSnap.data().type === 'like') {
-            setReactionState(msgId, 'dislike', likeBtnId, dislikeBtnId);
-            const curL = (await getDoc(msgRef)).data()?.likes || 0;
-            if (curL > 0) await updateDoc(msgRef, { likes: increment(-1) });
-            await updateDoc(msgRef, { dislikes: increment(1) });
-            await updateDoc(likeRef, { type: 'dislike' });
-        } else {
-            setReactionState(msgId, 'dislike', likeBtnId, dislikeBtnId);
-            await setDoc(likeRef, { msgId, username: currentUser, type: 'dislike' });
-            await updateDoc(msgRef, { dislikes: increment(1) });
-        }
-    } catch (e) { console.error(e); setReactionState(msgId, previousState, likeBtnId, dislikeBtnId); }
-    groupMessageLocks[msgId] = false;
-};
-
-// تعليقات المجموعة
-window.likeGroupComment = async function(commentId) {
-    if (isBanned(currentUser)) { alert('You are banned and cannot interact.'); return; }
-    if (groupCommentLikeLocks[commentId]) return;
-    groupCommentLikeLocks[commentId] = true;
-    const likeBtnId = 'gclike-btn-' + commentId;
-    const dislikeBtnId = 'gcdislike-btn-' + commentId;
-    const previousState = userReactions[commentId] || null;
-    try {
-        const likeRef = doc(db, 'groupCommentLikes', commentId + '_' + currentUser);
-        const likeSnap = await getDoc(likeRef);
-        const commentRef = doc(db, 'groupComments', commentId);
-        if (likeSnap.exists() && likeSnap.data().type === 'like') {
-            setReactionState(commentId, null, likeBtnId, dislikeBtnId);
-            const cur = (await getDoc(commentRef)).data()?.likes || 0;
-            if (cur > 0) await updateDoc(commentRef, { likes: increment(-1) });
-            await deleteDoc(likeRef);
-        } else if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
-            setReactionState(commentId, 'like', likeBtnId, dislikeBtnId);
-            const curD = (await getDoc(commentRef)).data()?.dislikes || 0;
-            if (curD > 0) await updateDoc(commentRef, { dislikes: increment(-1) });
-            await updateDoc(commentRef, { likes: increment(1) });
-            await updateDoc(likeRef, { type: 'like' });
-        } else {
-            setReactionState(commentId, 'like', likeBtnId, dislikeBtnId);
-            await setDoc(likeRef, { commentId, username: currentUser, type: 'like' });
-            await updateDoc(commentRef, { likes: increment(1) });
-        }
-    } catch (e) { console.error(e); setReactionState(commentId, previousState, likeBtnId, dislikeBtnId); }
-    groupCommentLikeLocks[commentId] = false;
-};
-
-window.dislikeGroupComment = async function(commentId) {
-    if (isBanned(currentUser)) { alert('You are banned and cannot interact.'); return; }
-    if (groupCommentLikeLocks[commentId]) return;
-    groupCommentLikeLocks[commentId] = true;
-    const likeBtnId = 'gclike-btn-' + commentId;
-    const dislikeBtnId = 'gcdislike-btn-' + commentId;
-    const previousState = userReactions[commentId] || null;
-    try {
-        const likeRef = doc(db, 'groupCommentLikes', commentId + '_' + currentUser);
-        const likeSnap = await getDoc(likeRef);
-        const commentRef = doc(db, 'groupComments', commentId);
-        if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
-            setReactionState(commentId, null, likeBtnId, dislikeBtnId);
-            const cur = (await getDoc(commentRef)).data()?.dislikes || 0;
-            if (cur > 0) await updateDoc(commentRef, { dislikes: increment(-1) });
-            await deleteDoc(likeRef);
-        } else if (likeSnap.exists() && likeSnap.data().type === 'like') {
-            setReactionState(commentId, 'dislike', likeBtnId, dislikeBtnId);
-            const curL = (await getDoc(commentRef)).data()?.likes || 0;
-            if (curL > 0) await updateDoc(commentRef, { likes: increment(-1) });
-            await updateDoc(commentRef, { dislikes: increment(1) });
-            await updateDoc(likeRef, { type: 'dislike' });
-        } else {
-            setReactionState(commentId, 'dislike', likeBtnId, dislikeBtnId);
-            await setDoc(likeRef, { commentId, username: currentUser, type: 'dislike' });
-            await updateDoc(commentRef, { dislikes: increment(1) });
-        }
-    } catch (e) { console.error(e); setReactionState(commentId, previousState, likeBtnId, dislikeBtnId); }
-    groupCommentLikeLocks[commentId] = false;
-};
-
-// تعديل loadPosts لاستخدام الحالة المحلية
 async function loadPosts() {
     const container = document.getElementById('posts-container');
     container.innerHTML = '<div class="loading">Loading...</div>';
@@ -903,7 +1209,8 @@ async function loadPosts() {
             const time = formatTime(new Date(timestamp));
             const editedTag = post.edited ? '<span class="edited-tag">(edited)</span>' : '';
             const isOwnerOrAdmin = isStaff() || post.username === currentUser;
-            let pic = post.profilePic; if (!pic) pic = await fetchUserPic(post.username);
+            let pic = post.profilePic;
+            if (!pic) pic = await fetchUserPic(post.username);
             let menuItems = '';
             if (isOwnerOrAdmin && !post.edited) menuItems += `<button onclick="editPost('${postId}', '${escapeHtml(post.content)}')">Edit</button>`;
             if (isOwnerOrAdmin) menuItems += `<button class="danger" onclick="deletePost('${postId}')">Delete</button>`;
@@ -911,18 +1218,12 @@ async function loadPosts() {
             const menuId = 'menu-post-' + postId;
             const authorDisplay = getDisplayNameWithUsername(post.displayName || post.username, post.username, pic);
             const menuHtml = menuItems ? `<div class="menu-container"><button class="menu-btn" onclick="event.stopPropagation();toggleMenu('${menuId}')">⋮</button><div class="menu-dropdown" id="${menuId}">${menuItems}</div></div>` : '';
-            const likes = Math.max(0, post.likes || 0);
-            const dislikes = Math.max(0, post.dislikes || 0);
-            // استخدام الحالة المحلية لإضافة الكلاسات فوراً
-            const reaction = userReactions[postId] || null;
-            const likeClass = reaction === 'like' ? ' active-reaction like-active' : '';
-            const dislikeClass = reaction === 'dislike' ? ' active-reaction dislike-active' : '';
             html += `<div class="post" id="post-${postId}">
                 <div class="post-header"><div class="post-author-info"><div class="post-author-name">${authorDisplay} ${getTag(post.username)}</div><div class="post-author-time" data-timestamp="${timestamp}">${time}${editedTag}</div></div>${menuHtml}</div>
                 <div class="post-content" dir="auto">${escapeHtml(post.content)}</div>
                 <div class="post-actions">
-                    <button id="like-btn-${postId}" class="${likeClass}" onclick="likePost('${postId}')">👍 <span id="likes-${postId}">${likes}</span></button>
-                    <button id="dislike-btn-${postId}" class="${dislikeClass}" onclick="dislikePost('${postId}')">👎 <span id="dislikes-${postId}">${dislikes}</span></button>
+                    <button id="like-btn-${postId}" onclick="likePost('${postId}')">👍 <span id="likes-${postId}">${post.likes || 0}</span></button>
+                    <button id="dislike-btn-${postId}" onclick="dislikePost('${postId}')">👎 <span id="dislikes-${postId}">${post.dislikes || 0}</span></button>
                     <button onclick="toggleComments('${postId}')">💬 <span id="comments-count-${postId}">0</span></button>
                 </div>
                 <div class="comments-section hidden" id="comments-${postId}">
@@ -932,12 +1233,171 @@ async function loadPosts() {
             </div>`;
         }
         container.innerHTML = html;
-        snapshot.forEach(docSnap => loadComments(docSnap.id));
+        // التحقق من حالة الإعجاب الحالية لكل منشور
+        for (const docSnap of snapshot.docs) {
+            const postId = docSnap.id;
+            checkUserReaction(postId, 'like-btn-' + postId, 'dislike-btn-' + postId, 'likes', 'post');
+            loadComments(postId);
+        }
     }, (error) => { container.innerHTML = '<div class="error-msg">Error: ' + error.message + '</div>'; });
 }
 window.loadPosts = loadPosts;
 
-// تعديل loadComments
+// دالة للتحقق من تفاعل المستخدم الحالي مع منشور/رسالة
+async function checkUserReaction(itemId, likeBtnId, dislikeBtnId, collectionName, type) {
+    try {
+        let likeRef;
+        if (type === 'post') {
+            likeRef = doc(db, 'likes', itemId + '_' + currentUser);
+        } else if (type === 'groupMessage') {
+            likeRef = doc(db, 'groupMessageLikes', itemId + '_' + currentUser);
+        } else if (type === 'comment') {
+            likeRef = doc(db, 'commentLikes', itemId + '_' + currentUser);
+        } else if (type === 'groupComment') {
+            likeRef = doc(db, 'groupCommentLikes', itemId + '_' + currentUser);
+        }
+        if (!likeRef) return;
+        const likeSnap = await getDoc(likeRef);
+        if (likeSnap.exists() && likeSnap.data().type === 'like') {
+            updateReactionButtonUI(likeBtnId, 'like');
+            updateReactionButtonUI(dislikeBtnId, null);
+        } else if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
+            updateReactionButtonUI(likeBtnId, null);
+            updateReactionButtonUI(dislikeBtnId, 'dislike');
+        }
+    } catch (e) { console.error(e); }
+}
+
+window.editPost = function(postId, content) {
+    if (isBanned(currentUser)) { alert('You are banned.'); return; }
+    editingId = postId; editingType = 'post';
+    document.getElementById('edit-text').value = content;
+    document.getElementById('edit-modal').classList.remove('hidden');
+};
+
+window.deletePost = async function(postId) {
+    if (isBanned(currentUser)) { alert('You are banned.'); return; }
+    if (!confirm('Are you sure you want to delete this post?')) return;
+    try { await deleteDoc(doc(db, 'posts', postId)); }
+    catch (e) { alert('Error: ' + e.message); }
+};
+
+window.likePost = async function(postId) {
+    if (isBanned(currentUser)) { alert('You are banned and cannot interact.'); return; }
+    if (likeLocks[postId]) return;
+    likeLocks[postId] = true;
+    const likeBtnId = 'like-btn-' + postId;
+    const dislikeBtnId = 'dislike-btn-' + postId;
+    try {
+        const likeRef = doc(db, 'likes', postId + '_' + currentUser);
+        const likeSnap = await getDoc(likeRef);
+        const postRef = doc(db, 'posts', postId);
+        if (likeSnap.exists() && likeSnap.data().type === 'like') {
+            await deleteDoc(likeRef); await updateDoc(postRef, { likes: increment(-1) });
+            updateReactionButtonUI(likeBtnId, null);
+        } else if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
+            await updateDoc(likeRef, { type: 'like' }); await updateDoc(postRef, { likes: increment(1), dislikes: increment(-1) });
+            updateReactionButtonUI(likeBtnId, 'like');
+            updateReactionButtonUI(dislikeBtnId, null);
+        } else {
+            await setDoc(likeRef, { postId, username: currentUser, type: 'like' }); await updateDoc(postRef, { likes: increment(1) });
+            updateReactionButtonUI(likeBtnId, 'like');
+            updateReactionButtonUI(dislikeBtnId, null);
+        }
+    } catch (e) { console.error(e); }
+    likeLocks[postId] = false;
+};
+
+window.dislikePost = async function(postId) {
+    if (isBanned(currentUser)) { alert('You are banned and cannot interact.'); return; }
+    if (likeLocks[postId]) return;
+    likeLocks[postId] = true;
+    const likeBtnId = 'like-btn-' + postId;
+    const dislikeBtnId = 'dislike-btn-' + postId;
+    try {
+        const likeRef = doc(db, 'likes', postId + '_' + currentUser);
+        const likeSnap = await getDoc(likeRef);
+        const postRef = doc(db, 'posts', postId);
+        if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
+            await deleteDoc(likeRef); await updateDoc(postRef, { dislikes: increment(-1) });
+            updateReactionButtonUI(dislikeBtnId, null);
+        } else if (likeSnap.exists() && likeSnap.data().type === 'like') {
+            await updateDoc(likeRef, { type: 'dislike' }); await updateDoc(postRef, { dislikes: increment(1), likes: increment(-1) });
+            updateReactionButtonUI(likeBtnId, null);
+            updateReactionButtonUI(dislikeBtnId, 'dislike');
+        } else {
+            await setDoc(likeRef, { postId, username: currentUser, type: 'dislike' }); await updateDoc(postRef, { dislikes: increment(1) });
+            updateReactionButtonUI(likeBtnId, null);
+            updateReactionButtonUI(dislikeBtnId, 'dislike');
+        }
+    } catch (e) { console.error(e); }
+    likeLocks[postId] = false;
+};
+
+window.replyToComment = function(postId, username) {
+    if (isBanned(currentUser)) { alert('You are banned.'); return; }
+    const input = document.getElementById('comment-input-' + postId);
+    if (input) { input.value = '@' + username + ' '; input.focus(); }
+};
+
+window.toggleComments = function(postId) {
+    const section = document.getElementById('comments-' + postId);
+    section.classList.toggle('hidden');
+    if (!section.classList.contains('hidden')) loadComments(postId);
+};
+
+window.likeComment = async function(commentId) {
+    if (isBanned(currentUser)) { alert('You are banned and cannot interact.'); return; }
+    if (commentLikeLocks[commentId]) return;
+    commentLikeLocks[commentId] = true;
+    const likeBtnId = 'clike-btn-' + commentId;
+    const dislikeBtnId = 'cdislike-btn-' + commentId;
+    try {
+        const likeRef = doc(db, 'commentLikes', commentId + '_' + currentUser);
+        const likeSnap = await getDoc(likeRef);
+        const commentRef = doc(db, 'comments', commentId);
+        if (likeSnap.exists() && likeSnap.data().type === 'like') {
+            await deleteDoc(likeRef); await updateDoc(commentRef, { likes: increment(-1) });
+            updateReactionButtonUI(likeBtnId, null);
+        } else if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
+            await updateDoc(likeRef, { type: 'like' }); await updateDoc(commentRef, { likes: increment(1), dislikes: increment(-1) });
+            updateReactionButtonUI(likeBtnId, 'like');
+            updateReactionButtonUI(dislikeBtnId, null);
+        } else {
+            await setDoc(likeRef, { commentId, username: currentUser, type: 'like' }); await updateDoc(commentRef, { likes: increment(1) });
+            updateReactionButtonUI(likeBtnId, 'like');
+            updateReactionButtonUI(dislikeBtnId, null);
+        }
+    } catch (e) { console.error(e); }
+    commentLikeLocks[commentId] = false;
+};
+
+window.dislikeComment = async function(commentId) {
+    if (isBanned(currentUser)) { alert('You are banned and cannot interact.'); return; }
+    if (commentLikeLocks[commentId]) return;
+    commentLikeLocks[commentId] = true;
+    const likeBtnId = 'clike-btn-' + commentId;
+    const dislikeBtnId = 'cdislike-btn-' + commentId;
+    try {
+        const likeRef = doc(db, 'commentLikes', commentId + '_' + currentUser);
+        const likeSnap = await getDoc(likeRef);
+        const commentRef = doc(db, 'comments', commentId);
+        if (likeSnap.exists() && likeSnap.data().type === 'dislike') {
+            await deleteDoc(likeRef); await updateDoc(commentRef, { dislikes: increment(-1) });
+            updateReactionButtonUI(dislikeBtnId, null);
+        } else if (likeSnap.exists() && likeSnap.data().type === 'like') {
+            await updateDoc(likeRef, { type: 'dislike' }); await updateDoc(commentRef, { dislikes: increment(1), likes: increment(-1) });
+            updateReactionButtonUI(likeBtnId, null);
+            updateReactionButtonUI(dislikeBtnId, 'dislike');
+        } else {
+            await setDoc(likeRef, { commentId, username: currentUser, type: 'dislike' }); await updateDoc(commentRef, { dislikes: increment(1) });
+            updateReactionButtonUI(likeBtnId, null);
+            updateReactionButtonUI(dislikeBtnId, 'dislike');
+        }
+    } catch (e) { console.error(e); }
+    commentLikeLocks[commentId] = false;
+};
+
 function loadComments(postId) {
     if (commentsListeners[postId]) { commentsListeners[postId](); }
     const container = document.getElementById('comments-list-' + postId);
@@ -956,7 +1416,8 @@ function loadComments(postId) {
             const time = formatTime(new Date(timestamp));
             const editedTag = c.edited ? '<span class="edited-tag">(edited)</span>' : '';
             const isOwnerOrAdmin = isStaff() || c.username === currentUser;
-            let pic = c.profilePic; if (!pic) pic = await fetchUserPic(c.username);
+            let pic = c.profilePic;
+            if (!pic) pic = await fetchUserPic(c.username);
             let menuItems = '';
             if (isOwnerOrAdmin && !c.edited) menuItems += `<button onclick="editComment('${commentId}', '${escapeHtml(c.content)}')">Edit</button>`;
             if (isOwnerOrAdmin) menuItems += `<button class="danger" onclick="deleteComment('${commentId}')">Delete</button>`;
@@ -964,26 +1425,151 @@ function loadComments(postId) {
             const menuId = 'menu-comment-' + commentId;
             const authorDisplay = getDisplayNameWithUsername(c.displayName || c.username, c.username, pic);
             const menuHtml = menuItems ? `<div class="menu-container"><button class="menu-btn" onclick="event.stopPropagation();toggleMenu('${menuId}')">⋮</button><div class="menu-dropdown" id="${menuId}">${menuItems}</div></div>` : '';
-            const likes = Math.max(0, c.likes || 0);
-            const dislikes = Math.max(0, c.dislikes || 0);
-            const reaction = userReactions[commentId] || null;
-            const likeClass = reaction === 'like' ? ' active-reaction like-active' : '';
-            const dislikeClass = reaction === 'dislike' ? ' active-reaction dislike-active' : '';
             html += `<div class="comment" id="comment-${commentId}">
                 <div class="comment-header"><div class="comment-author-info"><div class="comment-author-name">${authorDisplay} ${getTag(c.username)}</div><div class="comment-author-time" data-timestamp="${timestamp}">${time}${editedTag}</div></div>${menuHtml}</div>
                 <div class="comment-text" dir="auto">${escapeHtml(c.content)}</div>
-                <div class="comment-actions"><button class="reply-btn" onclick="replyToComment('${postId}', '${c.username}')">Reply</button><button class="like-btn${likeClass}" id="clike-btn-${commentId}" onclick="likeComment('${commentId}')">👍 <span id="clikes-${commentId}">${likes}</span></button><button class="dislike-btn${dislikeClass}" id="cdislike-btn-${commentId}" onclick="dislikeComment('${commentId}')">👎 <span id="cdislikes-${commentId}">${dislikes}</span></button></div>
+                <div class="comment-actions"><button class="reply-btn" onclick="replyToComment('${postId}', '${c.username}')">Reply</button><button class="like-btn" id="clike-btn-${commentId}" onclick="likeComment('${commentId}')">👍 <span id="clikes-${commentId}">${c.likes || 0}</span></button><button class="dislike-btn" id="cdislike-btn-${commentId}" onclick="dislikeComment('${commentId}')">👎 <span id="cdislikes-${commentId}">${c.dislikes || 0}</span></button></div>
             </div>`;
         }
         if (!hasComments) html = '<div style="color:#888;font-size:14px;text-align:center;padding:10px">No comments</div>';
         container.innerHTML = html;
+        // التحقق من حالة الإعجاب للتعليقات
+        for (const docSnap of snapshot.docs) {
+            const c = docSnap.data();
+            if (c.postId !== postId) continue;
+            checkUserReaction(docSnap.id, 'clike-btn-' + docSnap.id, 'cdislike-btn-' + docSnap.id, 'commentLikes', 'comment');
+        }
         const countEl = document.getElementById('comments-count-' + postId);
         if (countEl) countEl.textContent = commentCount;
     }, (error) => { if (container) container.innerHTML = '<div style="color:#888;font-size:14px;text-align:center;padding:10px">Error loading comments</div>'; });
 }
 window.loadComments = loadComments;
 
-// loadGroupChatMessages مع الحالة المحلية
+window.addComment = async function(postId) {
+    if (isBanned(currentUser)) { alert('You are banned and cannot comment.'); return; }
+    const input = document.getElementById('comment-input-' + postId);
+    const content = input.value.trim();
+    if (!content) return;
+    if (content.length > 1000) { alert('Comment must not exceed 1000 characters'); return; }
+    try {
+        const pic = await fetchUserPic(currentUser);
+        await addDoc(collection(db, 'comments'), { postId: postId, username: currentUser, content: content, createdAt: serverTimestamp(), edited: false, likes: 0, dislikes: 0, profilePic: pic });
+        input.value = '';
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+window.editComment = function(commentId, content) {
+    if (isBanned(currentUser)) { alert('You are banned.'); return; }
+    editingId = commentId; editingType = 'comment';
+    document.getElementById('edit-text').value = content;
+    document.getElementById('edit-modal').classList.remove('hidden');
+};
+
+window.deleteComment = async function(commentId) {
+    if (isBanned(currentUser)) { alert('You are banned.'); return; }
+    if (!confirm('Are you sure you want to delete this comment?')) return;
+    try { await deleteDoc(doc(db, 'comments', commentId)); }
+    catch (e) { alert('Error: ' + e.message); }
+};
+
+window.saveEdit = async function() {
+    if (isBanned(currentUser)) { alert('You are banned.'); return; }
+    const newContent = document.getElementById('edit-text').value.trim();
+    if (!newContent) { alert('Cannot be empty'); return; }
+    if (newContent.length > 1000) { alert('Must not exceed 1000 characters'); return; }
+    try {
+        let collectionName = 'posts';
+        if (editingType === 'comment') collectionName = 'comments';
+        else if (editingType === 'groupMessage') collectionName = 'groupMessages';
+        else if (editingType === 'groupComment') collectionName = 'groupComments';
+        const ref = doc(db, collectionName, editingId);
+        const snap = await getDoc(ref);
+        if (snap.exists()) {
+            if (snap.data().edited) { alert('Can only edit once'); closeEditModal(); return; }
+            await updateDoc(ref, { content: newContent, edited: true });
+        }
+        closeEditModal();
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+window.closeEditModal = function() {
+    document.getElementById('edit-modal').classList.add('hidden');
+    editingId = null; editingType = null;
+};
+
+window.createGroup = async function() {
+    if (isBanned(currentUser)) { alert('You are banned and cannot create groups.'); return; }
+    const name = document.getElementById('group-name').value.trim();
+    const privacyEl = document.querySelector('input[name="group-privacy"]:checked');
+    const privacy = privacyEl ? privacyEl.value : 'public';
+    const msgEl = document.getElementById('group-msg');
+    if (!name) { msgEl.textContent = 'Please enter a group name'; return; }
+    if (name.length > 50) { msgEl.textContent = 'Name must not exceed 50 characters'; return; }
+    try {
+        if (!isStaff()) {
+            const userGroups = await getDocs(query(collection(db, 'groups')));
+            let hasGroup = false;
+            userGroups.forEach((docSnap) => { if (docSnap.data().owner === currentUser) hasGroup = true; });
+            if (hasGroup) { msgEl.textContent = 'You can only create one group'; return; }
+        }
+        await addDoc(collection(db, 'groups'), { name: name, owner: currentUser, members: [currentUser], privacy: privacy, createdAt: serverTimestamp() });
+        document.getElementById('group-name').value = '';
+        msgEl.textContent = ''; msgEl.className = 'success-msg'; msgEl.textContent = 'Group created successfully!';
+        setTimeout(() => { msgEl.textContent = ''; msgEl.className = 'error-msg'; }, 3000);
+    } catch (e) { msgEl.textContent = 'Error: ' + e.message; }
+};
+
+function loadGroups() {
+    const container = document.getElementById('groups-container');
+    if (!container) return;
+    container.innerHTML = '<div class="loading">Loading...</div>';
+    const q = query(collection(db, 'groups'), orderBy('createdAt', 'desc'));
+    groupsListener = onSnapshot(q, (snapshot) => {
+        if (snapshot.empty) { container.innerHTML = '<div class="empty">No groups</div>'; return; }
+        let html = '';
+        snapshot.forEach((docSnap) => {
+            const g = docSnap.data(); const groupId = docSnap.id;
+            const isMember = g.members && g.members.includes(currentUser);
+            const isOwnerGroup = g.owner === currentUser;
+            const isPublic = g.privacy !== 'private';
+            let actions = '';
+            if (isOwnerGroup) actions = `<div class="group-card-actions"><button class="btn-primary" onclick="openGroupChat('${groupId}')">Open Chat</button><button class="btn-group" onclick="showInviteModal('${groupId}')">Invite</button><button class="btn-danger" onclick="deleteGroup('${groupId}')">Delete</button></div>`;
+            else if (isMember) actions = `<div class="group-card-actions"><button class="btn-primary" onclick="openGroupChat('${groupId}')">Open Chat</button><button class="btn-secondary" onclick="leaveGroup('${groupId}')">Leave</button></div>`;
+            else if (isPublic) actions = `<div class="group-card-actions"><button class="btn-primary" onclick="joinGroup('${groupId}')">Join</button></div>`;
+            else actions = `<div class="group-card-actions"><span style="font-size:12px;color:#888;padding:6px 0">Private - Invite only</span></div>`;
+            let membersHtml = '';
+            if (g.members && g.members.length > 0) membersHtml = `<div class="group-members"><strong>Members:</strong> ${g.members.length} member${g.members.length > 1 ? 's' : ''}</div>`;
+            const privacyBadge = isPublic ? '<span style="font-size:11px;color:#42b72a;background:#e8f5e9;padding:2px 8px;border-radius:4px;margin-left:8px">Public</span>' : '<span style="font-size:11px;color:#e41e3f;background:#ffebee;padding:2px 8px;border-radius:4px;margin-left:8px">Private</span>';
+            html += `<div class="group-card"><div class="group-card-header"><span class="group-card-name">${g.name}${privacyBadge}</span><span class="group-card-owner" style="cursor:pointer" onclick="viewProfile('${g.owner}')">By @${g.owner}</span></div>${actions}${membersHtml}</div>`;
+        });
+        container.innerHTML = html;
+    }, (error) => { container.innerHTML = '<div class="error-msg">Error: ' + error.message + '</div>'; });
+}
+window.loadGroups = loadGroups;
+
+window.openGroupChat = async function(groupId) {
+    if (isBanned(currentUser)) { alert('You are banned and cannot access groups.'); return; }
+    currentGroupChatId = groupId;
+    const groupRef = doc(db, 'groups', groupId);
+    const groupSnap = await getDoc(groupRef);
+    if (!groupSnap.exists()) return;
+    const g = groupSnap.data();
+    document.getElementById('group-chat-header-display').textContent = g.name;
+    document.getElementById('group-chat-header-sub').textContent = (g.privacy === 'private' ? 'Private' : 'Public') + ' · ' + (g.members ? g.members.length : 0) + ' members';
+    document.getElementById('tab-content-groups').classList.add('hidden');
+    document.getElementById('tab-content-groupchat').classList.remove('hidden');
+    loadGroupChatMessages();
+};
+
+window.backToGroups = function() {
+    currentGroupChatId = null;
+    if (groupChatListener) { groupChatListener(); groupChatListener = null; }
+    document.getElementById('tab-content-groupchat').classList.add('hidden');
+    document.getElementById('tab-content-groups').classList.remove('hidden');
+    document.getElementById('tab-groups').classList.add('active');
+    loadGroups();
+};
+
 function loadGroupChatMessages() {
     if (!currentGroupChatId) return;
     const container = document.getElementById('group-chat-messages');
@@ -1005,7 +1591,8 @@ function loadGroupChatMessages() {
                 const time = formatTime(new Date(timestamp));
                 const editedTag = msg.edited ? '<span class="edited-tag">(edited)</span>' : '';
                 const isOwnerOrAdmin = isStaff() || msg.username === currentUser;
-                let pic = msg.profilePic; if (!pic) pic = await fetchUserPic(msg.username);
+                let pic = msg.profilePic;
+                if (!pic) pic = await fetchUserPic(msg.username);
                 let menuItems = '';
                 if (isOwnerOrAdmin && !msg.edited) menuItems += `<button onclick="editGroupMessage('${msgId}', '${escapeHtml(msg.content)}')">Edit</button>`;
                 if (isOwnerOrAdmin) menuItems += `<button class="danger" onclick="deleteGroupMessage('${msgId}')">Delete</button>`;
@@ -1013,22 +1600,142 @@ function loadGroupChatMessages() {
                 const menuId = 'menu-gmsg-' + msgId;
                 const authorDisplay = getDisplayNameWithUsername(msg.displayName || msg.username, msg.username, pic);
                 const menuHtml = menuItems ? `<div class="menu-container"><button class="menu-btn" onclick="event.stopPropagation();toggleMenu('${menuId}')">⋮</button><div class="menu-dropdown" id="${menuId}">${menuItems}</div></div>` : '';
-                const likes = Math.max(0, msg.likes || 0);
-                const dislikes = Math.max(0, msg.dislikes || 0);
-                const reaction = userReactions[msgId] || null;
-                const likeClass = reaction === 'like' ? ' active-reaction like-active' : '';
-                const dislikeClass = reaction === 'dislike' ? ' active-reaction dislike-active' : '';
-                html += `<div class="post" id="group-msg-${msgId}"><div class="post-header"><div class="post-author-info"><div class="post-author-name">${authorDisplay} ${getTag(msg.username)}</div><div class="post-author-time" data-timestamp="${timestamp}">${time}${editedTag}</div></div>${menuHtml}</div><div class="post-content" dir="auto">${escapeHtml(msg.content)}</div><div class="post-actions"><button id="glike-btn-${msgId}" class="${likeClass}" onclick="likeGroupMessage('${msgId}')">👍 <span id="glikes-${msgId}">${likes}</span></button><button id="gdislike-btn-${msgId}" class="${dislikeClass}" onclick="dislikeGroupMessage('${msgId}')">👎 <span id="gdislikes-${msgId}">${dislikes}</span></button><button onclick="toggleGroupComments('${msgId}')">💬 <span id="gcomments-count-${msgId}">0</span></button></div><div class="comments-section hidden" id="group-comments-${msgId}"><div id="group-comments-list-${msgId}"><div class="loading">Loading comments...</div></div><div class="comment-input"><input type="text" id="group-comment-input-${msgId}" placeholder="Write a comment..." maxlength="1000"><button class="btn-primary" onclick="addGroupComment('${msgId}')">Send</button></div></div></div>`;
+                html += `<div class="post" id="group-msg-${msgId}"><div class="post-header"><div class="post-author-info"><div class="post-author-name">${authorDisplay} ${getTag(msg.username)}</div><div class="post-author-time" data-timestamp="${timestamp}">${time}${editedTag}</div></div>${menuHtml}</div><div class="post-content" dir="auto">${escapeHtml(msg.content)}</div><div class="post-actions"><button id="glike-btn-${msgId}" onclick="likeGroupMessage('${msgId}')">👍 <span id="glikes-${msgId}">${msg.likes || 0}</span></button><button id="gdislike-btn-${msgId}" onclick="dislikeGroupMessage('${msgId}')">👎 <span id="gdislikes-${msgId}">${msg.dislikes || 0}</span></button><button onclick="toggleGroupComments('${msgId}')">💬 <span id="gcomments-count-${msgId}">0</span></button></div><div class="comments-section hidden" id="group-comments-${msgId}"><div id="group-comments-list-${msgId}"><div class="loading">Loading comments...</div></div><div class="comment-input"><input type="text" id="group-comment-input-${msgId}" placeholder="Write a comment..." maxlength="1000"><button class="btn-primary" onclick="addGroupComment('${msgId}')">Send</button></div></div></div>`;
             }
         }
         container.innerHTML = html;
-        snapshot.forEach((docSnap) => { loadGroupComments(docSnap.id); });
+        for (const docSnap of snapshot.docs) {
+            checkUserReaction(docSnap.id, 'glike-btn-' + docSnap.id, 'gdislike-btn-' + docSnap.id, 'groupMessageLikes', 'groupMessage');
+            loadGroupComments(docSnap.id);
+        }
         container.scrollTop = container.scrollHeight;
     }, (error) => { container.innerHTML = '<div class="error-msg">Error loading messages: ' + error.message + '</div>'; });
 }
 window.loadGroupChatMessages = loadGroupChatMessages;
 
-// loadGroupComments مع الحالة المحلية
+window.sendGroupMessage = async function() {
+    if (isBanned(currentUser)) { alert('You are banned and cannot send messages.'); return; }
+    if (!currentGroupChatId) return;
+    const input = document.getElementById('group-chat-message-input');
+    const content = input.value.trim();
+    if (!content) return;
+    if (content.length > 1000) { alert('Message must not exceed 1000 characters'); return; }
+    try {
+        const pic = await fetchUserPic(currentUser);
+        await addDoc(collection(db, 'groupMessages'), { groupId: currentGroupChatId, username: currentUser, displayName: currentUser, content: content, likes: 0, dislikes: 0, edited: false, createdAt: serverTimestamp(), profilePic: pic });
+        input.value = '';
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+window.likeGroupMessage = async function(msgId) {
+    if (isBanned(currentUser)) { alert('You are banned and cannot interact.'); return; }
+    if (groupMessageLocks[msgId]) return;
+    groupMessageLocks[msgId] = true;
+    const likeBtnId = 'glike-btn-' + msgId;
+    const dislikeBtnId = 'gdislike-btn-' + msgId;
+    try {
+        const likeRef = doc(db, 'groupMessageLikes', msgId + '_' + currentUser);
+        const likeSnap = await getDoc(likeRef);
+        const msgRef = doc(db, 'groupMessages', msgId);
+        if (likeSnap.exists() && likeSnap.data().type === 'like') { 
+            await deleteDoc(likeRef); await updateDoc(msgRef, { likes: increment(-1) });
+            updateReactionButtonUI(likeBtnId, null);
+        } else if (likeSnap.exists() && likeSnap.data().type === 'dislike') { 
+            await updateDoc(likeRef, { type: 'like' }); await updateDoc(msgRef, { likes: increment(1), dislikes: increment(-1) });
+            updateReactionButtonUI(likeBtnId, 'like');
+            updateReactionButtonUI(dislikeBtnId, null);
+        } else { 
+            await setDoc(likeRef, { msgId, username: currentUser, type: 'like' }); await updateDoc(msgRef, { likes: increment(1) });
+            updateReactionButtonUI(likeBtnId, 'like');
+            updateReactionButtonUI(dislikeBtnId, null);
+        }
+    } catch (e) { console.error(e); }
+    groupMessageLocks[msgId] = false;
+};
+
+window.dislikeGroupMessage = async function(msgId) {
+    if (isBanned(currentUser)) { alert('You are banned and cannot interact.'); return; }
+    if (groupMessageLocks[msgId]) return;
+    groupMessageLocks[msgId] = true;
+    const likeBtnId = 'glike-btn-' + msgId;
+    const dislikeBtnId = 'gdislike-btn-' + msgId;
+    try {
+        const likeRef = doc(db, 'groupMessageLikes', msgId + '_' + currentUser);
+        const likeSnap = await getDoc(likeRef);
+        const msgRef = doc(db, 'groupMessages', msgId);
+        if (likeSnap.exists() && likeSnap.data().type === 'dislike') { 
+            await deleteDoc(likeRef); await updateDoc(msgRef, { dislikes: increment(-1) });
+            updateReactionButtonUI(dislikeBtnId, null);
+        } else if (likeSnap.exists() && likeSnap.data().type === 'like') { 
+            await updateDoc(likeRef, { type: 'dislike' }); await updateDoc(msgRef, { dislikes: increment(1), likes: increment(-1) });
+            updateReactionButtonUI(likeBtnId, null);
+            updateReactionButtonUI(dislikeBtnId, 'dislike');
+        } else { 
+            await setDoc(likeRef, { msgId, username: currentUser, type: 'dislike' }); await updateDoc(msgRef, { dislikes: increment(1) });
+            updateReactionButtonUI(likeBtnId, null);
+            updateReactionButtonUI(dislikeBtnId, 'dislike');
+        }
+    } catch (e) { console.error(e); }
+    groupMessageLocks[msgId] = false;
+};
+
+window.editGroupMessage = function(msgId, content) { if (isBanned(currentUser)) { alert('You are banned.'); return; } editingId = msgId; editingType = 'groupMessage'; document.getElementById('edit-text').value = content; document.getElementById('edit-modal').classList.remove('hidden'); };
+window.deleteGroupMessage = async function(msgId) { if (isBanned(currentUser)) { alert('You are banned.'); return; } if (!confirm('Are you sure you want to delete this message?')) return; try { await deleteDoc(doc(db, 'groupMessages', msgId)); const cQ = query(collection(db, 'groupComments'), where('msgId', '==', msgId)); const cSnap = await getDocs(cQ); cSnap.forEach(async (c) => { await deleteDoc(doc(db, 'groupComments', c.id)); }); } catch (e) { alert('Error: ' + e.message); } };
+
+window.toggleGroupComments = function(msgId) { const section = document.getElementById('group-comments-' + msgId); section.classList.toggle('hidden'); if (!section.classList.contains('hidden')) loadGroupComments(msgId); };
+
+window.likeGroupComment = async function(commentId) {
+    if (isBanned(currentUser)) { alert('You are banned and cannot interact.'); return; }
+    if (groupCommentLikeLocks[commentId]) return;
+    groupCommentLikeLocks[commentId] = true;
+    const likeBtnId = 'gclike-btn-' + commentId;
+    const dislikeBtnId = 'gcdislike-btn-' + commentId;
+    try {
+        const likeRef = doc(db, 'groupCommentLikes', commentId + '_' + currentUser);
+        const likeSnap = await getDoc(likeRef);
+        const commentRef = doc(db, 'groupComments', commentId);
+        if (likeSnap.exists() && likeSnap.data().type === 'like') { 
+            await deleteDoc(likeRef); await updateDoc(commentRef, { likes: increment(-1) });
+            updateReactionButtonUI(likeBtnId, null);
+        } else if (likeSnap.exists() && likeSnap.data().type === 'dislike') { 
+            await updateDoc(likeRef, { type: 'like' }); await updateDoc(commentRef, { likes: increment(1), dislikes: increment(-1) });
+            updateReactionButtonUI(likeBtnId, 'like');
+            updateReactionButtonUI(dislikeBtnId, null);
+        } else { 
+            await setDoc(likeRef, { commentId, username: currentUser, type: 'like' }); await updateDoc(commentRef, { likes: increment(1) });
+            updateReactionButtonUI(likeBtnId, 'like');
+            updateReactionButtonUI(dislikeBtnId, null);
+        }
+    } catch (e) { console.error(e); }
+    groupCommentLikeLocks[commentId] = false;
+};
+
+window.dislikeGroupComment = async function(commentId) {
+    if (isBanned(currentUser)) { alert('You are banned and cannot interact.'); return; }
+    if (groupCommentLikeLocks[commentId]) return;
+    groupCommentLikeLocks[commentId] = true;
+    const likeBtnId = 'gclike-btn-' + commentId;
+    const dislikeBtnId = 'gcdislike-btn-' + commentId;
+    try {
+        const likeRef = doc(db, 'groupCommentLikes', commentId + '_' + currentUser);
+        const likeSnap = await getDoc(likeRef);
+        const commentRef = doc(db, 'groupComments', commentId);
+        if (likeSnap.exists() && likeSnap.data().type === 'dislike') { 
+            await deleteDoc(likeRef); await updateDoc(commentRef, { dislikes: increment(-1) });
+            updateReactionButtonUI(dislikeBtnId, null);
+        } else if (likeSnap.exists() && likeSnap.data().type === 'like') { 
+            await updateDoc(likeRef, { type: 'dislike' }); await updateDoc(commentRef, { dislikes: increment(1), likes: increment(-1) });
+            updateReactionButtonUI(likeBtnId, null);
+            updateReactionButtonUI(dislikeBtnId, 'dislike');
+        } else { 
+            await setDoc(likeRef, { commentId, username: currentUser, type: 'dislike' }); await updateDoc(commentRef, { dislikes: increment(1) });
+            updateReactionButtonUI(likeBtnId, null);
+            updateReactionButtonUI(dislikeBtnId, 'dislike');
+        }
+    } catch (e) { console.error(e); }
+    groupCommentLikeLocks[commentId] = false;
+};
+
 function loadGroupComments(msgId) {
     if (groupCommentsListeners[msgId]) { groupCommentsListeners[msgId](); }
     const container = document.getElementById('group-comments-list-' + msgId);
@@ -1047,7 +1754,8 @@ function loadGroupComments(msgId) {
             const time = formatTime(new Date(timestamp));
             const editedTag = c.edited ? '<span class="edited-tag">(edited)</span>' : '';
             const isOwnerOrAdmin = isStaff() || c.username === currentUser;
-            let pic = c.profilePic; if (!pic) pic = await fetchUserPic(c.username);
+            let pic = c.profilePic;
+            if (!pic) pic = await fetchUserPic(c.username);
             let menuItems = '';
             if (isOwnerOrAdmin && !c.edited) menuItems += `<button onclick="editGroupComment('${commentId}', '${escapeHtml(c.content)}')">Edit</button>`;
             if (isOwnerOrAdmin) menuItems += `<button class="danger" onclick="deleteGroupComment('${commentId}')">Delete</button>`;
@@ -1055,87 +1763,189 @@ function loadGroupComments(msgId) {
             const menuId = 'menu-gcomment-' + commentId;
             const authorDisplay = getDisplayNameWithUsername(c.displayName || c.username, c.username, pic);
             const menuHtml = menuItems ? `<div class="menu-container"><button class="menu-btn" onclick="event.stopPropagation();toggleMenu('${menuId}')">⋮</button><div class="menu-dropdown" id="${menuId}">${menuItems}</div></div>` : '';
-            const likes = Math.max(0, c.likes || 0);
-            const dislikes = Math.max(0, c.dislikes || 0);
-            const reaction = userReactions[commentId] || null;
-            const likeClass = reaction === 'like' ? ' active-reaction like-active' : '';
-            const dislikeClass = reaction === 'dislike' ? ' active-reaction dislike-active' : '';
-            html += `<div class="comment" id="gcomment-${commentId}"><div class="comment-header"><div class="comment-author-info"><div class="comment-author-name">${authorDisplay} ${getTag(c.username)}</div><div class="comment-author-time" data-timestamp="${timestamp}">${time}${editedTag}</div></div>${menuHtml}</div><div class="comment-text" dir="auto">${escapeHtml(c.content)}</div><div class="comment-actions"><button class="reply-btn" onclick="replyToGroupComment('${msgId}', '${c.username}')">Reply</button><button class="like-btn${likeClass}" id="gclike-btn-${commentId}" onclick="likeGroupComment('${commentId}')">👍 <span id="gclikes-${commentId}">${likes}</span></button><button class="dislike-btn${dislikeClass}" id="gcdislike-btn-${commentId}" onclick="dislikeGroupComment('${commentId}')">👎 <span id="gcdislikes-${commentId}">${dislikes}</span></button></div></div>`;
+            html += `<div class="comment" id="gcomment-${commentId}"><div class="comment-header"><div class="comment-author-info"><div class="comment-author-name">${authorDisplay} ${getTag(c.username)}</div><div class="comment-author-time" data-timestamp="${timestamp}">${time}${editedTag}</div></div>${menuHtml}</div><div class="comment-text" dir="auto">${escapeHtml(c.content)}</div><div class="comment-actions"><button class="reply-btn" onclick="replyToGroupComment('${msgId}', '${c.username}')">Reply</button><button class="like-btn" id="gclike-btn-${commentId}" onclick="likeGroupComment('${commentId}')">👍 <span id="gclikes-${commentId}">${c.likes || 0}</span></button><button class="dislike-btn" id="gcdislike-btn-${commentId}" onclick="dislikeGroupComment('${commentId}')">👎 <span id="gcdislikes-${commentId}">${c.dislikes || 0}</span></button></div></div>`;
         }
         if (!hasComments) html = '<div style="color:#888;font-size:14px;text-align:center;padding:10px">No comments</div>';
         container.innerHTML = html;
+        for (const docSnap of snapshot.docs) {
+            if (docSnap.data().msgId !== msgId) continue;
+            checkUserReaction(docSnap.id, 'gclike-btn-' + docSnap.id, 'gcdislike-btn-' + docSnap.id, 'groupCommentLikes', 'groupComment');
+        }
         const countEl = document.getElementById('gcomments-count-' + msgId);
         if (countEl) countEl.textContent = commentCount;
     }, (error) => { if (container) container.innerHTML = '<div style="color:#888;font-size:14px;text-align:center;padding:10px">Error loading comments</div>'; });
 }
 window.loadGroupComments = loadGroupComments;
 
-// باقي الدوال بدون تغيير (createPost, deletePost, etc.)
-window.createPost = async function() { /* unchanged */ };
-function getDisplayNameWithUsername(displayName, username, pic) { /* unchanged */ }
-window.editPost = function(postId, content) { /* unchanged */ };
-window.deletePost = async function(postId) { /* unchanged */ };
-window.replyToComment = function(postId, username) { /* unchanged */ };
-window.toggleComments = function(postId) { /* unchanged */ };
-window.addComment = async function(postId) { /* unchanged */ };
-window.editComment = function(commentId, content) { /* unchanged */ };
-window.deleteComment = async function(commentId) { /* unchanged */ };
-window.saveEdit = async function() { /* unchanged */ };
-window.closeEditModal = function() { /* unchanged */ };
-window.createGroup = async function() { /* unchanged */ };
-function loadGroups() { /* unchanged */ }
-window.loadGroups = loadGroups;
-window.openGroupChat = async function(groupId) { /* unchanged */ };
-window.backToGroups = function() { /* unchanged */ };
-window.sendGroupMessage = async function() { /* unchanged */ };
-window.editGroupMessage = function(msgId, content) { /* unchanged */ };
-window.deleteGroupMessage = async function(msgId) { /* unchanged */ };
-window.toggleGroupComments = function(msgId) { /* unchanged */ };
-window.addGroupComment = async function(msgId) { /* unchanged */ };
-window.editGroupComment = function(commentId, content) { /* unchanged */ };
-window.deleteGroupComment = async function(commentId) { /* unchanged */ };
-window.replyToGroupComment = function(msgId, username) { /* unchanged */ };
-window.showInviteModal = function(groupId) { /* unchanged */ };
-window.closeInviteModal = function() { /* unchanged */ };
-window.sendInvite = async function() { /* unchanged */ };
-function loadPrivateChats() { /* unchanged */ }
+window.addGroupComment = async function(msgId) {
+    if (isBanned(currentUser)) { alert('You are banned and cannot comment.'); return; }
+    const input = document.getElementById('group-comment-input-' + msgId);
+    const content = input.value.trim();
+    if (!content) return;
+    if (content.length > 1000) { alert('Comment must not exceed 1000 characters'); return; }
+    try {
+        const pic = await fetchUserPic(currentUser);
+        await addDoc(collection(db, 'groupComments'), { msgId: msgId, groupId: currentGroupChatId, username: currentUser, displayName: currentUser, content: content, createdAt: serverTimestamp(), edited: false, likes: 0, dislikes: 0, profilePic: pic });
+        input.value = '';
+    } catch (e) { alert('Error: ' + e.message); }
+};
+
+window.editGroupComment = function(commentId, content) { if (isBanned(currentUser)) { alert('You are banned.'); return; } editingId = commentId; editingType = 'groupComment'; document.getElementById('edit-text').value = content; document.getElementById('edit-modal').classList.remove('hidden'); };
+window.deleteGroupComment = async function(commentId) { if (isBanned(currentUser)) { alert('You are banned.'); return; } if (!confirm('Are you sure you want to delete this comment?')) return; try { await deleteDoc(doc(db, 'groupComments', commentId)); } catch (e) { alert('Error: ' + e.message); } };
+window.replyToGroupComment = function(msgId, username) { if (isBanned(currentUser)) { alert('You are banned.'); return; } const input = document.getElementById('group-comment-input-' + msgId); if (input) { input.value = '@' + username + ' '; input.focus(); } };
+
+window.showInviteModal = function(groupId) { if (isBanned(currentUser)) { alert('You are banned.'); return; } inviteGroupId = groupId; getDoc(doc(db, 'groups', groupId)).then((snap) => { if (snap.exists()) { document.getElementById('invite-info').innerHTML = 'invite: <strong>' + snap.data().name + '</strong>'; document.getElementById('invite-modal').classList.remove('hidden'); } }); };
+window.closeInviteModal = function() { document.getElementById('invite-modal').classList.add('hidden'); inviteGroupId = null; document.getElementById('invite-username').value = ''; };
+window.sendInvite = async function() { if (isBanned(currentUser)) { alert('You are banned.'); return; } const username = document.getElementById('invite-username').value.trim(); if (!username) { alert('Please enter a username'); return; } if (username === currentUser) { alert('You cannot invite yourself'); return; } try { const userRef = doc(db, 'users', username); const userSnap = await getDoc(userRef); if (!userSnap.exists()) { alert('User not found'); return; } const groupRef = doc(db, 'groups', inviteGroupId); const groupSnap = await getDoc(groupRef); if (groupSnap.exists()) { const members = groupSnap.data().members || []; if (members.includes(username)) { alert('User is already a member'); return; } } await addDoc(collection(db, 'invites'), { groupId: inviteGroupId, groupName: groupSnap.data().name, from: currentUser, to: username, status: 'pending', createdAt: serverTimestamp() }); alert('Invite sent successfully!'); closeInviteModal(); } catch (e) { alert('Error: ' + e.message); } };
+
+function loadPrivateChats() {
+    const container = document.getElementById('private-chats-container');
+    if (!container) return;
+    if (privateChatsListener) privateChatsListener();
+    const q = query(collection(db, 'privateMessages'), orderBy('createdAt', 'desc'));
+    privateChatsListener = onSnapshot(q, (snapshot) => {
+        if (!container) return;
+        const chatUsers = new Map();
+        snapshot.forEach((docSnap) => { const msg = docSnap.data(); if (msg.sender !== currentUser && msg.receiver !== currentUser) return; const otherUser = msg.sender === currentUser ? msg.receiver : msg.sender; if (!chatUsers.has(otherUser)) chatUsers.set(otherUser, { lastMessage: msg.content, lastTime: msg.createdAt, lastMsgId: docSnap.id }); });
+        if (chatUsers.size === 0) { container.innerHTML = '<div class="empty">No private chats</div>'; return; }
+        let html = '';
+        chatUsers.forEach((data, otherUser) => { const timestamp = data.lastTime ? data.lastTime.toDate().getTime() : Date.now(); const time = formatTime(new Date(timestamp)); html += `<div class="chat-list-item" onclick="openPrivateChat('${otherUser}')"><div class="chat-list-item-info"><div class="chat-list-item-name">@${otherUser}</div><div class="chat-list-item-last">${escapeHtml(data.lastMessage)}</div></div><div class="chat-list-item-time" data-timestamp="${timestamp}">${time}</div></div>`; });
+        container.innerHTML = html;
+    });
+}
 window.loadPrivateChats = loadPrivateChats;
-window.startPrivateChat = async function() { /* unchanged */ };
-window.openPrivateChat = async function(username) { /* unchanged */ };
-window.backToPrivateList = function() { /* unchanged */ };
-function loadChatMessages() { /* unchanged */ }
+
+window.startPrivateChat = async function() {
+    if (isBanned(currentUser)) { alert('You are banned and cannot start chats.'); return; }
+    const username = document.getElementById('private-chat-username').value.trim();
+    const msgEl = document.getElementById('private-chat-msg');
+    if (!username) { msgEl.textContent = 'Please enter a username'; return; }
+    if (username === currentUser) { msgEl.textContent = 'You cannot start a chat with yourself'; return; }
+    try { const userRef = doc(db, 'users', username); const userSnap = await getDoc(userRef); if (!userSnap.exists()) { msgEl.textContent = 'User not found'; return; } await addDoc(collection(db, 'chatRequests'), { from: currentUser, to: username, status: 'pending', createdAt: serverTimestamp() }); document.getElementById('private-chat-username').value = ''; msgEl.textContent = ''; msgEl.className = 'success-msg'; msgEl.textContent = 'Chat request sent!'; setTimeout(() => { msgEl.textContent = ''; msgEl.className = 'error-msg'; }, 3000); }
+    catch (e) { msgEl.textContent = 'Error: ' + e.message; }
+};
+
+window.openPrivateChat = async function(username) {
+    if (isBanned(currentUser)) { alert('You are banned and cannot access chats.'); return; }
+    currentChatUser = username;
+    try { const userRef = doc(db, 'users', username); const userSnap = await getDoc(userRef); if (userSnap.exists()) { document.getElementById('chat-header-display').textContent = userSnap.data().displayName || username; document.getElementById('chat-header-user').textContent = '@' + username; } else { document.getElementById('chat-header-display').textContent = username; document.getElementById('chat-header-user').textContent = '@' + username; } }
+    catch (e) { document.getElementById('chat-header-display').textContent = username; document.getElementById('chat-header-user').textContent = '@' + username; }
+    checkChatBlocked();
+    document.getElementById('tab-content-private').classList.add('hidden');
+    document.getElementById('tab-content-chat').classList.remove('hidden');
+    document.querySelectorAll('.nav-tab-vertical').forEach(t => t.classList.remove('active'));
+    markPrivateChatAsRead(username);
+    loadChatMessages();
+};
+
+window.backToPrivateList = function() { currentChatUser = null; if (chatMessagesListener) chatMessagesListener(); document.getElementById('tab-content-chat').classList.add('hidden'); document.getElementById('tab-content-private').classList.remove('hidden'); document.getElementById('tab-private').classList.add('active'); loadPrivateChats(); };
+
+function loadChatMessages() {
+    const container = document.getElementById('chat-messages');
+    if (!container) return;
+    if (chatMessagesListener) chatMessagesListener();
+    container.innerHTML = '<div class="loading">Loading...</div>';
+    const q = query(collection(db, 'privateMessages'), orderBy('createdAt', 'asc'));
+    chatMessagesListener = onSnapshot(q, (snapshot) => {
+        if (!container) return;
+        let html = ''; let hasMessages = false;
+        snapshot.forEach((docSnap) => { const msg = docSnap.data(); if ((msg.sender !== currentUser || msg.receiver !== currentChatUser) && (msg.sender !== currentChatUser || msg.receiver !== currentUser)) return; hasMessages = true; const timestamp = msg.createdAt ? msg.createdAt.toDate().getTime() : Date.now(); const time = formatTime(new Date(timestamp)); const isSent = msg.sender === currentChatUser; html += `<div class="chat-message ${isSent ? 'sent' : 'received'}"><div dir="auto">${escapeHtml(msg.content)}</div><div class="chat-message-time" data-timestamp="${timestamp}">${time}</div></div>`; });
+        if (!hasMessages) html = '<div class="empty" style="padding:40px 20px">No messages yet. Start the conversation!</div>';
+        container.innerHTML = html;
+        container.scrollTop = container.scrollHeight;
+    });
+}
 window.loadChatMessages = loadChatMessages;
-window.sendChatMessage = async function() { /* unchanged */ };
-window.blockChatUser = async function() { /* unchanged */ };
-window.unblockChatUser = async function() { /* unchanged */ };
-async function isChatBlocked(otherUser) { /* unchanged */ }
-async function checkChatBlocked() { /* unchanged */ }
-function loadInbox() { /* unchanged */ }
+
+window.sendChatMessage = async function() {
+    if (isBanned(currentUser)) { alert('You are banned and cannot send messages.'); return; }
+    if (!currentChatUser) return;
+    const isBlocked = await isChatBlocked(currentChatUser);
+    if (isBlocked) { alert('You cannot send messages to this user'); return; }
+    const input = document.getElementById('chat-message-input');
+    const content = input.value.trim();
+    if (!content) return;
+    if (content.length > 1000) { alert('Message must not exceed 1000 characters'); return; }
+    try { await addDoc(collection(db, 'privateMessages'), { sender: currentUser, receiver: currentChatUser, content: content, readBy: [currentUser], createdAt: serverTimestamp() }); input.value = ''; }
+    catch (e) { alert('Error: ' + e.message); }
+};
+
+window.blockChatUser = async function() { if (isBanned(currentUser)) { alert('You are banned.'); return; } if (!currentChatUser) return; if (!confirm('Are you sure you want to block ' + currentChatUser + '?')) return; try { await setDoc(doc(db, 'chatBlocks', currentUser + '_' + currentChatUser), { blocker: currentUser, blocked: currentChatUser, createdAt: serverTimestamp() }); checkChatBlocked(); } catch (e) { alert('Error: ' + e.message); } };
+window.unblockChatUser = async function() { if (isBanned(currentUser)) { alert('You are banned.'); return; } if (!currentChatUser) return; try { await deleteDoc(doc(db, 'chatBlocks', currentUser + '_' + currentChatUser)); checkChatBlocked(); } catch (e) { alert('Error: ' + e.message); } };
+async function isChatBlocked(otherUser) { try { const blockRef = doc(db, 'chatBlocks', currentUser + '_' + otherUser); const blockSnap = await getDoc(blockRef); return blockSnap.exists(); } catch (e) { return false; } }
+async function checkChatBlocked() { if (!currentChatUser) return; const blocked = await isChatBlocked(currentChatUser); const notice = document.getElementById('chat-blocked-notice'); const blockBtn = document.getElementById('chat-block-btn'); const inputArea = document.getElementById('chat-input-area'); if (blocked) { notice.classList.remove('hidden'); blockBtn.textContent = 'Unblock'; blockBtn.onclick = unblockChatUser; blockBtn.className = 'btn-success'; inputArea.classList.add('hidden'); } else { notice.classList.add('hidden'); blockBtn.textContent = 'Block'; blockBtn.onclick = blockChatUser; blockBtn.className = 'btn-ban'; inputArea.classList.remove('hidden'); } }
+
+function loadInbox() {
+    const container = document.getElementById('inbox-container');
+    if (!container) return;
+    if (inboxListener) inboxListener();
+    let invitesData = []; let chatRequestsData = [];
+    const invitesQ = query(collection(db, 'invites'), orderBy('createdAt', 'desc'));
+    const chatReqQ = query(collection(db, 'chatRequests'), orderBy('createdAt', 'desc'));
+    const unsubInvites = onSnapshot(invitesQ, (snapshot) => { invitesData = []; snapshot.forEach(doc => { const data = doc.data(); if (data.to === currentUser || data.from === currentUser) invitesData.push({ id: doc.id, ...data }); }); renderInbox(); }, (error) => { container.innerHTML = '<div class="error-msg">Error loading invites</div>'; });
+    const unsubChatReqs = onSnapshot(chatReqQ, (snapshot) => { chatRequestsData = []; snapshot.forEach(doc => { const data = doc.data(); if (data.to === currentUser || data.from === currentUser) chatRequestsData.push({ id: doc.id, ...data }); }); renderInbox(); }, (error) => { container.innerHTML = '<div class="error-msg">Error loading chat requests</div>'; });
+    function renderInbox() { let html = ''; let unreadCount = 0; let hasItems = false; invitesData.forEach((inv) => { const isUnread = inv.to === currentUser && inv.status === 'pending' && (!inv.readBy || !inv.readBy.includes(currentUser)); if (isUnread) unreadCount++; const timestamp = inv.createdAt ? inv.createdAt.toDate().getTime() : Date.now(); const time = formatTime(new Date(timestamp)); if (inv.to === currentUser && inv.status === 'pending') { hasItems = true; html += `<div class="inbox-item"><div class="inbox-item-info"><div class="inbox-item-title">Invite to join group "${inv.groupName}"</div><div class="inbox-item-desc">from @${inv.from} · ${time}</div></div><div class="inbox-actions"><button class="btn-success" onclick="acceptInvite('${inv.id}')">Accept</button><button class="btn-danger" onclick="rejectInvite('${inv.id}')">Reject</button></div></div>`; } else if (inv.from === currentUser && inv.status === 'pending') { hasItems = true; html += `<div class="inbox-item"><div class="inbox-item-info"><div class="inbox-item-title">Invite sent to @${inv.to}</div><div class="inbox-item-desc">for group "${inv.groupName}" · ${time}</div></div><div class="inbox-actions"><button class="btn-secondary" disabled>Pending</button></div></div>`; } else if (inv.from === currentUser && inv.status === 'accepted') { hasItems = true; html += `<div class="inbox-item"><div class="inbox-item-info"><div class="inbox-item-title">@${inv.to} accepted the invitation</div><div class="inbox-item-desc">for group "${inv.groupName}" · ${time}</div></div><div class="inbox-actions"><button class="btn-success" onclick="approveMember('${inv.id}', '${inv.to}', '${inv.groupId}')">Approve</button><button class="btn-danger" onclick="rejectMember('${inv.id}')">Reject</button></div></div>`; } else if (inv.to === currentUser && inv.status === 'rejected') { hasItems = true; html += `<div class="inbox-item"><div class="inbox-item-info"><div class="inbox-item-title">Your invite was rejected</div><div class="inbox-item-desc">for group "${inv.groupName}" · ${time}</div></div></div>`; } }); chatRequestsData.forEach((req) => { const isUnread = req.to === currentUser && req.status === 'pending' && (!req.readBy || !req.readBy.includes(currentUser)); if (isUnread) unreadCount++; const timestamp = req.createdAt ? req.createdAt.toDate().getTime() : Date.now(); const time = formatTime(new Date(timestamp)); if (req.to === currentUser && req.status === 'pending') { hasItems = true; html += `<div class="inbox-item"><div class="inbox-item-info"><div class="inbox-item-title">Private chat request from @${req.from}</div><div class="inbox-item-desc">${time}</div></div><div class="inbox-actions"><button class="btn-success" onclick="acceptChatRequest('${req.id}', '${req.from}')">Accept</button><button class="btn-danger" onclick="rejectChatRequest('${req.id}')">Reject</button></div></div>`; } else if (req.from === currentUser && req.status === 'pending') { hasItems = true; html += `<div class="inbox-item"><div class="inbox-item-info"><div class="inbox-item-title">Chat request sent to @${req.to}</div><div class="inbox-item-desc">${time}</div></div><div class="inbox-actions"><button class="btn-secondary" disabled>Pending</button></div></div>`; } else if (req.to === currentUser && req.status === 'accepted') { hasItems = true; html += `<div class="inbox-item"><div class="inbox-item-info"><div class="inbox-item-title">@${req.from} accepted chat request</div><div class="inbox-item-desc">${time}</div></div></div>`; } else if (req.from === currentUser && req.status === 'accepted') { hasItems = true; html += `<div class="inbox-item"><div class="inbox-item-info"><div class="inbox-item-title">@${req.to} accepted chat request</div><div class="inbox-item-desc">${time}</div></div></div>`; } else if (req.to === currentUser && req.status === 'rejected') { hasItems = true; html += `<div class="inbox-item"><div class="inbox-item-info"><div class="inbox-item-title">Chat request was rejected</div><div class="inbox-item-desc">from @${req.from} · ${time}</div></div></div>`; } }); if (!hasItems) html = '<div class="empty">No messages in Inbox</div>'; container.innerHTML = html; const badge = document.getElementById('inbox-badge'); if (unreadCount > 0) { badge.textContent = unreadCount; badge.classList.remove('hidden'); } else { badge.classList.add('hidden'); } }
+    inboxListener = () => { unsubInvites(); unsubChatReqs(); };
+}
 window.loadInbox = loadInbox;
-window.markPrivateChatAsRead = async function(chatUser) { /* unchanged */ };
-window.acceptInvite = async function(inviteId) { /* unchanged */ };
-window.rejectInvite = async function(inviteId) { /* unchanged */ };
-window.approveMember = async function(inviteId, username, groupId) { /* unchanged */ };
-window.rejectMember = async function(inviteId) { /* unchanged */ };
-window.acceptChatRequest = async function(requestId, fromUser) { /* unchanged */ };
-window.rejectChatRequest = async function(requestId) { /* unchanged */ };
-window.deleteGroup = async function(groupId) { /* unchanged */ };
-window.joinGroup = async function(groupId) { /* unchanged */ };
-window.leaveGroup = async function(groupId) { /* unchanged */ };
-window.openPasswordModal = function() { /* unchanged */ };
-window.closePasswordModal = function() { /* unchanged */ };
-window.checkOldPassword = async function() { /* unchanged */ };
-window.updatePassword = async function() { /* unchanged */ };
-window.changeDisplayName = async function() { /* unchanged */ };
-window.changeUsername = async function() { /* unchanged */ };
-window.toggleTheme = function() { /* unchanged */ };
-function updateThemeButtonText() { /* unchanged */ }
+
+window.markPrivateChatAsRead = async function(chatUser) { if (!chatUser) return; try { const q = query(collection(db, 'privateMessages'), where('receiver', '==', currentUser), where('sender', '==', chatUser)); const snap = await getDocs(q); snap.forEach(async (docSnap) => { const data = docSnap.data(); const readBy = data.readBy || []; if (!readBy.includes(currentUser)) { readBy.push(currentUser); await updateDoc(doc(db, 'privateMessages', docSnap.id), { readBy: readBy }); } }); } catch (e) { console.error(e); } };
+window.acceptInvite = async function(inviteId) { if (isBanned(currentUser)) { alert('You are banned.'); return; } try { await updateDoc(doc(db, 'invites', inviteId), { status: 'accepted' }); } catch (e) { alert('Error: ' + e.message); } };
+window.rejectInvite = async function(inviteId) { if (isBanned(currentUser)) { alert('You are banned.'); return; } try { await updateDoc(doc(db, 'invites', inviteId), { status: 'rejected' }); } catch (e) { alert('Error: ' + e.message); } };
+window.approveMember = async function(inviteId, username, groupId) { if (isBanned(currentUser)) { alert('You are banned.'); return; } try { const groupRef = doc(db, 'groups', groupId); const groupSnap = await getDoc(groupRef); if (groupSnap.exists()) { const members = groupSnap.data().members || []; if (!members.includes(username)) members.push(username); await updateDoc(groupRef, { members: members }); } await deleteDoc(doc(db, 'invites', inviteId)); } catch (e) { alert('Error: ' + e.message); } };
+window.rejectMember = async function(inviteId) { if (isBanned(currentUser)) { alert('You are banned.'); return; } try { await deleteDoc(doc(db, 'invites', inviteId)); } catch (e) { alert('Error: ' + e.message); } };
+window.acceptChatRequest = async function(requestId, fromUser) { if (isBanned(currentUser)) { alert('You are banned.'); return; } try { await updateDoc(doc(db, 'chatRequests', requestId), { status: 'accepted' }); await addDoc(collection(db, 'privateMessages'), { sender: fromUser, receiver: currentUser, content: 'Chat started', createdAt: serverTimestamp() }); } catch (e) { alert('Error: ' + e.message); } };
+window.rejectChatRequest = async function(requestId) { if (isBanned(currentUser)) { alert('You are banned.'); return; } try { await updateDoc(doc(db, 'chatRequests', requestId), { status: 'rejected' }); } catch (e) { alert('Error: ' + e.message); } };
+
+window.deleteGroup = async function(groupId) { if (isBanned(currentUser)) { alert('You are banned.'); return; } if (!confirm('Are you sure you want to delete this group?')) return; try { await deleteDoc(doc(db, 'groups', groupId)); const msgs = await getDocs(query(collection(db, 'groupMessages'), where('groupId', '==', groupId))); msgs.forEach(async (docSnap) => { await deleteDoc(doc(db, 'groupMessages', docSnap.id)); }); const comments = await getDocs(query(collection(db, 'groupComments'), where('groupId', '==', groupId))); comments.forEach(async (docSnap) => { await deleteDoc(doc(db, 'groupComments', docSnap.id)); }); alert('Group deleted successfully'); } catch (e) { alert('Error: ' + e.message); } };
+window.joinGroup = async function(groupId) { if (isBanned(currentUser)) { alert('You are banned and cannot join groups.'); return; } try { const groupRef = doc(db, 'groups', groupId); const groupSnap = await getDoc(groupRef); if (groupSnap.exists()) { const members = groupSnap.data().members || []; if (!members.includes(currentUser)) { members.push(currentUser); await updateDoc(groupRef, { members: members }); alert('You have joined the group'); } else { alert('You are already a member'); } } } catch (e) { alert('Error: ' + e.message); } };
+window.leaveGroup = async function(groupId) { if (isBanned(currentUser)) { alert('You are banned and cannot leave groups.'); return; } if (!confirm('Are you sure you want to leave this group?')) return; try { const groupRef = doc(db, 'groups', groupId); const groupSnap = await getDoc(groupRef); if (groupSnap.exists()) { let members = groupSnap.data().members || []; members = members.filter(m => m !== currentUser); await updateDoc(groupRef, { members: members }); alert('You have left the group'); } } catch (e) { alert('Error: ' + e.message); } };
+
+window.openPasswordModal = function() { document.getElementById('old-password').value = ''; document.getElementById('new-password').value = ''; document.getElementById('confirm-password').value = ''; document.getElementById('password-msg1').textContent = ''; document.getElementById('password-msg2').textContent = ''; document.getElementById('password-step1').classList.remove('hidden'); document.getElementById('password-step2').classList.add('hidden'); document.getElementById('password-modal').classList.remove('hidden'); };
+window.closePasswordModal = function() { document.getElementById('password-modal').classList.add('hidden'); };
+window.checkOldPassword = async function() { const oldPass = document.getElementById('old-password').value; const msgEl = document.getElementById('password-msg1'); if (!oldPass) { msgEl.textContent = 'Please enter your old password'; return; } try { const userRef = doc(db, 'users', currentUser); const userSnap = await getDoc(userRef); if (userSnap.exists() && userSnap.data().password === oldPass) { document.getElementById('password-step1').classList.add('hidden'); document.getElementById('password-step2').classList.remove('hidden'); } else { msgEl.textContent = 'Incorrect old password'; } } catch (e) { msgEl.textContent = 'Error: ' + e.message; } };
+window.updatePassword = async function() { const newPass = document.getElementById('new-password').value; const confirmPass = document.getElementById('confirm-password').value; const msgEl = document.getElementById('password-msg2'); if (!newPass || !confirmPass) { msgEl.textContent = 'Please fill in both fields'; return; } if (newPass.length < 4) { msgEl.textContent = 'Password must be at least 4 characters'; return; } if (newPass !== confirmPass) { msgEl.textContent = 'Passwords do not match'; return; } try { await updateDoc(doc(db, 'users', currentUser), { password: newPass }); alert('Password changed successfully!'); closePasswordModal(); } catch (e) { msgEl.textContent = 'Error: ' + e.message; } };
+
+window.changeDisplayName = async function() { if (isBanned(currentUser)) { alert('You are banned.'); return; } const newName = document.getElementById('settings-displayname').value.trim(); const msgEl = document.getElementById('settings-displayname-msg'); if (!newName) { msgEl.textContent = 'Please enter a display name'; return; } if (newName.length > 50) { msgEl.textContent = 'Max 50 characters'; return; } try { const userRef = doc(db, 'users', currentUser); const userSnap = await getDoc(userRef); if (!userSnap.exists()) { msgEl.textContent = 'User not found'; return; } const data = userSnap.data(); if (!isOwner() && data.lastNameChange) { const daysSince = (Date.now() - data.lastNameChange.toDate().getTime()) / (1000 * 60 * 60 * 24); if (daysSince < 7) { msgEl.textContent = 'You can change display name once every 7 days. ' + Math.ceil(7 - daysSince) + ' days remaining.'; return; } } await updateDoc(userRef, { displayName: newName, lastNameChange: serverTimestamp() }); msgEl.style.color = 'var(--success)'; msgEl.textContent = 'Display name updated successfully!'; document.getElementById('settings-displayname').value = ''; updateSidebarUserInfo(); setTimeout(() => { msgEl.textContent = ''; msgEl.style.color = ''; }, 3000); } catch (e) { msgEl.textContent = 'Error: ' + e.message; } };
+
+window.changeUsername = async function() { if (isBanned(currentUser)) { alert('You are banned.'); return; } const newUsername = document.getElementById('settings-username').value.trim(); const msgEl = document.getElementById('settings-username-msg'); if (!newUsername) { msgEl.textContent = 'Please enter a username'; return; } if (newUsername.length < 3) { msgEl.textContent = 'Min 3 characters'; return; } if (newUsername === currentUser) { msgEl.textContent = 'Same username'; return; } try { const userRef = doc(db, 'users', currentUser); const userSnap = await getDoc(userRef); if (!userSnap.exists()) { msgEl.textContent = 'User not found'; return; } const data = userSnap.data(); if (!isOwner() && data.lastUsernameChange) { const daysSince = (Date.now() - data.lastUsernameChange.toDate().getTime()) / (1000 * 60 * 60 * 24); if (daysSince < 30) { msgEl.textContent = 'You can change username once every 30 days. ' + Math.ceil(30 - daysSince) + ' days remaining.'; return; } } const newUserRef = doc(db, 'users', newUsername); const newUserSnap = await getDoc(newUserRef); if (newUserSnap.exists()) { msgEl.textContent = 'Username already taken'; return; } await setDoc(newUserRef, { ...data, username: newUsername, lastUsernameChange: serverTimestamp() }); await deleteDoc(userRef); currentUser = newUsername; localStorage.setItem('whisper_user', newUsername); msgEl.style.color = 'var(--success)'; msgEl.textContent = 'Username updated successfully!'; document.getElementById('settings-username').value = ''; updateSidebarUserInfo(); setTimeout(() => { msgEl.textContent = ''; msgEl.style.color = ''; }, 3000); } catch (e) { msgEl.textContent = 'Error: ' + e.message; } };
+
+window.toggleTheme = function() { document.body.classList.toggle('dark'); localStorage.setItem('whisper_theme', document.body.classList.contains('dark') ? 'dark' : 'light'); updateThemeButtonText(); };
+function updateThemeButtonText() { const btn = document.getElementById('theme-toggle-btn'); if (btn) { btn.textContent = document.body.classList.contains('dark') ? '☀️ Light Mode' : '🌙 Dark Mode'; } }
 if (localStorage.getItem('whisper_theme') === 'dark') { document.body.classList.add('dark'); updateThemeButtonText(); }
-function escapeHtml(text) { /* unchanged */ }
-function formatTime(date) { /* unchanged */ }
-function updateAllTimestamps() { /* unchanged */ }
-window.toggleMenu = function(menuId) { /* unchanged */ };
-document.addEventListener('click', function(e) { /* unchanged */ });
+
+function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
+
+// دالة formatTime محدثة مع شهور وسنين
+function formatTime(date) {
+    const now = new Date();
+    const diff = Math.floor((now - date) / 1000);
+    if (diff < 60) return 'Just now';
+    if (diff < 3600) return Math.floor(diff / 60) + ' minute' + (Math.floor(diff/60) > 1 ? 's' : '') + ' ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + ' hour' + (Math.floor(diff/3600) > 1 ? 's' : '') + ' ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + ' day' + (Math.floor(diff/86400) > 1 ? 's' : '') + ' ago';
+    if (diff < 2592000) return Math.floor(diff / 604800) + ' week' + (Math.floor(diff/604800) > 1 ? 's' : '') + ' ago';
+    if (diff < 31536000) return Math.floor(diff / 2592000) + ' month' + (Math.floor(diff/2592000) > 1 ? 's' : '') + ' ago';
+    return Math.floor(diff / 31536000) + ' year' + (Math.floor(diff/31536000) > 1 ? 's' : '') + ' ago';
+}
+
+// دالة تحديث جميع الأوقات في الصفحة
+function updateAllTimestamps() {
+    const timeElements = document.querySelectorAll('[data-timestamp]');
+    timeElements.forEach(el => {
+        const ts = parseInt(el.getAttribute('data-timestamp'));
+        if (!isNaN(ts)) {
+            // الحفاظ على وسم (edited) إذا كان موجوداً
+            const editedTag = el.querySelector('.edited-tag') ? ' <span class="edited-tag">(edited)</span>' : '';
+            el.textContent = formatTime(new Date(ts));
+            if (editedTag) el.innerHTML += editedTag;
+        }
+    });
+}
+
+window.toggleMenu = function(menuId) { const menu = document.getElementById(menuId); if (!menu) return; document.querySelectorAll('.menu-dropdown.show').forEach(el => { if (el.id !== menuId) el.classList.remove('show'); }); menu.classList.toggle('show'); };
+document.addEventListener('click', function(e) { if (!e.target.closest('.menu-container')) { document.querySelectorAll('.menu-dropdown.show').forEach(el => el.classList.remove('show')); } });
+
 const savedUser = localStorage.getItem('whisper_user');
 if (savedUser) { currentUser = savedUser; showChat(); }
 console.log('Whisper Chat loaded successfully!');
